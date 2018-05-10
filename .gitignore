@@ -1,0 +1,11 @@
+# Build Path of Test Fixtures
+.gatsby-context.js
+.DS_Store
+public/
+build/
+.cache/
+.netlify
+node_modules
+
+# IDE specific
+.vscode/
