@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 
 import {innerHtml} from '../utils/wordpressHelpers';
+import Seo from '../components/seo';
 
 export default class PageTemplate extends React.Component {
 	static propTypes = {
@@ -11,31 +12,27 @@ export default class PageTemplate extends React.Component {
 	}
 
 	render() {
-		const {currentPage, site, landingPageBase, servicesNav} = this.props.data;
+		const {currentPage, site} = this.props.data;
 
 		return (
 			<div>
-				<div className="container">
-					<div className="page-content">
-						<div className="bg-black">
-							<div
-								dangerouslySetInnerHTML={innerHtml(currentPage.content)} // eslint-disable-line react/no-danger
-							/>
-							{landingPageBase ?
-								<div
-									dangerouslySetInnerHTML={innerHtml(landingPageBase.content)} // eslint-disable-line react/no-danger
-								/> : null
-							}
-						</div>
-					</div>
-				</div>
+				<Seo
+					currentPage={currentPage}
+					site={site}
+					location={this.props.location}
+				/>
+				<main
+					dangerouslySetInnerHTML={innerHtml(currentPage.content)} // eslint-disable-line react/no-danger
+					className="main"
+					role="main"
+				/>
 			</div>
 		);
 	}
 }
 
 export const pageQuery = graphql`
-query defaultPageQuery($id: String!, $landingPageBase: Int = 0) {
+query defaultPageQuery($id: String!) {
   currentPage: wordpressPage(id: {eq: $id}) {
 	...Page
   }

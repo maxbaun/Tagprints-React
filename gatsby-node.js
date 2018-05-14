@@ -16,12 +16,12 @@ exports.modifyWebpackConfig = ({config}) => {
 	return config;
 };
 
-// exports.createPages = ({graphql, boundActionCreators}) => {
-// 	const {createPage} = boundActionCreators;
-// 	return Promise.all([
-// 		getPages(graphql, createPage)
-// 	]);
-// };
+exports.createPages = ({graphql, boundActionCreators}) => {
+	const {createPage} = boundActionCreators;
+	return Promise.all([
+		getPages(graphql, createPage)
+	]);
+};
 
 function getPages(graphql, createPage) {
 	return new Promise((resolve, reject) => {
@@ -53,9 +53,9 @@ function getPages(graphql, createPage) {
 			}
 
 			result.data.pages.edges.forEach(edge => {
-				if (edge.node.slug === 'home') {
-					return;
-				}
+				// if (edge.node.slug === 'home') {
+				// 	return;
+				// }
 
 				createPage({
 					path: getSlug(edge, result.data.pages.edges),

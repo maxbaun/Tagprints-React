@@ -194,10 +194,6 @@ async function processRemoteNode({ url, store, cache, createNode, auth = {} }) {
       filename
 	)
 
-	console.log('========')
-	console.log('finished')
-	console.log(url)
-	console.log(filename)
     // Save the response headers for future requests.
     cache.set(cacheId(url), response.headers)
 
