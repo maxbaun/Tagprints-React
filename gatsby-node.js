@@ -16,12 +16,12 @@ exports.modifyWebpackConfig = ({config}) => {
 	return config;
 };
 
-exports.createPages = ({graphql, boundActionCreators}) => {
-	const {createPage} = boundActionCreators;
-	return Promise.all([
-		getPages(graphql, createPage)
-	]);
-};
+// exports.createPages = ({graphql, boundActionCreators}) => {
+// 	const {createPage} = boundActionCreators;
+// 	return Promise.all([
+// 		getPages(graphql, createPage)
+// 	]);
+// };
 
 function getPages(graphql, createPage) {
 	return new Promise((resolve, reject) => {
@@ -46,6 +46,10 @@ function getPages(graphql, createPage) {
 			if (result.errors) {
 				console.log(result.errors);
 				reject(result.errors);
+			}
+
+			if (!result.data) {
+				return resolve();
 			}
 
 			result.data.pages.edges.forEach(edge => {
