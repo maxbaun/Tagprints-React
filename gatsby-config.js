@@ -42,6 +42,12 @@ module.exports = {
 			}
 		},
 		{
+			resolve: 'gatsby-plugin-facebook-pixel',
+			options: {
+				pixelId: '785276321503890'
+			}
+		},
+		{
 			resolve: `gatsby-plugin-sitemap`
 		}
 	]

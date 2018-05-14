@@ -1,9 +1,9 @@
 export const replaceLinks = str => {
 	return str
-		.replace('http://czone.info', '')
-		.replace('https://czone.info', '')
-		.replace('http://czonemusic.com', '')
-		.replace('https://czonemusic.com', '');
+		.replace('http://tagprints.info', '')
+		.replace('https://tagprints.info', '')
+		.replace('http://tagprints.com', '')
+		.replace('https://tagprints.com', '');
 };
 
 export const replaceContent = content => {
