@@ -1,0 +1,121 @@
+@import '../helpers/variables.scss';
+@import '../helpers/mixins.scss';
+@import '../components/buttons';
+
+.hero {
+}
+
+.heroInner {
+	height: 512px;
+	position: relative;
+	text-align: center;
+}
+
+.heroImage {
+	height: 100%;
+
+	> div,
+	& > div > div {
+		height: 100%;
+	}
+}
+
+.heroContent {
+	padding: 15px;
+	position: absolute;
+	top: 70px;
+	width: 100%;
+	z-index: 1;
+
+	h1 {
+		animation-direction: normal;
+		font-size: 34px;
+		font-weight: 300;
+		line-height: 1.5;
+		margin: 0 0 30px;
+		opacity: 1;
+	}
+
+	a {
+		animation-direction: normal;
+		opacity: 1;
+	}
+}
+
+.loaded {
+	opacity: 1;
+}
+
+.step {
+	margin: 0 auto;
+	max-width: 268px;
+	text-align: center;
+
+	img {
+		margin-bottom: 20px;
+	}
+
+	h3 {
+		color: $color_14;
+		font-size: 26px;
+		font-weight: 300;
+		margin: 0 0 10px;
+	}
+
+	p {
+		color: $color_7;
+	}
+}
+
+.image1 {
+	background-color: $bg_grey;
+	padding: 0;
+}
+
+.cta {
+	margin-top: 30px;
+	text-align: center;
+}
+
+.image2 {
+	@extend .image1;
+	overflow: visible;
+	margin-top: 100px;
+	padding-top: 100px;
+
+	> div {
+		margin-top: -60px;
+	}
+}
+
+.features {
+	padding: 80px 0;
+}
+
+.featuresInner {
+	margin: 0 auto;
+	max-width: 780px;
+}
+
+.feature {
+	height: 153px;
+	text-align: center;
+
+	i {
+		color: $color_1;
+		display: block;
+		font-size: 64px;
+		height: 64px;
+		line-height: 64px;
+		margin-bottom: 20px;
+	}
+
+	p {
+		font-size: 20px;
+		color: $color_2;
+		font-weight: 500;
+		line-height: 1.15;
+		max-width: 190px;
+		margin: 0 auto 20px;
+	}
+}

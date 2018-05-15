@@ -38,6 +38,7 @@ export default class Html extends React.Component {
 					<meta name="referrer" content="origin"/>
 					<meta charSet="utf-8"/>
 					<meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
+					{/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css"/> */}
 					{css}
 				</head>
 				<body data-theme="default">
@@ -46,6 +47,7 @@ export default class Html extends React.Component {
 						dangerouslySetInnerHTML={{__html: this.props.body}} //eslint-disable-line
 					/>
 					{this.props.postBodyComponents}
+					<script src="//npmcdn.com/flickity@1.2.1/dist/flickity.pkgd.js"/>
 				</body>
 			</html>
 		);

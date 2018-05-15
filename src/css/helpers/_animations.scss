@@ -1,28 +1,28 @@
 @include keyframes(bounce){
-    0% {
-      transform:  translateY(0)  ;
-    }
-    10% {
-      transform:  translateY(-4px)  ;
-    }
-    15% {
-      transform:  translateY(4px)  ;
-    }
-    30% {
-      transform:  translateY(-3px)  ;
-    }
-    45% {
-      transform:  translateY(3px)  ;
-    }
-    60% {
-      transform:  translateY(-2px)  ;
-    }
-    75% {
-      transform:  translateY(1px) ;
-    }
-    100% {
-      transform:  translateY(0px)  ;
-    }
+	0% {
+		transform:  translateY(0)  ;
+	}
+	10% {
+		transform:  translateY(-4px)  ;
+	}
+	15% {
+		transform:  translateY(4px)  ;
+	}
+	30% {
+		transform:  translateY(-3px)  ;
+	}
+	45% {
+		transform:  translateY(3px)  ;
+	}
+	60% {
+		transform:  translateY(-2px)  ;
+	}
+	75% {
+		transform:  translateY(1px) ;
+	}
+	100% {
+		transform:  translateY(0px)  ;
+	}
 }
 
 @include keyframes(placeholder){

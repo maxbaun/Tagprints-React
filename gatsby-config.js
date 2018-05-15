@@ -12,7 +12,7 @@ module.exports = {
 		* plugins. Here the site sources its data from Wordpress.
 		*/
 		{
-			resolve: `gatsby-source-max`,
+			resolve: `gatsby-source-wordpress`,
 			options: {
 				/*
 				* The base URL of the Wordpress site without the trailingslash and the protocol. This is required.

@@ -23,7 +23,7 @@
 		"axios": "^0.18.0",
 		"baguettebox.js": "^1.10.0",
 		"bootstrap-sass": "^3.3.5",
-		"flickity": "^2.1.1",
+		"flickity": "^1.2.1",
 		"font-awesome": "^4.4.0",
 		"gatsby": "^1.9.256",
 		"gatsby-image": "^1.0.4",

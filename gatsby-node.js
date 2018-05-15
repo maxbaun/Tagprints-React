@@ -32,6 +32,7 @@ function getPages(graphql, createPage) {
 					edges {
 						node {
 							id
+							title
 							wpid: wordpress_id
 							slug
 							status
@@ -53,9 +54,9 @@ function getPages(graphql, createPage) {
 			}
 
 			result.data.pages.edges.forEach(edge => {
-				// if (edge.node.slug === 'home') {
-				// 	return;
-				// }
+				if (edge.node.title === 'TagPrints Homepage') {
+					return;
+				}
 
 				createPage({
 					path: getSlug(edge, result.data.pages.edges),
@@ -120,5 +121,9 @@ function getSlug(edge, edges) {
 }
 
 function getPageTemplate(template) {
+	if (template === 'template-hashtag.php') {
+		return path.resolve('./src/templates/hashtag.js');
+	}
+
 	return path.resolve(`./src/templates/page.js`);
 }
