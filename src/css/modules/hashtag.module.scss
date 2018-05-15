@@ -1,6 +1,4 @@
 @import '../helpers/variables.scss';
-@import '../helpers/mixins.scss';
-@import '../components/buttons';
 
 .hero {
 }
@@ -118,4 +116,8 @@
 		max-width: 190px;
 		margin: 0 auto 20px;
 	}
+}
+
+.modalInner {
+	text-align: center;
 }

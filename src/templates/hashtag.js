@@ -6,16 +6,19 @@ import Link from 'gatsby-link';
 
 import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
 import {initPageElements} from '../utils/documentHelpers';
-import {chunk} from '../utils/componentHelpers';
+import {click} from '../utils/componentHelpers';
+import Modal from '../components/modal';
+import ModalContent from '../components/modalContent';
 import Seo from '../components/seo';
 import CSS from '../css/modules/hashtag.module.scss';
 
-export default class PageTemplate extends Component {
+export default class HashtagTemplate extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			heroLoaded: false
+			heroLoaded: false,
+			modalActive: false
 		};
 
 		this.renderHero = this.renderHero.bind(this);
@@ -23,7 +26,10 @@ export default class PageTemplate extends Component {
 		this.renderImage1 = this.renderImage1.bind(this);
 		this.renderFeatures = this.renderFeatures.bind(this);
 		this.renderImage2 = this.renderImage2.bind(this);
+		this.renderModal = this.renderModal.bind(this);
 		this.handleHeroLoad = this.handleHeroLoad.bind(this);
+
+		this.handleModalToggle = this.handleModalToggle.bind(this);
 	}
 
 	static propTypes = {
@@ -39,6 +45,10 @@ export default class PageTemplate extends Component {
 		this.setState({
 			heroLoaded: true
 		});
+	}
+
+	handleModalToggle(modalActive) {
+		this.setState({modalActive});
 	}
 
 	render() {
@@ -58,6 +68,7 @@ export default class PageTemplate extends Component {
 				{this.renderFeatures()}
 				{this.renderImage2()}
 				{this.renderCta({marginBottom: 30})}
+				{this.renderModal()}
 				{/* <main
 					dangerouslySetInnerHTML={innerHtml(currentPage.content)} // eslint-disable-line react/no-danger
 					className="main"
@@ -153,8 +164,6 @@ export default class PageTemplate extends Component {
 			image1: {image}
 		} = this.props.data.currentPage.acf;
 
-		console.log(image);
-
 		return (
 			<section className={CSS.image1}>
 				<div className="container">
@@ -171,13 +180,13 @@ export default class PageTemplate extends Component {
 
 		return (
 			<div className={CSS.cta}>
-				<Link
-					to={replaceLinks(link.url)}
+				<a
+					onClick={click(this.handleModalToggle, true)}
 					className="btn btn-cta"
 					style={style}
 				>
 					{link.title}
-				</Link>
+				</a>
 			</div>
 		);
 	}
@@ -186,8 +195,6 @@ export default class PageTemplate extends Component {
 		const {
 			image2: {image}
 		} = this.props.data.currentPage.acf;
-
-		console.log(image);
 
 		return (
 			<section className={CSS.image2}>
@@ -233,6 +240,34 @@ export default class PageTemplate extends Component {
 					</div>
 				</div>
 			</div>
+		);
+	}
+
+	renderModal() {
+		const {modalActive} = this.state;
+		const {modal} = this.props.data.currentPage.acf;
+
+		return (
+			<Modal
+				size="large"
+				active={modalActive}
+				onClose={click(this.handleModalToggle, false)}
+			>
+				<ModalContent classname="brick">
+					<div className={CSS.modalInner}>
+						<Img
+							style={{
+								marginBottom: 30
+							}}
+							resolutions={
+								modal.image.localFile.childImageSharp
+									.resolutions
+							}
+						/>
+						<div>{modal.form}</div>
+					</div>
+				</ModalContent>
+			</Modal>
 		);
 	}
 }
@@ -326,6 +361,23 @@ export const pageQuery = graphql`
 						title
 						url
 					}
+				}
+				modal: hashtagModal {
+					image {
+						localFile {
+							childImageSharp {
+								resolutions(width: 222) {
+									base64
+									aspectRatio
+									src
+									srcSet
+									width
+									height
+								}
+							}
+						}
+					}
+					form
 				}
 			}
 		}

@@ -1,0 +1,88 @@
+@import '../helpers/variables.scss';
+@import '../helpers/mixins.scss';
+@import '../utils/mixins.scss';
+
+.wrap {
+	position: fixed;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	left: 0;
+	right: 0;
+	background-color: #fafafa;
+	padding: 0;
+	max-height: 70%;
+	width: 80%;
+	margin: auto;
+	overflow-y: auto;
+	border-radius: 2px;
+	will-change: top, opacity;
+	z-index: 1003;
+
+	@include mediumAndUp {
+		width: 55%;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		margin-top: 0;
+	}
+}
+
+.large {
+	@extend .modal;
+
+	width: 80%;
+
+	@include mediumAndUp {
+		width: 75%;
+	}
+}
+
+.close {
+	cursor: pointer;
+}
+
+.content {
+	padding: 24px;
+}
+
+.brick {
+	@extend .content;
+	background-image: url('../../images/brickwall.png');
+	background-size: 110px 69px;
+	@include image-2x('../..//images/brickwall@2x.png', 110px, 69px);
+	background-repeat: repeat;
+}
+
+.footer {
+	border-radius: 0 0 2px 2px;
+	background-color: #fafafa;
+	padding: 4px 6px;
+	height: 56px;
+	width: 100%;
+	text-align: right;
+
+	a {
+		margin: 6px 0;
+	}
+}
+
+.fog {
+	position: fixed;
+	z-index: 999;
+	top: -25%;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 125%;
+	width: 100%;
+	background: #000;
+	display: none;
+
+	will-change: opacity;
+}
