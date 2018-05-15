@@ -1,0 +1,49 @@
+@import '../utils/mixins.scss';
+
+.form {
+	ul {
+		@include noList;
+		@include clearfix;
+
+		li {
+			float: left;
+		}
+	}
+}
+
+.full {
+	width: 100%;
+}
+
+.half {
+	width: 100%;
+
+	@include mediumAndUp {
+		width: 50%;
+	}
+}
+
+.hidden {
+	display: none;
+	float: none;
+}
+
+.inputGroup {
+	display: block;
+}
+
+.submit {
+	margin-top: 20px;
+	text-align: center;
+	width: 100%;
+}
+
+:global {
+	.react-datepicker-wrapper {
+		display: block;
+	}
+
+	.react-datepicker__input-container {
+		display: block;
+	}
+}

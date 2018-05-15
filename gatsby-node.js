@@ -8,7 +8,25 @@ exports.modifyWebpackConfig = ({config}) => {
 	config.merge({
 		plugins: [
 			new webpack.DefinePlugin({
-				API_URL: JSON.stringify(isDev ? 'http://tagprints.info/wp-json' : 'http://tagprints.com/wp-json')
+				API_URL: JSON.stringify(
+					isDev ?
+						'http://tagprints.info/wp-json' :
+						'http://tagprints.com/wp-json'
+				),
+				GRAVITY_FORMS_API: JSON.stringify(
+					isDev ?
+						'http://tagprints.info/gravityformsapi' :
+						'http://tagprints.com/gravityformsapi'
+				),
+				GRAVITY_FORMS_PUBLIC_KEY: JSON.stringify(
+					isDev ? '4a60f91bc9' : ''
+				),
+				GRAVITY_FORMS_PRIVATE_KEY: JSON.stringify(
+					isDev ? 'f226e7f31e4acc7' : ''
+				),
+				RECAPTCHA_KEY: JSON.stringify(
+					isDev ? '6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf' : ''
+				)
 			})
 		]
 	});
@@ -18,30 +36,28 @@ exports.modifyWebpackConfig = ({config}) => {
 
 exports.createPages = ({graphql, boundActionCreators}) => {
 	const {createPage} = boundActionCreators;
-	return Promise.all([
-		getPages(graphql, createPage)
-	]);
+	return Promise.all([getPages(graphql, createPage)]);
 };
 
 function getPages(graphql, createPage) {
 	return new Promise((resolve, reject) => {
 		graphql(
 			`
-			{
-				pages: allWordpressPage {
-					edges {
-						node {
-							id
-							title
-							wpid: wordpress_id
-							slug
-							status
-							template
-							parent: wordpress_parent
+				{
+					pages: allWordpressPage {
+						edges {
+							node {
+								id
+								title
+								wpid: wordpress_id
+								slug
+								status
+								template
+								parent: wordpress_parent
+							}
 						}
 					}
 				}
-			}
 			`
 		).then(result => {
 			if (result.errors) {
@@ -76,18 +92,18 @@ function getProfiles(graphql, createPage) {
 	return new Promise((resolve, reject) => {
 		graphql(
 			`
-			{
-				profiles: allWordpressWpProfile {
-					edges {
-						node {
-							id
-							wpid: wordpress_id
-							slug
-							status
+				{
+					profiles: allWordpressWpProfile {
+						edges {
+							node {
+								id
+								wpid: wordpress_id
+								slug
+								status
+							}
 						}
 					}
 				}
-			}
 			`
 		).then(result => {
 			if (result.errors) {
@@ -98,7 +114,9 @@ function getProfiles(graphql, createPage) {
 			result.data.profiles.edges.forEach(edge => {
 				createPage({
 					path: `/profile/${edge.node.slug}`,
-					component: slash(path.resolve(`./src/templates/profile.js`)),
+					component: slash(
+						path.resolve(`./src/templates/profile.js`)
+					),
 					context: {
 						id: edge.node.id
 					}

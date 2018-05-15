@@ -8,6 +8,7 @@ import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
 import {initPageElements} from '../utils/documentHelpers';
 import {click} from '../utils/componentHelpers';
 import Modal from '../components/modal';
+import Form from '../components/form';
 import ModalContent from '../components/modalContent';
 import Seo from '../components/seo';
 import CSS from '../css/modules/hashtag.module.scss';
@@ -129,7 +130,7 @@ export default class HashtagTemplate extends Component {
 		const {steps} = this.props.data.currentPage.acf;
 
 		return (
-			<section className={CSS.steps}>
+			<section id="hashtagSteps" className={CSS.steps}>
 				<div className="container">
 					<div className="row">
 						{steps &&
@@ -264,7 +265,7 @@ export default class HashtagTemplate extends Component {
 									.resolutions
 							}
 						/>
-						<div>{modal.form}</div>
+						<Form formId={modal.form}/>
 					</div>
 				</ModalContent>
 			</Modal>
