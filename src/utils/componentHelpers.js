@@ -1,4 +1,10 @@
+import uuid from 'uuid/v4';
+
 import {easeInOutQuad} from './easingHelpers';
+
+export function unique() {
+	return uuid();
+}
 
 export function compact(array) {
 	let resIndex = 0;

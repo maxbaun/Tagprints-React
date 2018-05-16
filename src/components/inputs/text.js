@@ -19,7 +19,8 @@ const TextInput = ({
 	onBlur,
 	readOnly,
 	tabIndex,
-	required
+	required,
+	error
 }) => {
 	return (
 		<div className={[CSS.inputGroup, CSS[classname]].join(' ')}>
@@ -40,6 +41,9 @@ const TextInput = ({
 				onFocus={onFocus || null}
 				onBlur={onBlur || null}
 			/>
+			{error && error !== '' ? (
+				<small className={CSS.error}>{error}</small>
+			) : null}
 		</div>
 	);
 };
@@ -59,7 +63,8 @@ TextInput.propTypes = {
 	onFocus: PropTypes.func,
 	onBlur: PropTypes.func,
 	tabIndex: PropTypes.number,
-	required: PropTypes.bool
+	required: PropTypes.bool,
+	error: PropTypes.string
 };
 
 TextInput.defaultProps = {
@@ -77,7 +82,8 @@ TextInput.defaultProps = {
 	onKeyUp: noop,
 	onFocus: noop,
 	onBlur: noop,
-	required: false
+	required: false,
+	error: null
 };
 
 export default TextInput;

@@ -26,6 +26,9 @@ exports.modifyWebpackConfig = ({config}) => {
 				),
 				RECAPTCHA_KEY: JSON.stringify(
 					isDev ? '6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf' : ''
+				),
+				RECAPTCHA_SECRET: JSON.stringify(
+					isDev ? '6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5' : ''
 				)
 			})
 		]

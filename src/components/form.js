@@ -9,7 +9,10 @@ import Text from './inputs/text';
 import Textarea from './inputs/textarea';
 import DatePicker from './inputs/date';
 import Recaptcha from './inputs/recaptcha';
+import Button from './button';
 import CSS from '../css/modules/forms.module.scss';
+import Loader from './loader';
+import {innerHtml} from '../utils/wordpressHelpers';
 
 export default class Form extends Component {
 	constructor(props) {
@@ -21,16 +24,18 @@ export default class Form extends Component {
 			inputs: [],
 			values: {},
 			button: {},
-			hasCaptcha: false,
-			captchaFields: []
+			confirmation: null,
+			errors: {}
 		};
 
 		this.form = null;
 
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-		this.getValue = this.getValue.bind(this);
 		this.renderInput = this.renderInput.bind(this);
+		this.renderForm = this.renderForm.bind(this);
+		this.renderLoader = this.renderLoader.bind(this);
+		this.renderConfirmation = this.renderConfirmation.bind(this);
 	}
 
 	static propTypes = {
@@ -44,18 +49,12 @@ export default class Form extends Component {
 		this.form
 			.getForm()
 			.then(res => {
-				console.log(res);
-				const captchaFields = res.fields
-					.filter(f => f.type === 'captcha')
-					.map(f => f.id);
-				const hasCaptcha = Boolean(captchaFields.length);
-
 				this.setState({
 					loading: false,
 					inputs: res.fields,
 					button: res.button,
-					hasCaptcha,
-					captchaFields
+					errors: {},
+					values: this.getDefaultValues(res.fields)
 				});
 			})
 			.catch(err => {
@@ -65,56 +64,45 @@ export default class Form extends Component {
 			});
 	}
 
-	getValue(id) {
-		return this.state.values[id];
-	}
-
-	formValid() {
-		const {inputs, values} = this.state;
-
-		let valid = true;
-
-		inputs.forEach(input => {
-			if (input.required && !values[input]) {
-				valid = false;
-			}
-		});
-
-		if (this.state.hasCaptcha && this.state.captchaFields) {
-			this.state.captchaFields.forEach(id => {
-				if (!values[id]) {
-					valid = false;
-				}
-			});
-		}
-
-		return valid;
-	}
-
-	transformValues() {
-		const keys = Object.keys(this.state.values);
+	getDefaultValues(fields) {
 		const obj = {};
 
-		keys.forEach(key => {
-			let value = this.state.values[key];
+		fields.forEach(field => {
+			let value;
 
-			if (moment.isMoment(value)) {
-				value = value.format('MM/DD/YYYY').toString();
+			if (field.type === 'date') {
+				value = moment();
 			}
 
-			obj[key] = value;
+			obj[field.id] = value;
+
+			this.form.setField(field.id, value);
 		});
 
 		return obj;
 	}
 
 	handleSubmit() {
-		if (this.formValid()) {
-			const values = this.transformValues();
-			// @TODO - submit the form
-			console.log('form submitted');
-			console.log(values);
-		}
+		this.setState({
+			sending: true,
+			confirmation: null
+		});
+
+		this.form
+			.submit()
+			.then(res => {
+				this.setState({
+					sending: false,
+					confirmation: res,
+					errors: {}
+				});
+			})
+			.catch(errors => {
+				this.setState({
+					sending: false,
+					errors
+				});
+			});
 	}
 
 	handleChange(id) {
@@ -122,108 +110,136 @@ export default class Form extends Component {
 			this.setState(prevState => {
 				return {
 					...prevState,
-					values: {
-						...prevState.values,
-						[id]: value
-					}
+					values: this.form.setField(id, value)
 				};
 			});
 		};
 	}
 
 	render() {
-		const {inputs, button} = this.state;
-		let count = 0;
+		const {loading} = this.state;
 
 		return (
-			<div className={CSS.wrap}>
-				<form
-					className={CSS.form}
-					onSubmit={clickPrevent(this.handleSubmit)}
-				>
-					<ul>
-						{inputs.map(input => {
-							if (input.type === 'html') {
-								return null;
-							}
-
-							if (count !== 0) {
-								count += 1;
-							}
-
-							const classes = [];
-
-							if (input.cssClass !== '') {
-								classes.push(CSS[input.cssClass]);
-							}
-
-							if (input.type === 'hidden') {
-								classes.push(CSS.hidden);
-							}
-
-							if (classes.length === 0) {
-								classes.push(CSS.full);
-							}
-
-							return (
-								<li
-									key={input.id}
-									className={classes.join(' ')}
-								>
-									{this.renderInput(input, count)}
-								</li>
-							);
-						})}
-						<li className={CSS.submit}>
-							<button
-								type="submit"
-								className="btn btn-cta btn-cta-transparent-inverse"
-							>
-								{button.text}
-							</button>
-						</li>
-					</ul>
-				</form>
+			<div className={loading ? CSS.loading : CSS.wrap}>
+				{loading ? this.renderLoader() : this.renderForm()}
 			</div>
 		);
 	}
 
+	renderLoader() {
+		return (
+			<div className={CSS.loader} style={{height: 100}}>
+				<Loader/>
+			</div>
+		);
+	}
+
+	renderForm() {
+		const {inputs, button, sending} = this.state;
+		let count = 0;
+
+		return (
+			<form
+				className={CSS.form}
+				onSubmit={clickPrevent(this.handleSubmit)}
+			>
+				{this.renderConfirmation()}
+				<ul>
+					{inputs.map(input => {
+						if (input.type === 'html') {
+							return null;
+						}
+
+						if (count !== 0) {
+							count += 1;
+						}
+
+						const classes = [];
+
+						if (input.cssClass !== '') {
+							classes.push(CSS[input.cssClass]);
+						}
+
+						if (input.type === 'hidden') {
+							classes.push(CSS.hidden);
+						}
+
+						if (classes.length === 0) {
+							classes.push(CSS.full);
+						}
+
+						return (
+							<li key={input.id} className={classes.join(' ')}>
+								{this.renderInput(input, count)}
+							</li>
+						);
+					})}
+					<li className={CSS.submit}>
+						<Button
+							setSize
+							type="submit"
+							classes="btn btn-cta btn-cta-transparent-inverse"
+							text={button.text}
+							loading={sending}
+						/>
+					</li>
+				</ul>
+			</form>
+		);
+	}
+
 	renderInput(input, index) {
+		const {id, type} = input;
+		const value = this.state.values[id];
+		const error = this.state.errors[id];
+
 		const props = {
-			id: `${input.id}`,
-			name: `gform_${input.id}`,
-			type: input.type,
+			id: `${id}`,
+			name: `gform_${id}`,
+			type,
 			tabIndex: index,
 			placeholder: input.label,
-			onChange: this.handleChange(input.id),
+			onChange: this.handleChange(id),
 			required: input.required,
-			value: this.getValue(input.id)
+			value,
+			error
 		};
 
-		if (input.type === 'text' || input.type === 'email') {
+		if (type === 'text' || type === 'email') {
 			return <Text {...props}/>;
 		}
 
-		if (input.type === 'textarea') {
+		if (type === 'textarea') {
 			return <Textarea {...props}/>;
 		}
 
-		if (input.type === 'date') {
-			return (
-				<DatePicker
-					{...props}
-					value={this.getValue(input.id) || moment()}
-				/>
-			);
+		if (type === 'date') {
+			return <DatePicker {...props} value={value || moment()}/>;
 		}
 
-		if (input.type === 'captcha') {
+		if (type === 'captcha') {
 			return (
 				<Recaptcha
 					tabIndex={index}
-					onChange={this.handleChange(input.id)}
+					onChange={this.handleChange(id)}
+					error={error}
 				/>
 			);
 		}
+	}
+
+	renderConfirmation() {
+		const {confirmation} = this.state;
+
+		if (!confirmation || confirmation === '') {
+			return null;
+		}
+
+		return (
+			<div
+				dangerouslySetInnerHTML={innerHtml(confirmation)} // eslint-disable-line react/no-danger
+				className={CSS.confirmation}
+			/>
+		);
 	}
 }

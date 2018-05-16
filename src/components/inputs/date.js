@@ -17,7 +17,8 @@ const Datepicker = ({
 	onBlur,
 	readOnly,
 	tabIndex,
-	required
+	required,
+	error
 }) => {
 	return (
 		<div className={[CSS.inputGroup, CSS[classname]].join(' ')}>
@@ -35,6 +36,9 @@ const Datepicker = ({
 				onFocus={onFocus || null}
 				onBlur={onBlur || null}
 			/>
+			{error && error !== '' ? (
+				<small className={CSS.error}>{error}</small>
+			) : null}
 		</div>
 	);
 };
@@ -51,7 +55,8 @@ Datepicker.propTypes = {
 	onFocus: PropTypes.func,
 	onBlur: PropTypes.func,
 	tabIndex: PropTypes.number,
-	required: PropTypes.bool
+	required: PropTypes.bool,
+	error: PropTypes.string
 };
 
 Datepicker.defaultProps = {
@@ -66,7 +71,8 @@ Datepicker.defaultProps = {
 	onChange: noop,
 	onFocus: noop,
 	onBlur: noop,
-	required: false
+	required: false,
+	error: null
 };
 
 export default Datepicker;

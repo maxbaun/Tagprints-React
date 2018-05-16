@@ -18,7 +18,8 @@ const TextArea = ({
 	onBlur,
 	readOnly,
 	tabIndex,
-	required
+	required,
+	error
 }) => {
 	return (
 		<div className={[CSS.inputGroup, CSS[classname]].join(' ')}>
@@ -38,6 +39,9 @@ const TextArea = ({
 				onFocus={onFocus || null}
 				onBlur={onBlur || null}
 			/>
+			{error && error !== '' ? (
+				<small className={CSS.error}>{error}</small>
+			) : null}
 		</div>
 	);
 };
@@ -56,7 +60,8 @@ TextArea.propTypes = {
 	onFocus: PropTypes.func,
 	onBlur: PropTypes.func,
 	tabIndex: PropTypes.number,
-	required: PropTypes.bool
+	required: PropTypes.bool,
+	error: PropTypes.string
 };
 
 TextArea.defaultProps = {
@@ -73,7 +78,8 @@ TextArea.defaultProps = {
 	onKeyUp: noop,
 	onFocus: noop,
 	onBlur: noop,
-	required: false
+	required: false,
+	error: null
 };
 
 export default TextArea;

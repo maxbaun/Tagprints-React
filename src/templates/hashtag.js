@@ -11,6 +11,7 @@ import Modal from '../components/modal';
 import Form from '../components/form';
 import ModalContent from '../components/modalContent';
 import Seo from '../components/seo';
+import ScrollSpy from '../components/scrollSpy';
 import CSS from '../css/modules/hashtag.module.scss';
 
 export default class HashtagTemplate extends Component {
@@ -113,12 +114,14 @@ export default class HashtagTemplate extends Component {
 							<h1 className={titleClass.join(' ')}>
 								{hero.title}
 							</h1>
-							<Link
-								to={replaceLinks(hero.link.url)}
-								className={btnClass.join(' ')}
-							>
-								{hero.link.title}
-							</Link>
+							<ScrollSpy target="#hashtagSteps">
+								<a
+									href={hero.link.url}
+									className={btnClass.join(' ')}
+								>
+									{hero.link.title}
+								</a>
+							</ScrollSpy>
 						</div>
 					) : null}
 				</div>
