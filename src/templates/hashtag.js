@@ -205,7 +205,8 @@ export default class HashtagTemplate extends Component {
 				<Img
 					sizes={image.localFile.childImageSharp.sizes}
 					style={{
-						marginTop: -175
+						maxWidth: 1600,
+						margin: '-175px auto 0'
 					}}
 				/>
 			</section>
