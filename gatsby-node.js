@@ -91,46 +91,6 @@ function getPages(graphql, createPage) {
 	});
 }
 
-function getProfiles(graphql, createPage) {
-	return new Promise((resolve, reject) => {
-		graphql(
-			`
-				{
-					profiles: allWordpressWpProfile {
-						edges {
-							node {
-								id
-								wpid: wordpress_id
-								slug
-								status
-							}
-						}
-					}
-				}
-			`
-		).then(result => {
-			if (result.errors) {
-				console.log(result.errors);
-				reject(result.errors);
-			}
-
-			result.data.profiles.edges.forEach(edge => {
-				createPage({
-					path: `/profile/${edge.node.slug}`,
-					component: slash(
-						path.resolve(`./src/templates/profile.js`)
-					),
-					context: {
-						id: edge.node.id
-					}
-				});
-			});
-
-			resolve();
-		});
-	});
-}
-
 function getSlug(edge, edges) {
 	if (!edge.node.parent) {
 		return `/${edge.node.slug}`;
@@ -144,6 +104,10 @@ function getSlug(edge, edges) {
 function getPageTemplate(template) {
 	if (template === 'template-hashtag.php') {
 		return path.resolve('./src/templates/hashtag.js');
+	}
+
+	if (template === 'template-team.php') {
+		return path.resolve('./src/templates/team.js');
 	}
 
 	return path.resolve(`./src/templates/page.js`);

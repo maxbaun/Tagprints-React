@@ -1,0 +1,95 @@
+@import '../helpers/variables.scss';
+@import '../helpers/mixins.scss';
+
+.hero {
+}
+
+.heroInner {
+	height: 443px;
+	overflow: hidden;
+	position: relative;
+	text-align: center;
+}
+
+.heroImage {
+	height: 100%;
+
+	> div,
+	& > div > div {
+		height: 100%;
+	}
+}
+
+.heroContent {
+	@include bgImageOverlay($color_2);
+	display: table;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+
+	h1 {
+		animation-direction: normal;
+		color: $color_white;
+		display: table-cell;
+		font-family: 'proxima_novasemibold';
+		font-size: 45px;
+		font-weight: 300;
+		line-height: 50px;
+		margin: 0;
+		opacity: 1;
+		text-shadow: 0 5px 5px rgba(0, 0, 0, 0.75);
+		vertical-align: middle;
+	}
+}
+
+.content {
+	padding: 60px 0;
+
+	> div {
+		margin: 0 auto;
+		max-width: 650px;
+		text-align: center;
+	}
+
+	p {
+		margin-bottom: 30px;
+	}
+
+	hr {
+		background-color: $color_11;
+		border-color: $color_11;
+		margin: 10px auto;
+		max-width: 85px;
+	}
+}
+
+.teamSection {
+	padding: 0 0 60px;
+}
+
+.member {
+	height: 280px;
+	max-width: 280px;
+	margin: 0 auto 30px;
+	text-align: center;
+}
+
+.memberName {
+	display: block;
+	margin-bottom: 10px;
+	font-size: 22px;
+	font-family: 'proxima_novaregular';
+	line-height: 1.2;
+}
+
+.memberJob {
+	display: block;
+	font-size: 12px;
+	margin-bottom: 0;
+	text-transform: uppercase;
+	color: $color_9;
+	font-family: 'proxima_novasemibold';
+	line-height: 1.2;
+}

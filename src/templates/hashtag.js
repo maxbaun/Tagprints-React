@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import graphql from 'graphql';
 import Img from 'gatsby-image';
-import Link from 'gatsby-link';
 
-import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
+import {innerHtml} from '../utils/wordpressHelpers';
 import {initPageElements} from '../utils/documentHelpers';
 import {click} from '../utils/componentHelpers';
 import Modal from '../components/modal';
