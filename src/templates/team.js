@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import graphql from 'graphql';
 import Img from 'gatsby-image';
+import Link from 'gatsby-link';
 
-import {innerHtml} from '../utils/wordpressHelpers';
+import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
 import Seo from '../components/seo';
 import CSS from '../css/modules/team.module.scss';
 
@@ -18,6 +19,7 @@ export default class TeamTemplate extends Component {
 		this.renderHero = this.renderHero.bind(this);
 		this.renderContent = this.renderContent.bind(this);
 		this.renderTeam = this.renderTeam.bind(this);
+		this.renderCta = this.renderCta.bind(this);
 		this.handleHeroLoad = this.handleHeroLoad.bind(this);
 	}
 
@@ -45,6 +47,7 @@ export default class TeamTemplate extends Component {
 				{this.renderHero()}
 				{this.renderContent()}
 				{this.renderTeam()}
+				{this.renderCta()}
 				<main
 					dangerouslySetInnerHTML={innerHtml(currentPage.content)} // eslint-disable-line react/no-danger
 					className="main"
@@ -117,7 +120,10 @@ export default class TeamTemplate extends Component {
 						{teamMembers &&
 							teamMembers.map(member => {
 								return (
-									<div key={member.name} className="col-sm-4">
+									<div
+										key={member.name}
+										className="col-xs-6 col-sm-4"
+									>
 										<div className={CSS.member}>
 											<div className={CSS.memberImage}>
 												<Img
@@ -139,6 +145,26 @@ export default class TeamTemplate extends Component {
 								);
 							})}
 					</div>
+				</div>
+			</div>
+		);
+	}
+
+	renderCta() {
+		const {cta} = this.props.data.currentPage.acf;
+
+		return (
+			<div className={CSS.ctaSection}>
+				<div className="container">
+					<h1>
+						{cta.title}
+						<Link
+							to={replaceLinks(cta.link.url)}
+							className="btn btn-cta-transparent btn-cta-transparent-inverse"
+						>
+							{cta.link.title}
+						</Link>
+					</h1>
 				</div>
 			</div>
 		);
