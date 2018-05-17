@@ -62,14 +62,16 @@ export default class HashtagTemplate extends Component {
 					site={site}
 					location={this.props.location}
 				/>
-				{this.renderHero()}
-				{this.renderSteps()}
-				{this.renderImage1()}
-				{this.renderCta()}
-				{this.renderFeatures()}
-				{this.renderImage2()}
-				{this.renderCta({marginBottom: 30})}
-				{this.renderModal()}
+				<main className="main" rol="main">
+					{this.renderHero()}
+					{this.renderSteps()}
+					{this.renderImage1()}
+					{this.renderCta()}
+					{this.renderFeatures()}
+					{this.renderImage2()}
+					{this.renderCta({marginBottom: 30})}
+					{this.renderModal()}
+				</main>
 				{/* <main
 					dangerouslySetInnerHTML={innerHtml(currentPage.content)} // eslint-disable-line react/no-danger
 					className="main"

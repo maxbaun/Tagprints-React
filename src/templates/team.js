@@ -44,15 +44,17 @@ export default class TeamTemplate extends Component {
 					site={site}
 					location={this.props.location}
 				/>
-				{this.renderHero()}
-				{this.renderContent()}
-				{this.renderTeam()}
-				{this.renderCta()}
-				<main
+				<main className="main" role="main">
+					{this.renderHero()}
+					{this.renderContent()}
+					{this.renderTeam()}
+					{this.renderCta()}
+				</main>
+				{/* <main
 					dangerouslySetInnerHTML={innerHtml(currentPage.content)} // eslint-disable-line react/no-danger
 					className="main"
 					role="main"
-				/>
+				/> */}
 			</div>
 		);
 	}
