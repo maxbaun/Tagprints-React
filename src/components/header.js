@@ -23,11 +23,11 @@ export default class Header extends Component {
 
 	static propTypes = {
 		items: PropTypes.array
-	}
+	};
 
 	static defaultProps = {
 		items: []
-	}
+	};
 
 	componentDidMount() {
 		document.addEventListener('click', this.checkClick);
@@ -74,7 +74,17 @@ export default class Header extends Component {
 				<div className="banner navbar navbar-main" role="banner">
 					<div className="container">
 						<div className="navbar-header">
-							<button ref={ref.call(this, 'toggle')} type="button" onClick={clickPrevent(this.handleToggle, !menuActive)} className="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+							<button
+								ref={ref.call(this, 'toggle')}
+								type="button"
+								onClick={clickPrevent(
+									this.handleToggle,
+									!menuActive
+								)}
+								className="navbar-toggle collapsed"
+								data-toggle="collapse"
+								data-target=".navbar-collapse"
+							>
 								<span className="icon-bar"/>
 								<span className="icon-bar"/>
 								<span className="icon-bar"/>
@@ -83,13 +93,27 @@ export default class Header extends Component {
 								<Logo/>
 							</Link>
 						</div>
-						<div ref={ref.call(this, 'menu')} className={navClass.join(' ')} role="navigation">
+						<div
+							ref={ref.call(this, 'menu')}
+							className={navClass.join(' ')}
+							role="navigation"
+						>
 							<div className="navbar-right">
 								<Nav
 									items={this.props.items}
 									id="menu-primary-navigation"
 									classes="nav navbar-nav main-navigation"
 								/>
+								<ul className="nav navbar-nav navbar-cta">
+									<li>
+										<Link
+											to="/free-quote"
+											className="btn btn-cta-transparent"
+										>
+											Free Quote
+										</Link>
+									</li>
+								</ul>
 							</div>
 							<NavSocial
 								showPhone

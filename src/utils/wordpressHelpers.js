@@ -10,8 +10,23 @@ export const replaceContent = content => {
 	return replaceLinks(content);
 };
 
+export const replaceIcons = content => {
+	let match = content.match(/%.*?%/);
+
+	while (match) {
+		content = content.replace(
+			match[0],
+			`<span class="fa fa-${match[0].split('%')[1]}"></span>`
+		);
+		match = content.match(/%.*?%/);
+	}
+
+	return content;
+};
+
 export const innerHtml = content => {
 	content = replaceContent(content);
+	content = replaceIcons(content);
 
 	return {__html: content};
 };
@@ -28,4 +43,4 @@ export const sortByMenuOrder = list => {
 
 		return a.menuOrder - b.menuOrder;
 	});
-}
+};

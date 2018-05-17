@@ -20,10 +20,12 @@ const TextInput = ({
 	readOnly,
 	tabIndex,
 	required,
-	error
+	error,
+	label
 }) => {
 	return (
 		<div className={[CSS.inputGroup, CSS[classname]].join(' ')}>
+			{label ? <label htmlFor={name}>{label}</label> : null}
 			<input
 				className={CSS.input}
 				autoComplete={autocomplete}
@@ -35,7 +37,7 @@ const TextInput = ({
 				value={value || ''}
 				readOnly={readOnly ? 'readonly' : ''}
 				tabIndex={tabIndex}
-				placeholder={placeholder}
+				placeholder={placeholder ? placeholder : null}
 				onChange={input(onChange)}
 				onKeyUp={key(onKeyUp)}
 				onFocus={onFocus || null}
@@ -64,7 +66,8 @@ TextInput.propTypes = {
 	onBlur: PropTypes.func,
 	tabIndex: PropTypes.number,
 	required: PropTypes.bool,
-	error: PropTypes.string
+	error: PropTypes.string,
+	label: PropTypes.string
 };
 
 TextInput.defaultProps = {
@@ -83,7 +86,8 @@ TextInput.defaultProps = {
 	onFocus: noop,
 	onBlur: noop,
 	required: false,
-	error: null
+	error: null,
+	label: null
 };
 
 export default TextInput;

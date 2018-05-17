@@ -8,7 +8,6 @@ import {replaceLinks} from '../utils/wordpressHelpers';
 export default class Form {
 	constructor(formId) {
 		this.formId = formId;
-		this.form = {};
 		this.fields = [];
 		this.values = {};
 		this.hasCaptcha = false;
@@ -57,7 +56,26 @@ export default class Form {
 	}
 
 	setField(field, value) {
-		this.values[field] = value;
+		const input = this.fields.find(f => f.id === field);
+		let newValue = value;
+
+		if (input.type === 'checkbox') {
+			const currentValue = this.values[field] ?
+				this.values[field].split(', ') :
+				[];
+			const index = currentValue.indexOf(value);
+
+			if (index > -1) {
+				currentValue.splice(index, 1);
+			} else {
+				currentValue.push(value);
+			}
+
+			newValue = currentValue.join(', ');
+			newValue = newValue.replace('  ', ' ');
+		}
+
+		this.values[field] = newValue;
 
 		return this.values;
 	}
@@ -87,11 +105,22 @@ export default class Form {
 	}
 
 	transformValues() {
-		const keys = Object.keys(this.values);
+		const keys = Object.keys(this.values).map(v => parseInt(v, 10));
 		const obj = {};
 
 		keys.forEach(key => {
+			const input = this.fields.find(f => f.id === key);
 			let value = this.values[key];
+
+			if (input && input.type === 'checkbox') {
+				input.choices.forEach((choice, index) => {
+					if (value.includes(choice.value)) {
+						obj[`input_${key}_${index + 1}`] = choice.value;
+					}
+				});
+
+				return;
+			}
 
 			if (moment.isMoment(value)) {
 				value = value.format('MM/DD/YYYY').toString();
@@ -131,9 +160,16 @@ export default class Form {
 				baseURL: gfBase,
 				url,
 				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/x-www-form-urlencoded'
+					Accept: 'application/json'
 				},
+				// TransformRequest: data => {
+				// 	console.log(data);
+				// 	let formData = new window.FormData();
+				// 	Object.keys(data).forEach(attr => {
+				// 		formData.append(attr, data[attr]);
+				// 	});
+				// 	return formData;
+				// },
 				data: JSON.stringify(data),
 				params: {
 					api_key: gfPublicKey, // eslint-disable-line camelcase

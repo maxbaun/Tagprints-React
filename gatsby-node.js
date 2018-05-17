@@ -110,5 +110,9 @@ function getPageTemplate(template) {
 		return path.resolve('./src/templates/team.js');
 	}
 
+	if (template === 'template-form.php') {
+		return path.resolve('./src/templates/form.js');
+	}
+
 	return path.resolve(`./src/templates/page.js`);
 }

@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import {addUrlProps, UrlQueryParamTypes} from 'react-url-query';
+import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import {state, click, clickPrevent} from '../utils/componentHelpers';
+import {clickPrevent} from '../utils/componentHelpers';
 import FormService from '../services/form';
 import Text from './inputs/text';
 import Textarea from './inputs/textarea';
@@ -13,8 +15,63 @@ import Button from './button';
 import CSS from '../css/modules/forms.module.scss';
 import Loader from './loader';
 import {innerHtml} from '../utils/wordpressHelpers';
+import OptionGroup from './inputs/optionGroup';
 
-export default class Form extends Component {
+const urlPropsQueryConfig = {
+	campaignid: {
+		type: UrlQueryParamTypes.string,
+		queryParam: `campaignid`
+	},
+	adgroupid: {
+		type: UrlQueryParamTypes.string,
+		queryParam: `adgroupid`
+	},
+	// eslint-disable-next-line camelcase
+	loc_interest_ms: {
+		type: UrlQueryParamTypes.string,
+		queryParam: `loc_interest_ms`
+	},
+	// eslint-disable-next-line camelcase
+	loc_physical_ms: {
+		type: UrlQueryParamTypes.string,
+		queryParam: `loc_physical_ms`
+	},
+	matchtype: {
+		type: UrlQueryParamTypes.string,
+		queryParam: `matchtype`
+	},
+	device: {
+		type: UrlQueryParamTypes.string,
+		queryParam: `device`
+	},
+	devicemodel: {
+		type: UrlQueryParamTypes.string,
+		queryParam: `devicemodel`
+	},
+	keyword: {
+		type: UrlQueryParamTypes.string,
+		queryParam: `keyword`
+	},
+	placement: {
+		type: UrlQueryParamTypes.string,
+		queryParam: `placement`
+	},
+	adposition: {
+		type: UrlQueryParamTypes.string,
+		queryParam: `adposition`
+	}
+};
+
+const mapUrlToProps = (parsedParams, props) => {
+	return {
+		...props,
+		query: {
+			...parsedParams
+		}
+	};
+};
+
+class Form extends Component {
 	constructor(props) {
 		super(props);
 
@@ -25,7 +82,8 @@ export default class Form extends Component {
 			values: {},
 			button: {},
 			confirmation: null,
-			errors: {}
+			errors: {},
+			success: false
 		};
 
 		this.form = null;
@@ -36,10 +94,13 @@ export default class Form extends Component {
 		this.renderForm = this.renderForm.bind(this);
 		this.renderLoader = this.renderLoader.bind(this);
 		this.renderConfirmation = this.renderConfirmation.bind(this);
+		this.inputVisible = this.inputVisible.bind(this);
 	}
 
 	static propTypes = {
-		formId: PropTypes.string.isRequired
+		formId: PropTypes.string.isRequired,
+		labelPlacement: PropTypes.string.isRequired,
+		query: PropTypes.object.isRequired
 	};
 
 	componentDidMount() {
@@ -74,12 +135,48 @@ export default class Form extends Component {
 				value = moment();
 			}
 
+			if (field.type === 'checkbox') {
+				value = '';
+			}
+
+			if (field.defaultValue === '{ip}') {
+				this.getIpAddress(field.id);
+			}
+
 			obj[field.id] = value;
 
 			this.form.setField(field.id, value);
 		});
 
+		// Get the query params and set them in the object
+		const keys = Object.keys(this.props.query);
+
+		keys.forEach(key => {
+			const field = fields.find(f => f.inputName === key);
+
+			if (field) {
+				const value = this.props.query[key];
+				obj[field.id] = value;
+				this.form.setField(field.id, value);
+			}
+		});
+
 		return obj;
+	}
+
+	getIpAddress(fieldId) {
+		return axios.get('https://api.ipify.org?format=json').then(res => {
+			const {ip} = res.data;
+			this.form.setField(fieldId, ip);
+			this.setState(prevState => {
+				return {
+					values: {
+						...prevState.values,
+						[fieldId]: ip
+					}
+				};
+			});
+		});
 	}
 
 	handleSubmit() {
@@ -94,10 +191,12 @@ export default class Form extends Component {
 				this.setState({
 					sending: false,
 					confirmation: res,
+					success: true,
 					errors: {}
 				});
 			})
 			.catch(errors => {
+				console.log(errors);
 				this.setState({
 					sending: false,
 					errors
@@ -116,12 +215,43 @@ export default class Form extends Component {
 		};
 	}
 
+	inputVisible(input) {
+		if (
+			!input ||
+			!input.conditionalLogic ||
+			!input.conditionalLogic.rules ||
+			!input.conditionalLogic.rules.length
+		) {
+			return true;
+		}
+
+		const {rules} = input.conditionalLogic;
+
+		let visible = true;
+
+		rules.forEach(rule => {
+			const fieldId = parseInt(rule.fieldId, 10);
+			const value = this.state.values[fieldId];
+			const isset = value === rule.value;
+
+			if (!isset) {
+				visible = false;
+			}
+		});
+
+		return visible;
+	}
+
 	render() {
-		const {loading} = this.state;
+		const {loading, success} = this.state;
 
 		return (
 			<div className={loading ? CSS.loading : CSS.wrap}>
-				{loading ? this.renderLoader() : this.renderForm()}
+				{loading ?
+					this.renderLoader() :
+					success ?
+						this.renderConfirmation() :
+						this.renderForm()}
 			</div>
 		);
 	}
@@ -143,29 +273,40 @@ export default class Form extends Component {
 				className={CSS.form}
 				onSubmit={clickPrevent(this.handleSubmit)}
 			>
-				{this.renderConfirmation()}
 				<ul>
 					{inputs.map(input => {
-						if (input.type === 'html') {
-							return null;
-						}
-
 						if (count !== 0) {
 							count += 1;
 						}
 
-						const classes = [];
+						if (!this.inputVisible(input)) {
+							return null;
+						}
+
+						if (input.type === 'html') {
+							return (
+								<li
+									key={input.id}
+									// eslint-disable-next-line react/no-danger
+									dangerouslySetInnerHTML={innerHtml(
+										input.content
+									)}
+									className={CSS.full}
+								/>
+							);
+						}
+
+						const classes = [CSS.full];
 
 						if (input.cssClass !== '') {
-							classes.push(CSS[input.cssClass]);
+							const classList = input.cssClass.split(' ');
+							classList.forEach(cl => {
+								classes.push(CSS[cl]);
+							});
 						}
 
 						if (input.type === 'hidden') {
 							classes.push(CSS.hidden);
-						}
-
-						if (classes.length === 0) {
-							classes.push(CSS.full);
 						}
 
 						return (
@@ -189,20 +330,33 @@ export default class Form extends Component {
 	}
 
 	renderInput(input, index) {
-		const {id, type} = input;
+		const {
+			id,
+			type,
+			placeholder,
+			label,
+			required,
+			inputName: name,
+			choices
+		} = input;
 		const value = this.state.values[id];
 		const error = this.state.errors[id];
 
 		const props = {
 			id: `${id}`,
-			name: `gform_${id}`,
+			name: name !== '' || `gform_${id}`,
 			type,
 			tabIndex: index,
-			placeholder: input.label,
+			placeholder: placeholder && placeholder !== '' ? placeholder : null,
 			onChange: this.handleChange(id),
-			required: input.required,
+			required,
 			value,
-			error
+			error,
+			choices,
+			label:
+				label && label !== '' && input.labelPlacement !== 'hidden_label' ?
+					label :
+					null
 		};
 
 		if (type === 'text' || type === 'email') {
@@ -226,6 +380,21 @@ export default class Form extends Component {
 				/>
 			);
 		}
+
+		if (type === 'hidden' && value) {
+			return (
+				<input
+					type="hidden"
+					name={input.inputName}
+					id={id}
+					value={value}
+				/>
+			);
+		}
+
+		if (type === 'radio' || type === 'checkbox') {
+			return <OptionGroup {...props}/>;
+		}
 	}
 
 	renderConfirmation() {
@@ -243,3 +412,5 @@ export default class Form extends Component {
 		);
 	}
 }
+
+export default addUrlProps({urlPropsQueryConfig, mapUrlToProps})(Form);
