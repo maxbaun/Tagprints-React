@@ -3,7 +3,9 @@ export const replaceLinks = str => {
 		.replace('http://tagprints.info', '')
 		.replace('https://tagprints.info', '')
 		.replace('http://tagprints.com', '')
-		.replace('https://tagprints.com', '');
+		.replace('https://tagprints.com', '')
+		.replace('http://admin.tagprints.com', '')
+		.replace('https://admin.tagprints.com', '');
 };
 
 export const replaceContent = content => {

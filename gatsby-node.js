@@ -118,5 +118,9 @@ function getPageTemplate(template) {
 		return path.resolve('./src/templates/job.js');
 	}
 
+	if (template === 'template-contact.php') {
+		return path.resolve('./src/templates/contact.js');
+	}
+
 	return path.resolve(`./src/templates/page.js`);
 }
