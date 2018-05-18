@@ -117,7 +117,9 @@ export default class Button extends Component {
 				className={classes}
 				style={style}
 			>
-				{loading ? <Loader/> : null}
+				{loading ? (
+					<Loader wrapHeight={height} wrapWidth={width}/>
+				) : null}
 				{loading ? null : text}
 			</button>
 		);

@@ -48,6 +48,7 @@ export default class Html extends React.Component {
 					/>
 					{this.props.postBodyComponents}
 					<script src="//npmcdn.com/flickity@1.2.1/dist/flickity.pkgd.js"/>
+					<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAZyFJjtN1lLLz3UoVF_mDelyTQOSZ0-rY"/>
 				</body>
 			</html>
 		);

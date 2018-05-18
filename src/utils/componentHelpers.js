@@ -233,6 +233,10 @@ export function phoneLink(string) {
 	return `tel:${num}`;
 }
 
+export function emailLink(email) {
+	return `mailto:${email}`;
+}
+
 export function price(price) {
 	if (!price) {
 		return `$0.00`;

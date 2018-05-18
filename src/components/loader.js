@@ -13,6 +13,8 @@ export default class Loader extends Component {
 	static propTypes = {
 		color: PropTypes.string,
 		width: PropTypes.number,
+		wrapWidth: PropTypes.number,
+		wrapHeight: PropTypes.number,
 		hCenter: PropTypes.bool,
 		vCenter: PropTypes.bool,
 		zIndex: PropTypes.number,
@@ -22,6 +24,8 @@ export default class Loader extends Component {
 	static defaultProps = {
 		color: '#f15a24',
 		width: 50,
+		wrapWidth: 0,
+		wrapHeight: 0,
 		hCenter: true,
 		vCenter: true,
 		zIndex: 9,
@@ -53,14 +57,25 @@ export default class Loader extends Component {
 	}
 
 	render() {
-		const {color, width, hCenter, vCenter, zIndex} = this.props;
+		const {
+			color,
+			width,
+			wrapWidth,
+			wrapHeight,
+			hCenter,
+			vCenter,
+			zIndex
+		} = this.props;
 
 		let wrapStyle = {
 			position: 'absolute',
 			left: 0,
 			top: 0,
-			width: '100%',
-			height: '100%',
+			right: 0,
+			bottom: 0,
+			width: wrapWidth ? wrapWidth : '100%',
+			height: wrapHeight ? wrapHeight : '100%',
+			textAlign: 'center',
 			zIndex
 		};
 
