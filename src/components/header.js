@@ -5,7 +5,7 @@ import Link from 'gatsby-link';
 import Logo from './logo';
 import Nav from './nav';
 import NavSocial from './navSocial';
-import {clickPrevent, ref} from '../utils/componentHelpers';
+import {clickPrevent, ref, click} from '../utils/componentHelpers';
 
 export default class Header extends Component {
 	constructor(props) {
@@ -103,6 +103,10 @@ export default class Header extends Component {
 									items={this.props.items}
 									id="menu-primary-navigation"
 									classes="nav navbar-nav main-navigation"
+									onLinkClick={click(
+										this.handleToggle,
+										false
+									)}
 								/>
 								<ul className="nav navbar-nav navbar-cta">
 									<li>

@@ -88,19 +88,6 @@ export default class HashtagTemplate extends Component {
 
 		const {hero} = currentPage.acf;
 
-		let btnClass = ['btn', 'btn-cta'];
-		let titleClass = [];
-
-		if (heroLoaded) {
-			titleClass = titleClass.concat([
-				'animated',
-				'bounceInUp',
-				'loaded',
-				CSS.loaded
-			]);
-			btnClass = btnClass.concat(['animated', 'zoomInUp', CSS.loaded]);
-		}
-
 		return (
 			<div className={heroLoaded ? CSS.heroLoaded : CSS.hero}>
 				<div className={CSS.heroInner}>
@@ -110,21 +97,21 @@ export default class HashtagTemplate extends Component {
 							onLoad={this.handleHeroLoad}
 						/>
 					</div>
-					{heroLoaded ? (
-						<div className={CSS.heroContent}>
-							<h1 className={titleClass.join(' ')}>
-								{hero.title}
-							</h1>
+					<div className={CSS.heroContent}>
+						<div
+							className={[
+								CSS.heroContentInner,
+								heroLoaded ? CSS.loaded : ''
+							].join(' ')}
+						>
+							<h1>{hero.title}</h1>
 							<ScrollSpy target="#hashtagSteps">
-								<a
-									href={hero.link.url}
-									className={btnClass.join(' ')}
-								>
+								<a href={hero.link.url} className="btn btn-cta">
 									{hero.link.title}
 								</a>
 							</ScrollSpy>
 						</div>
-					) : null}
+					</div>
 				</div>
 			</div>
 		);

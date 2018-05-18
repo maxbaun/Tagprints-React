@@ -34,7 +34,6 @@
 	h1 {
 		animation-direction: normal;
 		color: $color_white;
-		display: table-cell;
 		font-family: 'proxima_novasemibold';
 		font-size: 45px;
 		font-weight: 300;
@@ -42,8 +41,20 @@
 		margin: 0;
 		opacity: 1;
 		text-shadow: 0 5px 5px rgba(0, 0, 0, 0.75);
-		vertical-align: middle;
 	}
+}
+
+.heroContentInner {
+	display: table-cell;
+	opacity: 0;
+	transform: scaleX(0.9) scaleY(0.9);
+	transition: all 0.5s ease-in-out;
+	vertical-align: middle;
+}
+
+.loaded {
+	opacity: 1;
+	transform: scaleX(1) scaleY(1);
 }
 
 .content {

@@ -66,17 +66,6 @@ export default class TeamTemplate extends Component {
 
 		const {hero} = currentPage.acf;
 
-		let titleClass = [];
-
-		if (heroLoaded) {
-			titleClass = titleClass.concat([
-				'animated',
-				'bounceInUp',
-				'loaded',
-				CSS.loaded
-			]);
-		}
-
 		return (
 			<div className={heroLoaded ? CSS.heroLoaded : CSS.hero}>
 				<div className={CSS.heroInner}>
@@ -86,13 +75,16 @@ export default class TeamTemplate extends Component {
 							onLoad={this.handleHeroLoad}
 						/>
 					</div>
-					{heroLoaded ? (
-						<div className={CSS.heroContent}>
-							<h1 className={titleClass.join(' ')}>
-								{hero.title}
-							</h1>
+					<div className={CSS.heroContent}>
+						<div
+							className={[
+								CSS.heroContentInner,
+								heroLoaded ? CSS.loaded : ''
+							].join(' ')}
+						>
+							<h1>{hero.title}</h1>
 						</div>
-					) : null}
+					</div>
 				</div>
 			</div>
 		);

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import OnVisible from 'react-on-visible';
 
 import Loader from './loader';
 import {ref, unique} from '../utils/componentHelpers';
