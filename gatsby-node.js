@@ -122,5 +122,9 @@ function getPageTemplate(template) {
 		return path.resolve('./src/templates/contact.js');
 	}
 
+	if (template === 'template-photobooth-lite.php') {
+		return path.resolve('./src/templates/pbl.js');
+	}
+
 	return path.resolve(`./src/templates/page.js`);
 }
