@@ -19,10 +19,15 @@ const TextArea = ({
 	readOnly,
 	tabIndex,
 	required,
-	error
+	error,
+	description,
+	label
 }) => {
 	return (
 		<div className={[CSS.inputGroup, CSS[classname]].join(' ')}>
+			{label && label !== '' ? (
+				<label htmlFor={name}>{label}</label>
+			) : null}
 			<textarea
 				className={CSS.input}
 				autoComplete={autocomplete}
@@ -39,6 +44,9 @@ const TextArea = ({
 				onFocus={onFocus || null}
 				onBlur={onBlur || null}
 			/>
+			{description && description !== '' ? (
+				<small className={CSS.description}>{description}</small>
+			) : null}
 			{error && error !== '' ? (
 				<small className={CSS.error}>{error}</small>
 			) : null}
@@ -52,6 +60,7 @@ TextArea.propTypes = {
 	name: PropTypes.string,
 	id: PropTypes.string,
 	placeholder: PropTypes.string,
+	label: PropTypes.string,
 	onKeyUp: PropTypes.func,
 	readOnly: PropTypes.bool,
 	autocomplete: PropTypes.string,
@@ -61,7 +70,8 @@ TextArea.propTypes = {
 	onBlur: PropTypes.func,
 	tabIndex: PropTypes.number,
 	required: PropTypes.bool,
-	error: PropTypes.string
+	error: PropTypes.string,
+	description: PropTypes.string
 };
 
 TextArea.defaultProps = {
@@ -69,6 +79,7 @@ TextArea.defaultProps = {
 	name: null,
 	id: null,
 	placeholder: 'Text Box',
+	label: null,
 	readOnly: false,
 	autocomplete: 'on',
 	classname: '',
@@ -79,7 +90,8 @@ TextArea.defaultProps = {
 	onFocus: noop,
 	onBlur: noop,
 	required: false,
-	error: null
+	error: null,
+	description: null
 };
 
 export default TextArea;

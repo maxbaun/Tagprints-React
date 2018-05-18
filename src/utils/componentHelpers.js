@@ -89,6 +89,13 @@ export function input(func, val) {
 		func && typeof func === 'function' ? func(val || e.target.value) : null;
 }
 
+export function file(func, val) {
+	return e =>
+		func && typeof func === 'function' ?
+			func(val || {file: e.target.files[0], filename: e.target.value}) :
+			null;
+}
+
 export function ref(target) {
 	return e => {
 		this[target] = e;

@@ -8,7 +8,7 @@ import Form from '../components/form';
 import Seo from '../components/seo';
 import CSS from '../css/modules/formPage.module.scss';
 
-export default class HashtagTemplate extends Component {
+export default class FormTemplate extends Component {
 	static propTypes = {
 		data: PropTypes.object.isRequired,
 		location: PropTypes.object.isRequired

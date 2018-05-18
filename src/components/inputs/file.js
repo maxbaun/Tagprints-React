@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {key, input, noop, file} from '../../utils/componentHelpers';
+import {key, input, noop} from '../../utils/componentHelpers';
 import CSS from '../../css/modules/forms.module.scss';
 
-const TextInput = ({
+const FileInput = ({
 	classname,
 	styles,
 	type,
@@ -24,10 +24,6 @@ const TextInput = ({
 	label,
 	description
 }) => {
-	if (type === 'fileupload') {
-		type = 'file';
-	}
-
 	return (
 		<div className={[CSS.inputGroup, CSS[classname]].join(' ')}>
 			{label ? <label htmlFor={name}>{label}</label> : null}
@@ -43,7 +39,7 @@ const TextInput = ({
 				readOnly={readOnly ? 'readonly' : ''}
 				tabIndex={tabIndex}
 				placeholder={placeholder ? placeholder : null}
-				onChange={type === 'file' ? file(onChange) : input(onChange)}
+				onChange={input(onChange)}
 				onKeyUp={key(onKeyUp)}
 				onFocus={onFocus || null}
 				onBlur={onBlur || null}
@@ -58,7 +54,7 @@ const TextInput = ({
 	);
 };
 
-TextInput.propTypes = {
+FileInput.propTypes = {
 	type: PropTypes.string,
 	value: PropTypes.string,
 	onChange: PropTypes.func,
@@ -79,7 +75,7 @@ TextInput.propTypes = {
 	description: PropTypes.string
 };
 
-TextInput.defaultProps = {
+FileInput.defaultProps = {
 	type: 'text',
 	value: '',
 	name: null,
@@ -100,4 +96,4 @@ TextInput.defaultProps = {
 	description: null
 };
 
-export default TextInput;
+export default FileInput;

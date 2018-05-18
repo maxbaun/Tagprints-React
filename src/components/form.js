@@ -99,7 +99,6 @@ class Form extends Component {
 
 	static propTypes = {
 		formId: PropTypes.string.isRequired,
-		labelPlacement: PropTypes.string.isRequired,
 		query: PropTypes.object.isRequired
 	};
 
@@ -337,7 +336,8 @@ class Form extends Component {
 			label,
 			required,
 			inputName: name,
-			choices
+			choices,
+			description
 		} = input;
 		const value = this.state.values[id];
 		const error = this.state.errors[id];
@@ -353,6 +353,7 @@ class Form extends Component {
 			value,
 			error,
 			choices,
+			description,
 			label:
 				label && label !== '' && input.labelPlacement !== 'hidden_label' ?
 					label :
