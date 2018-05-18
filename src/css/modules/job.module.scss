@@ -25,16 +25,21 @@
 }
 
 .featuredImage {
+	cursor: pointer;
 	margin-bottom: 20px;
+	max-width: 510px;
 	padding: 0 10px;
 }
 
 .gallery {
+	max-width: 510px;
+
 	ul {
 		@include noList();
 		@include clearfix();
 
 		li {
+			cursor: pointer;
 			float: left;
 			margin: 0 0 20px;
 			padding: 0 10px;

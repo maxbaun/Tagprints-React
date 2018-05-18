@@ -1,0 +1,55 @@
+@import '../helpers/variables.scss';
+@import '../utils/mixins.scss';
+
+.wrapper {
+	height: 100%;
+	position: relative;
+	width: 100%;
+}
+
+.container {
+	margin: 0 auto;
+	width: 100%;
+
+	@include mediumAndUp {
+		width: calc(100% - 100px);
+	}
+}
+
+.next,
+.prev {
+	background: none;
+	display: none;
+	height: 50px;
+	font-size: 50px;
+	margin-top: -25px;
+	outline: none !important;
+	position: absolute;
+	top: 50%;
+	z-index: 1;
+
+	@include mediumAndUp {
+		display: block;
+		height: 90px;
+		font-size: 90px;
+		margin-top: -45px;
+	}
+
+	> span {
+		color: $color_white;
+		display: block;
+		line-height: 50px;
+
+		@include mediumAndUp {
+			line-height: 90px;
+		}
+	}
+}
+
+.next {
+	right: 10px;
+}
+
+.prev {
+	left: 10px;
+}

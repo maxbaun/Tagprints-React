@@ -5,14 +5,60 @@ import graphql from 'graphql';
 import {innerHtml} from '../utils/wordpressHelpers';
 import Image from '../components/image';
 import Form from '../components/form';
+import Lightbox from '../components/lightbox';
 import Seo from '../components/seo';
 import CSS from '../css/modules/job.module.scss';
+import {click} from '../utils/componentHelpers';
 
 export default class JobTemplate extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			modalOpen: false,
+			modalStart: 1
+		};
+
+		this.getLightboxImages = this.getLightboxImages.bind(this);
+		this.handleModalOpen = this.handleModalOpen.bind(this);
+		this.handleModalClose = this.handleModalClose.bind(this);
+	}
+
 	static propTypes = {
 		data: PropTypes.object.isRequired,
 		location: PropTypes.object.isRequired
 	};
+
+	getLightboxImages() {
+		const {images} = this.props.data.currentPage.acf;
+
+		const featuredImage = {
+			full: images.featuredImage.full,
+			thumbnail: images.featuredImage.thumbnail,
+			url: images.featuredImage.url
+		};
+
+		const gridImages = images.gallery.map(image => {
+			return {
+				full: image.full,
+				thumbnail: image.thumbnail,
+				url: image.url
+			};
+		});
+
+		return [featuredImage, ...gridImages];
+	}
+
+	handleModalOpen(modalStart) {
+		this.setState({
+			modalOpen: true,
+			modalStart
+		});
+	}
+
+	handleModalClose() {
+		this.setState({modalOpen: false});
+	}
 
 	render() {
 		const {currentPage, site} = this.props.data;
@@ -40,7 +86,10 @@ export default class JobTemplate extends Component {
 								</div>
 							</div>
 							<div className="col-sm-6">
-								<div className={CSS.featuredImage}>
+								<div
+									className={CSS.featuredImage}
+									onClick={click(this.handleModalOpen, 1)}
+								>
 									<Image
 										sizes={
 											images.featuredImage.thumbnail
@@ -50,7 +99,7 @@ export default class JobTemplate extends Component {
 								</div>
 								<div className={CSS.gallery}>
 									<ul>
-										{images.gallery.map(image => {
+										{images.gallery.map((image, index) => {
 											const resolutions = image.thumbnail
 												.childImageSharp ?
 												image.thumbnail
@@ -64,6 +113,10 @@ export default class JobTemplate extends Component {
 														resolutions.src ||
 														image.url
 													}
+													onClick={click(
+														this.handleModalOpen,
+														index + 2
+													)}
 												>
 													<Image
 														url={image.url}
@@ -86,6 +139,12 @@ export default class JobTemplate extends Component {
 						</div>
 					</div>
 				</main>
+				<Lightbox
+					images={this.getLightboxImages()}
+					open={this.state.modalOpen}
+					start={this.state.modalStart}
+					onClose={this.handleModalClose}
+				/>
 				{/* <main
 					dangerouslySetInnerHTML={innerHtml(currentPage.content)} // eslint-disable-line react/no-danger
 					className="main"
@@ -106,6 +165,7 @@ export const pageQuery = graphql`
 				}
 				images: jobImage {
 					featuredImage {
+						url: source_url
 						thumbnail: localFile {
 							childImageSharp {
 								sizes(maxWidth: 460) {
@@ -145,7 +205,6 @@ export const pageQuery = graphql`
 								}
 							}
 						}
-						url: source_url
 						full: localFile {
 							childImageSharp {
 								resolutions {

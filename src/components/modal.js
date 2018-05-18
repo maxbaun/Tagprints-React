@@ -9,7 +9,7 @@ export default class Modal extends Component {
 		super(props);
 
 		this.state = {
-			display: 'none'
+			visibility: 'hidden'
 		};
 
 		this.handleRest = this.handleRest.bind(this);
@@ -19,21 +19,25 @@ export default class Modal extends Component {
 	static propTypes = {
 		active: PropTypes.bool,
 		onClose: PropTypes.func,
+		onShow: PropTypes.func,
 		children: PropTypes.node,
-		size: PropTypes.string
+		size: PropTypes.string,
+		showClose: PropTypes.bool
 	};
 
 	static defaultProps = {
 		active: false,
 		onClose: () => {},
+		onShow: () => {},
 		children: null,
-		size: null
+		size: null,
+		showClose: false
 	};
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.active) {
 			this.setState({
-				display: 'block'
+				visibility: 'visible'
 			});
 
 			document.querySelector('body').style.overflow = 'hidden';
@@ -44,25 +48,32 @@ export default class Modal extends Component {
 		const {active} = this.props;
 
 		if (!active) {
-			this.setState({
-				display: 'none'
+			return this.setState({
+				visibility: 'hidden'
 			});
 		}
+
+		return this.props.onShow();
 	}
 
 	handleClose() {
-		this.props.onClose();
 		document.querySelector('body').style.overflow = null;
+		this.props.onClose();
 	}
 
 	render() {
-		const {active, children, size} = this.props;
-		const {display} = this.state;
+		const {active, children, size, showClose} = this.props;
+		const {visibility} = this.state;
 
 		const modalClass = [CSS.modal, size ? CSS[size] : ''];
 
 		return (
 			<div className={CSS.wrap}>
+				{showClose ? (
+					<span onClick={this.handleClose} className={CSS.close}>
+						<span className="fa fa-close"/>
+					</span>
+				) : null}
 				<Motion
 					defaultStyle={{
 						opacity: 0,
@@ -91,7 +102,7 @@ export default class Modal extends Component {
 							<div
 								className={modalClass.join(' ')}
 								style={{
-									display: display,
+									visibility: visibility,
 									opacity: styles.opacity,
 									top: `${styles.top}%`,
 									zIndex: active ? 1003 : 1000,
@@ -121,7 +132,7 @@ export default class Modal extends Component {
 								onClick={this.handleClose}
 								className={CSS.fog}
 								style={{
-									display: display,
+									visibility: visibility,
 									opacity: styles.opacity,
 									zIndex: active ? 1002 : 999
 								}}
