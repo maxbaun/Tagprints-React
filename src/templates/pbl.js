@@ -1,23 +1,19 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import graphql from 'graphql';
-import Img from 'gatsby-image';
 import Link from 'gatsby-link';
 import {fromJS} from 'immutable';
 
 import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
-import {emailLink, phoneLink} from '../utils/componentHelpers';
 import CSS from '../css/modules/pbl.module.scss';
 import Fragment from '../components/fragment';
-import Image from '../components/image';
-import Location from '../components/location';
-import Form from '../components/form';
 import Seo from '../components/seo';
 import Hero from '../components/hero';
 import SectionSlider from '../components/sectionSlider';
 import SectionGallery from '../components/sectionGallery';
 import IconBlocks from '../components/iconBlocks';
 import SectionRental from '../components/sectionRental';
+import SectionFaq from '../components/sectionFaq';
 
 export default class PblPageTemplate extends Component {
 	constructor(props) {
@@ -138,9 +134,13 @@ export default class PblPageTemplate extends Component {
 						cta={data.rentalCta}
 						options={data.rentalBlocks}
 					/>
-					<div id="scroll">
-						<h1>hello</h1>
-					</div>
+					<SectionFaq
+						id="pblFaqs"
+						title={data.faqTitle}
+						faqs={data.faqFaqs}
+						classname="pblFaq"
+						accordionClass="pblAccordion"
+					/>
 				</main>
 				{/* <main
 					dangerouslySetInnerHTML={innerHtml(currentPage.content)} // eslint-disable-line react/no-danger

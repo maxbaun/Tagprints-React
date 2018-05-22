@@ -135,7 +135,10 @@ export default class JobTemplate extends Component {
 					<div className={CSS.form}>
 						<div className="container">
 							<h1>{form.title}</h1>
-							<Form formId={form.form}/>
+							<Form
+								location={this.props.location}
+								formId={form.form}
+							/>
 						</div>
 					</div>
 				</main>

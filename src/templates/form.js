@@ -51,6 +51,7 @@ export default class FormTemplate extends Component {
 							</div>
 							<div className={CSS.form}>
 								<Form
+									location={this.props.location}
 									formId={form.form}
 									labelPlacement={form.labelPlacement}
 								/>

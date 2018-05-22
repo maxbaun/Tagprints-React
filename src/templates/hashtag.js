@@ -257,7 +257,10 @@ export default class HashtagTemplate extends Component {
 									.resolutions
 							}
 						/>
-						<Form formId={modal.form}/>
+						<Form
+							location={this.props.location}
+							formId={modal.form}
+						/>
 					</div>
 				</ModalContent>
 			</Modal>

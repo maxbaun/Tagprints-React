@@ -99,7 +99,8 @@ class Form extends Component {
 
 	static propTypes = {
 		formId: PropTypes.string.isRequired,
-		query: PropTypes.object.isRequired
+		query: PropTypes.object.isRequired,
+		location: PropTypes.object.isRequired
 	};
 
 	componentDidMount() {

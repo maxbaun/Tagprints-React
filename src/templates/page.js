@@ -19,8 +19,6 @@ export default class PageTemplate extends Component {
 	render() {
 		const {currentPage, site} = this.props.data;
 
-		console.log('here');
-
 		return (
 			<div>
 				<Seo

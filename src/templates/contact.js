@@ -60,6 +60,7 @@ export default class ContactPageTemplate extends Component {
 									/>
 								</div>
 								<Form
+									location={this.props.location}
 									formId={form.form}
 									labelPlacement={form.labelPlacement}
 								/>

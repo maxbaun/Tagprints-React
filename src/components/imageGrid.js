@@ -114,7 +114,7 @@ export default class ImageGrid extends Component {
 		});
 	}
 
-	getColumnsPerRow(windowWidth = document.body.clientWidth) {
+	getColumnsPerRow(windowWidth = typeof document === 'undefined' ? 0 : document.body.clientWidth) {
 		if (windowWidth > LargeMax) {
 			return 6;
 		}
@@ -163,7 +163,7 @@ export default class ImageGrid extends Component {
 	}
 
 	getRows({
-		windowWidth = document.body.clientWidth,
+		windowWidth = typeof document === 'undefined' ? 0 : document.body.clientWidth,
 		items = this.props.items
 	}) {
 		const columnHeight = windowWidth / this.getColumnsPerRow();
@@ -270,7 +270,7 @@ export default class ImageGrid extends Component {
 	}
 
 	getGrid() {
-		const windowWidth = document.body.clientWidth;
+		const windowWidth = typeof document === 'undefined' ? 0 : document.body.clientWidth;
 		const {rows} = this.state;
 
 		let gridHeight = 0;
