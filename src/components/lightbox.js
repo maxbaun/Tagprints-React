@@ -145,14 +145,22 @@ export default class Lightbox extends Component {
 				onShow={this.handleModalShow}
 			>
 				<div ref={ref.call(this, 'wrapper')} className={CSS.wrapper}>
-					<div className="swiper-container">
-						<div className="swiper-wrapper">
+					<div className="swiper-container" style={{height: '100%'}}>
+						<div
+							className="swiper-wrapper"
+							style={{height: '100%'}}
+						>
 							{images.map(image => {
 								return (
 									<div
 										key={image.url}
 										className="swiper-slide"
-										style={{textAlign: 'center'}}
+										style={{
+											textAlign: 'center',
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center'
+										}}
 									>
 										<Image
 											url={image.url}

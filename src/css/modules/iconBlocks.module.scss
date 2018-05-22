@@ -1,0 +1,131 @@
+@import '../helpers/variables.scss';
+@import '../helpers/mixins.scss';
+@import '../utils/mixins.scss';
+
+$blockWidth: 477px;
+$iconBreakpoint: $blockWidth * 2;
+
+.blocks {
+	max-width: 1013px;
+	padding: 0 15px;
+	margin: 0 auto;
+
+	@media (min-width: $iconBreakpoint) {
+		padding: 0;
+	}
+
+	ul {
+		@include noList();
+
+		li {
+			border-color: black;
+			display: block;
+			text-align: center;
+			width: 100%;
+
+			@media (min-width: $iconBreakpoint) {
+				display: inline-block;
+				width: 50%;
+				border-bottom-width: 1px;
+				border-bottom-style: solid;
+
+				&:nth-child(odd) {
+					border-right-width: 1px;
+					border-right-style: solid;
+				}
+
+				&:nth-last-child(2),
+				&:last-child {
+					border-bottom: none;
+				}
+			}
+		}
+	}
+}
+
+.block {
+	width: $blockWidth;
+	max-width: 100%;
+	text-align: center;
+	display: inline-block;
+	padding: 20px 15px;
+
+	@media (min-width: $iconBreakpoint) {
+		height: 245px;
+		padding: 40px 0;
+		box-sizing: content-box;
+	}
+
+	span {
+		font-size: 50px;
+		display: block;
+		margin-bottom: 20px;
+		transform: scale(1);
+		transition: transform 0.15s ease-in-out;
+	}
+
+	h5 {
+		font-family: $fontGotham;
+		font-weight: 500;
+		font-size: 24px;
+		margin-bottom: 15px;
+		margin-top: 0;
+		text-transform: uppercase;
+
+		@media (min-width: $iconBreakpoint) {
+			font-size: 30px;
+			white-space: nowrap;
+		}
+	}
+
+	p {
+		font-family: $fontBook;
+		font-size: 16px;
+		line-height: 1.556;
+		max-width: 376px;
+		margin: 0 auto;
+
+		@media (min-width: $iconBreakpoint) {
+			font-size: 18px;
+		}
+	}
+}
+
+.pblPerks {
+	ul {
+		li {
+			@media (min-width: $iconBreakpoint) {
+				border-color: $color_26;
+			}
+		}
+	}
+
+	.block {
+		span {
+			color: $color_45;
+		}
+
+		h5 {
+			color: $color_44;
+		}
+
+		p {
+			color: $color_7;
+		}
+	}
+}
+
+.pblFacts {
+	ul {
+		li {
+			border-color: $color_43;
+		}
+	}
+
+	.block {
+		h5,
+		p {
+			color: $color_white;
+		}
+	}
+}

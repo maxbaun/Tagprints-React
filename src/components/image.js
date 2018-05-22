@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Img from 'gatsby-image';
 
 import {ImageLoader} from '../utils/imageHelpers';
+import {noop} from '../utils/componentHelpers';
 
 import Placeholder from './placeholder';
 
@@ -34,7 +35,8 @@ export default class Image extends Component {
 		lightbox: PropTypes.string,
 		children: PropTypes.element, //eslint-disable-line
 		sizes: PropTypes.object,
-		resolutions: PropTypes.object
+		resolutions: PropTypes.object,
+		onLoad: PropTypes.func
 	};
 
 	static defaultProps = {
@@ -48,7 +50,8 @@ export default class Image extends Component {
 		naturalWidth: 0,
 		style: {},
 		sizes: {},
-		resolutions: {}
+		resolutions: {},
+		onLoad: noop
 	};
 
 	componentWillMount() {
@@ -102,18 +105,18 @@ export default class Image extends Component {
 			return this.renderGatsbyImage();
 		}
 
+		const layout = this.getImageLayout();
+
+		let wrapStyle = {...style};
+
 		return (
-			<div
-				data-layout={this.getImageLayout()}
-				style={{
-					...style
-				}}
-			>
-				<div data-active={url ? 'true' : 'false'}>
-					<figure>
-						{showLightbox ?
-							this.renderLightbox(url, lightbox) :
-							this.renderImage(url)}
+			<div data-layout={this.getImageLayout()} style={wrapStyle}>
+				<div
+					data-active={url ? 'true' : 'false'}
+					style={{height: '100%', width: '100%'}}
+				>
+					<figure style={{height: '100%', width: '100%'}}>
+						{this.renderImage(url)}
 					</figure>
 				</div>
 			</div>
@@ -124,7 +127,11 @@ export default class Image extends Component {
 		const {url} = this.props;
 
 		return (
-			<a href={url} data-lightbox={lightbox}>
+			<a
+				href={url}
+				data-lightbox={lightbox}
+				style={{height: '100%', width: '100%'}}
+			>
 				{this.renderImage(thumbnail)}
 			</a>
 		);
@@ -133,18 +140,22 @@ export default class Image extends Component {
 	renderImage(url) {
 		const {placeholder} = this.props;
 
-		return url ? <img src={url}/> : placeholder ? <Placeholder/> : null;
+		return url ? (
+			<img src={url}/>
+		) : placeholder ? (
+			<Placeholder style={{height: '100%', width: '100%'}}/>
+		) : null;
 	}
 
 	renderGatsbyImage() {
-		const {sizes, resolutions} = this.props;
+		const {sizes, resolutions, onLoad} = this.props;
 
 		if (resolutions.src) {
-			return <Img resolutions={resolutions}/>;
+			return <Img resolutions={resolutions} onLoad={onLoad}/>;
 		}
 
 		if (sizes.src) {
-			return <Img sizes={sizes}/>;
+			return <Img sizes={sizes} onLoad={onLoad}/>;
 		}
 
 		return null;

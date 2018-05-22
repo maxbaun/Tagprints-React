@@ -5,7 +5,9 @@ export const replaceLinks = str => {
 		.replace('http://tagprints.com', '')
 		.replace('https://tagprints.com', '')
 		.replace('http://admin.tagprints.com', '')
-		.replace('https://admin.tagprints.com', '');
+		.replace('https://admin.tagprints.com', '')
+		.replace('http://tagprints.docksal', '')
+		.replace('https://tagprints.docksal', '');
 };
 
 export const replaceContent = content => {

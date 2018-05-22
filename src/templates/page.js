@@ -10,7 +10,7 @@ export default class PageTemplate extends Component {
 	static propTypes = {
 		data: PropTypes.object.isRequired,
 		location: PropTypes.object.isRequired
-	}
+	};
 
 	componentDidMount() {
 		initPageElements();
@@ -18,6 +18,8 @@ export default class PageTemplate extends Component {
 
 	render() {
 		const {currentPage, site} = this.props.data;
+
+		console.log('here');
 
 		return (
 			<div>
@@ -37,12 +39,12 @@ export default class PageTemplate extends Component {
 }
 
 export const pageQuery = graphql`
-query defaultPageQuery($id: String!) {
-  currentPage: wordpressPage(id: {eq: $id}) {
-	...Page
-  }
-  site {
-	...Site
-  }
-}
+	query defaultPageQuery($id: String!) {
+		currentPage: wordpressPage(id: {eq: $id}) {
+			...Page
+		}
+		site {
+			...Site
+		}
+	}
 `;

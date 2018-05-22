@@ -1,12 +1,12 @@
-const fs = require(`fs-extra`)
-const got = require(`got`)
-const crypto = require(`crypto`)
-const path = require(`path`)
-const { isWebUri } = require(`valid-url`)
-const Queue = require(`better-queue`)
+const fs = require(`fs-extra`);
+const got = require(`got`);
+const crypto = require(`crypto`);
+const path = require(`path`);
+const {isWebUri} = require(`valid-url`);
+const Queue = require(`better-queue`);
 
-const { createFileNode } = require(`./create-file-node`)
-const cacheId = url => `create-remote-file-node-${url}`
+const {createFileNode} = require(`./create-file-node`);
+const cacheId = url => `create-remote-file-node-${url}`;
 
 /********************
  * Type Definitions *
@@ -54,16 +54,16 @@ const cacheId = url => `create-remote-file-node-${url}`
  * @return {String}
  */
 const createHash = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
+	crypto
+		.createHash(`md5`)
+		.update(str)
+		.digest(`hex`);
 
-const CACHE_DIR = `.cache`
-const FS_PLUGIN_DIR = `gatsby-source-filesystem`
+const CACHE_DIR = `.cache`;
+const FS_PLUGIN_DIR = `gatsby-source-filesystem`;
 
 /**
- * createFilePath
+ * CreateFilePath
  * --
  *
  * @param  {String} directory
@@ -72,7 +72,7 @@ const FS_PLUGIN_DIR = `gatsby-source-filesystem`
  * @return {String}
  */
 const createFilePath = (directory, filename, ext) =>
-  path.join(directory, CACHE_DIR, FS_PLUGIN_DIR, `${filename}${ext}`)
+	path.join(directory, CACHE_DIR, FS_PLUGIN_DIR, `${filename}${ext}`);
 
 /********************
  * Queue Management *
@@ -85,10 +85,10 @@ const createFilePath = (directory, filename, ext) =>
  * as it's already in the processing cache
  */
 const queue = new Queue(pushToQueue, {
-  id: `url`,
-  merge: (old, _, cb) => cb(old),
-  concurrent: 200,
-})
+	id: `url`,
+	merge: (old, _, cb) => cb(old),
+	concurrent: 50
+});
 
 /**
  * @callback {Queue~queueCallback}
@@ -107,12 +107,12 @@ const queue = new Queue(pushToQueue, {
  * @return {Promise<null>}
  */
 async function pushToQueue(task, cb) {
-  try {
-    const node = await processRemoteNode(task)
-    return cb(null, node)
-  } catch (e) {
-    return cb(null, e)
-  }
+	try {
+		const node = await processRemoteNode(task);
+		return cb(null, node);
+	} catch (e) {
+		return cb(null, e);
+	}
 }
 
 /******************
@@ -131,102 +131,110 @@ async function pushToQueue(task, cb) {
  * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
 const requestRemoteNode = (url, headers, tmpFilename, filename) =>
-  new Promise((resolve, reject) => {
-    const responseStream = got.stream(url, { ...headers, timeout: 30000 })
-    const fsWriteStream = fs.createWriteStream(tmpFilename)
-    responseStream.pipe(fsWriteStream)
-	responseStream.on(`downloadProgress`, pro => console.log(pro))
+	new Promise((resolve, reject) => {
+		const responseStream = got.stream(url, {...headers, timeout: 30000});
+		const fsWriteStream = fs.createWriteStream(tmpFilename);
+		responseStream.pipe(fsWriteStream);
+		responseStream.on(`downloadProgress`, pro => console.log(pro));
 
-    // If there's a 400/500 response or other error.
-    responseStream.on(`error`, (error, body, response) => {
-      fs.removeSync(tmpFilename)
-      reject({ error, body, response })
-    })
+		// If there's a 400/500 response or other error.
+		responseStream.on(`error`, (error, body, response) => {
+			fs.removeSync(tmpFilename);
+			reject({error, body, response});
+		});
 
-    responseStream.on(`response`, response => {
-      fsWriteStream.on(`finish`, () => {
-        resolve(response)
-      })
-    })
-  })
+		responseStream.on(`response`, response => {
+			fsWriteStream.on(`finish`, () => {
+				resolve(response);
+			});
+		});
+	});
 
 /**
- * processRemoteNode
+ * ProcessRemoteNode
  * --
  * Request the remote file and return the fileNode
  *
  * @param {CreateRemoteFileNodePayload} options
  * @return {Promise<Object>} Resolves with the fileNode
  */
-async function processRemoteNode({ url, store, cache, createNode, auth = {} }) {
-  // Ensure our cache directory exists.
-  const programDir = store.getState().program.directory
-  await fs.ensureDir(path.join(programDir, CACHE_DIR, FS_PLUGIN_DIR))
+var count = 0;
+async function processRemoteNode({url, store, cache, createNode, auth = {}}) {
+	// Ensure our cache directory exists.
+	const programDir = store.getState().program.directory;
+	await fs.ensureDir(path.join(programDir, CACHE_DIR, FS_PLUGIN_DIR));
 
-  // See if there's response headers for this url
-  // from a previous request.
-  const cachedHeaders = await cache.get(cacheId(url))
-  const headers = {}
+	// See if there's response headers for this url
+	// from a previous request.
+	const cachedHeaders = await cache.get(cacheId(url));
+	const headers = {};
 
-  // Add htaccess authentication if passed in. This isn't particularly
-  // extensible. We should define a proper API that we validate.
-  if (auth && auth.htaccess_pass && auth.htaccess_user) {
-    headers.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
-  }
+	// Add htaccess authentication if passed in. This isn't particularly
+	// extensible. We should define a proper API that we validate.
+	if (auth && auth.htaccess_pass && auth.htaccess_user) {
+		headers.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`;
+	}
 
-  if (cachedHeaders && cachedHeaders.etag) {
-    headers[`If-None-Match`] = cachedHeaders.etag
-  }
+	if (cachedHeaders && cachedHeaders.etag) {
+		headers[`If-None-Match`] = cachedHeaders.etag;
+	}
 
-  // Create the temp and permanent file names for the url.
-  const digest = createHash(url)
-  const ext = path.parse(url).ext
+	// Create the temp and permanent file names for the url.
+	const digest = createHash(url);
+	const ext = path.parse(url).ext;
 
-  const tmpFilename = createFilePath(programDir, `tmp-${digest}`, ext)
-  const filename = createFilePath(programDir, digest, ext)
+	const tmpFilename = createFilePath(programDir, `tmp-${digest}`, ext);
+	const filename = createFilePath(programDir, digest, ext);
 
-  // Fetch the file.
-  try {
-    const response = await requestRemoteNode(
-      url,
-      headers,
-      tmpFilename,
-      filename
-	)
+	// Fetch the file.
+	try {
+		const response = await requestRemoteNode(
+			url,
+			headers,
+			tmpFilename,
+			filename
+		);
+		count++;
 
-    // Save the response headers for future requests.
-    cache.set(cacheId(url), response.headers)
+		// Save the response headers for future requests.
+		cache.set(cacheId(url), response.headers);
 
-    // If the status code is 200, move the piped temp file to the real name.
-    if (response.statusCode === 200) {
-      await fs.move(tmpFilename, filename, { overwrite: true })
-      // Else if 304, remove the empty response.
-    } else {
-      await fs.remove(tmpFilename)
-    }
+		// If the status code is 200, move the piped temp file to the real name.
+		if (response.statusCode === 200) {
+			await fs.move(tmpFilename, filename, {overwrite: true});
+			console.log('=============');
+			console.log('count', count);
+			console.log('url', url);
+			console.log('download completer', response.statusCode);
+			console.log(tmpFilename);
+			console.log(filename);
+			// Else if 304, remove the empty response.
+		} else {
+			await fs.remove(tmpFilename);
+		}
 
-    // Create the file node.
-    const fileNode = await createFileNode(filename, {})
-    fileNode.internal.description = `File "${url}"`
-    // Override the default plugin as gatsby-source-filesystem needs to
-    // be the owner of File nodes or there'll be conflicts if any other
-    // File nodes are created through normal usages of
-    // gatsby-source-filesystem.
-    createNode(fileNode, { name: `gatsby-source-filesystem` })
+		// Create the file node.
+		const fileNode = await createFileNode(filename, {});
+		fileNode.internal.description = `File "${url}"`;
+		// Override the default plugin as gatsby-source-filesystem needs to
+		// be the owner of File nodes or there'll be conflicts if any other
+		// File nodes are created through normal usages of
+		// gatsby-source-filesystem.
+		createNode(fileNode, {name: `gatsby-source-filesystem`});
 
-    return fileNode
-  } catch (err) {
-    // ignore
-  }
-  return null
+		return fileNode;
+	} catch (err) {
+		// ignore
+	}
+	return null;
 }
 
 /**
  * Index of promises resolving to File node from remote url
  */
-const processingCache = {}
+const processingCache = {};
 /**
- * pushTask
+ * PushTask
  * --
  * pushes a task in to the Queue and the processing cache
  *
@@ -235,16 +243,16 @@ const processingCache = {}
  * @return {Promise<Object>}
  */
 const pushTask = task =>
-  new Promise((resolve, reject) => {
-    queue
-      .push(task)
-      .on(`finish`, task => {
-        resolve(task)
-      })
-      .on(`failed`, () => {
-        resolve()
-      })
-  })
+	new Promise((resolve, reject) => {
+		queue
+			.push(task)
+			.on(`finish`, task => {
+				resolve(task);
+			})
+			.on(`failed`, () => {
+				resolve();
+			});
+	});
 
 /***************
  * Entry Point *
@@ -261,24 +269,24 @@ const pushTask = task =>
  * @param {CreateRemoteFileNodePayload} options
  * @return {Promise<Object>}                  Returns the created node
  */
-module.exports = ({ url, store, cache, createNode, auth = {} }) => {
-  // Check if we already requested node for this remote file
-  // and return stored promise if we did.
-  if (processingCache[url]) {
-    return processingCache[url]
-  }
+module.exports = ({url, store, cache, createNode, auth = {}}) => {
+	// Check if we already requested node for this remote file
+	// and return stored promise if we did.
+	if (processingCache[url]) {
+		return processingCache[url];
+	}
 
-  if (!url || isWebUri(url) === undefined) {
-    // should we resolve here, or reject?
-    // Technically, it's invalid input
-    return Promise.resolve()
-  }
+	if (!url || isWebUri(url) === undefined) {
+		// Should we resolve here, or reject?
+		// Technically, it's invalid input
+		return Promise.resolve();
+	}
 
-  return (processingCache[url] = pushTask({
-    url,
-    store,
-    cache,
-    createNode,
-    auth,
-  }))
-}
+	return (processingCache[url] = pushTask({
+		url,
+		store,
+		cache,
+		createNode,
+		auth
+	}));
+};

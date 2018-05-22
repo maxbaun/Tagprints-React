@@ -227,9 +227,12 @@ exports.mapElementsToParent = entities =>
   entities.map(e => {
     if (e.wordpress_parent) {
       // Create parent_element with a link to the parent node of type.
-      e.parent_element___NODE = entities.find(
+      const parentElement = entities.find(
         t => t.wordpress_id === e.wordpress_parent && t.__type === e.__type
-      ).id
+      )
+      if (parentElement) {
+        e.parent_element___NODE = parentElement.id
+      }
     }
     return e
   })
@@ -387,6 +390,7 @@ exports.mapEntitiesToMedia = entities => {
   })
 }
 
+var count = 0;
 // Downloads media files and removes "sizes" data as useless in Gatsby context.
 exports.downloadMediaFiles = async ({
   entities,
@@ -398,17 +402,15 @@ exports.downloadMediaFiles = async ({
 }) =>
   Promise.all(
     entities.map(async e => {
-      let fileNodeID
+	  let fileNodeID
       if (e.__type === `wordpress__wp_media`) {
         const mediaDataCacheKey = `wordpress-media-${e.wordpress_id}`
         const cacheMediaData = await cache.get(mediaDataCacheKey)
 
         // If we have cached media data and it wasn't modified, reuse
-		// previously created file node to not try to redownload
+        // previously created file node to not try to redownload
         if (cacheMediaData && e.modified === cacheMediaData.modified) {
-		  console.log('cached', e.modified === cacheMediaData.modified)
-		  fileNodeID = cacheMediaData.fileNodeID
-		  console.log(fileNodeID)
+          fileNodeID = cacheMediaData.fileNodeID
           touchNode(cacheMediaData.fileNodeID)
         }
 
@@ -421,7 +423,14 @@ exports.downloadMediaFiles = async ({
               cache,
               createNode,
               auth: _auth,
-            })
+			})
+
+			console.log('+++++++++++++++++')
+			console.log('filenodeCreated', count)
+			console.log(e.source_url)
+			console.log(fileNode.id)
+			console.log('+++++++++++++++++')
+			count++;
 
             if (fileNode) {
               fileNodeID = fileNode.id

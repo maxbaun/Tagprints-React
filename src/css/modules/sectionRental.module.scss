@@ -1,0 +1,214 @@
+@import '../helpers/variables.scss';
+@import '../helpers/mixins.scss';
+@import '../utils/mixins.scss';
+
+$rentalBreakpoint: $break_point;
+$optionBreakpoint: $screen-sm-min;
+
+.sectionRental {
+	padding: 0 !important;
+
+	h3 {
+		font-family: $fontGotham;
+		font-weight: 800;
+		color: $color_white;
+		font-size: 60px;
+		text-transform: uppercase;
+		margin-bottom: 40px;
+
+		@media (min-width: $rentalBreakpoint) {
+			margin-left: -80px;
+			margin-bottom: 80px;
+			font-size: 85px;
+		}
+	}
+}
+
+.inner {
+	@media (min-width: $rentalBreakpoint) {
+		display: table;
+		width: 100%;
+	}
+
+	> div {
+		white-space: normal;
+	}
+}
+
+.left {
+	display: none;
+
+	@media (min-width: $rentalBreakpoint) {
+		display: table-cell;
+		width: 30%;
+		padding: 80px 0;
+	}
+}
+
+.right {
+	padding: 40px 0;
+
+	@media (min-width: $rentalBreakpoint) {
+		display: table-cell;
+		width: 70%;
+		padding: 80px 0;
+	}
+}
+
+.options {
+	@include noList();
+	margin-bottom: 20px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+
+	@media (min-width: $rentalBreakpoint) {
+		margin-bottom: 40px;
+	}
+
+	@media (min-width: $optionBreakpoint) {
+		white-space: nowrap;
+	}
+}
+
+.option {
+	white-space: normal;
+	margin-bottom: 20px;
+	vertical-align: top;
+
+	@media (min-width: $optionBreakpoint) {
+		display: inline-block;
+		max-width: 238px;
+		width: calc(100% / 3 - 80px);
+		margin-right: 80px;
+	}
+
+	span {
+		display: block;
+		height: 100%;
+		width: auto;
+		background-repeat: no-repeat;
+		transform-origin: 0 50%;
+		transform: scale(1);
+		transition: all 0.2s ease-in-out;
+	}
+
+	h5 {
+		font-family: $fontGotham;
+		font-weight: 500;
+		font-size: 30px;
+		margin-bottom: 5px;
+		margin-top: 0;
+		line-height: 1;
+		text-transform: uppercase;
+
+		@media (min-width: $optionBreakpoint) {
+			margin-bottom: 20px;
+		}
+	}
+
+	p {
+		font-size: 18px;
+		line-height: 1.556;
+		font-family: $fontBook;
+		margin: 0;
+	}
+
+	&:hover {
+		span {
+			transform: scale(1.1);
+		}
+	}
+}
+
+.optionAccent {
+	@extend .option;
+
+	h5 {
+		font-family: $fontStone;
+		font-size: 37px;
+	}
+}
+
+.optionContent {
+	display: inline-block;
+	vertical-align: top;
+	width: calc(100% - 80px);
+
+	@media (min-width: $optionBreakpoint) {
+		display: block;
+		width: auto;
+	}
+}
+
+.optionIcon {
+	margin-bottom: 20px;
+	display: inline-block;
+	vertical-align: top;
+	height: 60px;
+	width: 80px;
+
+	@media (min-width: $optionBreakpoint) {
+		display: block;
+		width: auto;
+	}
+}
+
+.pblRental {
+	.left {
+		background-color: $color_42;
+	}
+
+	.right {
+		background-color: $color_45;
+	}
+
+	.options {
+		border-color: rgba($color_white, 0.3);
+	}
+
+	.option {
+		h5 {
+			color: $color_43;
+		}
+
+		p {
+			color: $color_white;
+		}
+
+		&:nth-child(1) {
+			span {
+				background-image: url('../../images/rental-daily.png');
+				background-size: auto 60px;
+				@include image-2x(
+					'../../images/rental-daily@2x.png',
+					auto,
+					60px
+				);
+			}
+		}
+
+		&:nth-child(2) {
+			span {
+				background-image: url('../../images/rental-monthly.png');
+				background-size: auto 60px;
+				@include image-2x(
+					'../../images/rental-monthly@2x.png',
+					auto,
+					60px
+				);
+			}
+		}
+
+		&:nth-child(3) {
+			span {
+				background-image: url('../../images/rental-forever.png');
+				background-size: auto 60px;
+				@include image-2x(
+					'../../images/rental-forever@2x.png',
+					auto,
+					60px
+				);
+			}
+		}
+	}
+}

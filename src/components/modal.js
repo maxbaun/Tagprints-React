@@ -9,11 +9,13 @@ export default class Modal extends Component {
 		super(props);
 
 		this.state = {
-			visibility: 'hidden'
+			visibility: 'hidden',
+			windowHeight: 0
 		};
 
 		this.handleRest = this.handleRest.bind(this);
 		this.handleClose = this.handleClose.bind(this);
+		this.handleResize = this.handleResize.bind(this);
 	}
 
 	static propTypes = {
@@ -33,6 +35,15 @@ export default class Modal extends Component {
 		size: null,
 		showClose: false
 	};
+
+	componentDidMount() {
+		this.handleResize();
+		window.addEventListener('resize', this.handleResize);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleResize);
+	}
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.active) {
@@ -61,14 +72,20 @@ export default class Modal extends Component {
 		this.props.onClose();
 	}
 
+	handleResize() {
+		this.setState({
+			windowHeight: document.body.clientHeight
+		});
+	}
+
 	render() {
 		const {active, children, size, showClose} = this.props;
-		const {visibility} = this.state;
+		const {visibility, windowHeight} = this.state;
 
 		const modalClass = [CSS.modal, size ? CSS[size] : ''];
 
 		return (
-			<div className={CSS.wrap}>
+			<div className={CSS.wrap} style={{visibility}}>
 				{showClose ? (
 					<span onClick={this.handleClose} className={CSS.close}>
 						<span className="fa fa-close"/>
@@ -98,10 +115,13 @@ export default class Modal extends Component {
 					onRest={this.handleRest}
 				>
 					{styles => {
+						const height = windowHeight - windowHeight / 5;
+
 						return (
 							<div
 								className={modalClass.join(' ')}
 								style={{
+									height: size === 'full' ? height : 'auto',
 									visibility: visibility,
 									opacity: styles.opacity,
 									top: `${styles.top}%`,

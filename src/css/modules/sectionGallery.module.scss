@@ -1,0 +1,16 @@
+@import '../helpers/variables.scss';
+@import '../helpers/mixins.scss';
+@import '../utils/mixins.scss';
+
+.sectionGallery {
+	padding: 40px 0;
+
+	@include largeAndUp {
+		padding: 80px 0;
+	}
+}
+
+.galleryItem {
+	cursor: pointer;
+	padding: 7.5px;
+}
