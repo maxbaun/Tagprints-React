@@ -51,6 +51,8 @@ export default class Modal extends Component {
 				visibility: 'visible'
 			});
 
+			this.handleResize();
+
 			document.querySelector('body').style.overflow = 'hidden';
 		}
 	}

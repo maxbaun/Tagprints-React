@@ -166,6 +166,8 @@ export default class Lightbox extends Component {
 											url={image.url}
 											sizes={image.sizes}
 											resolutions={image.resolutions}
+											naturalHeight={image.height}
+											naturalWidth={image.width}
 										/>
 									</div>
 								);

@@ -6,7 +6,6 @@ import {replaceLinks} from '../utils/wordpressHelpers';
 import CSS from '../css/modules/sectionRental.module.scss';
 
 const SectionRental = ({title, cta, options, classname, btnClass}) => {
-	console.log(cta);
 	return (
 		<section className={[CSS.sectionRental, CSS[classname]].join(' ')}>
 			<div className={CSS.inner}>

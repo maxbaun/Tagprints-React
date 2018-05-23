@@ -38,6 +38,10 @@ export default class Html extends React.Component {
 					<meta name="referrer" content="origin"/>
 					<meta charSet="utf-8"/>
 					<meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
+					<meta
+						name="viewport"
+						content="width=device-width, height=device-height, initial-scale=1, user-scalable=no"
+					/>
 					{/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css"/> */}
 					{css}
 				</head>

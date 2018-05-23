@@ -290,7 +290,6 @@
 		text-align: center;
 
 		li {
-			color: $color_39;
 			cursor: pointer;
 			display: inline-block;
 			font-family: $fontGotham;
@@ -299,12 +298,15 @@
 			line-height: 1.2;
 			vertical-align: middle;
 
-			span {
+			a {
+				color: $color_39;
 				padding: 2px 12px;
 			}
 
 			&.active {
-				color: $color_5;
+				a {
+					color: $color_5;
+				}
 			}
 
 			&:not(:last-child) {

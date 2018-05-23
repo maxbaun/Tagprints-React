@@ -9,7 +9,7 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 import Fragment from '../components/fragment';
 
-export default class DefaultLayout extends Component {
+export default class WorkLayout extends Component {
 	static propTypes = {
 		children: PropTypes.func.isRequired,
 		data: PropTypes.object,
@@ -34,7 +34,7 @@ export default class DefaultLayout extends Component {
 		const {pathname} = location;
 		let dataTheme = 'default';
 
-		if (pathname.includes('array13') && !pathname.includes('our-work')) {
+		if (pathname.includes('array13')) {
 			dataTheme = 'array13';
 		}
 
@@ -49,18 +49,21 @@ export default class DefaultLayout extends Component {
 	render() {
 		const {mainMenu} = this.props.data;
 
+		console.log(this.context);
+		console.log(this.props.data);
+
 		return (
 			<Fragment>
 				<Header items={mainMenu.items}/>
-				{this.props.children()}
+				our-work
 				<Footer menu={mainMenu}/>
 			</Fragment>
 		);
 	}
 }
 
-export const layoutQuery = graphql`
-	query mainMenuQuery {
+export const workLayoutQuery = graphql`
+	query workMainQuery($lookbookId: String, $caseStudyCategoryId: Int) {
 		mainMenu: wordpressWpApiMenusMenusItems(
 			name: {eq: "Primary Navigation"}
 		) {
@@ -71,6 +74,57 @@ export const layoutQuery = graphql`
 				children: wordpress_children {
 					title
 					url
+				}
+			}
+		}
+		lookbooks: allWordpressWpLookbook(filter: {id: {eq: $lookbookId}}) {
+			edges {
+				node {
+					id
+					title
+					acf {
+						gallery {
+							url: source_url
+							localFile {
+								childImageSharp {
+									sizes(maxWidth: 450) {
+										base64
+										aspectRatio
+										src
+										srcSet
+										srcWebp
+										srcSetWebp
+										sizes
+										originalImg
+										originalName
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		caseStudies: allWordpressWpCaseStudy(
+			filter: {case_study_category: {eq: $caseStudyCategoryId}}
+		) {
+			edges {
+				node {
+					title
+					content
+					slug
+					acf {
+						logo
+						subtitle
+					}
+				}
+			}
+		}
+		caseStudyCategories: allWordpressWpCaseStudyCategory {
+			edges {
+				node {
+					name
+					slug
 				}
 			}
 		}

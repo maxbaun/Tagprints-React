@@ -5,6 +5,7 @@ import Img from 'gatsby-image';
 import {ImageLoader} from '../utils/imageHelpers';
 import {noop} from '../utils/componentHelpers';
 
+import CSS from '../css/modules/image.module.scss';
 import Placeholder from './placeholder';
 
 export default class Image extends Component {
@@ -16,6 +17,8 @@ export default class Image extends Component {
 			width: 0,
 			url: null
 		};
+
+		this.imgLoader = null;
 
 		this.renderLightbox = this.renderLightbox.bind(this);
 		this.getImageLayout = this.getImageLayout.bind(this);
@@ -55,11 +58,18 @@ export default class Image extends Component {
 	};
 
 	componentWillMount() {
-		const {naturalHeight, naturalWidth, thumbnail, url} = this.props;
+		const {
+			naturalHeight,
+			naturalWidth,
+			thumbnail,
+			url,
+			resolutions,
+			sizes
+		} = this.props;
 
 		const preloadUrl = !thumbnail || thumbnail === '' ? url : thumbnail;
 
-		if (this.props.preload) {
+		if (this.props.preload && !resolutions.src && !sizes.src) {
 			this.preloadImage(preloadUrl);
 		} else {
 			this.setState({
@@ -70,11 +80,21 @@ export default class Image extends Component {
 		}
 	}
 
+	componentWillUnmount() {
+		if (this.imgLoader) {
+			this.imgLoader.cancel();
+			this.imgLoader = null;
+		}
+	}
+
 	preloadImage(url) {
-		const imgLoader = new ImageLoader(url);
-		imgLoader.getImage().then(img => {
-			this.setState(prevState => ({...prevState, ...img}));
-		});
+		this.imgLoader = new ImageLoader(url);
+		this.imgLoader
+			.getImage()
+			.then(img => {
+				this.setState(prevState => ({...prevState, ...img}));
+			})
+			.catch(() => {});
 	}
 
 	getImageLayout() {
@@ -149,13 +169,54 @@ export default class Image extends Component {
 
 	renderGatsbyImage() {
 		const {sizes, resolutions, onLoad} = this.props;
+		const layout = this.getImageLayout();
+		let imgStyle = {
+			width: '100%',
+			height: 'auto',
+			margin: '0 auto',
+			left: 0,
+			right: 0
+		};
+
+		if (layout === 'portrait') {
+			imgStyle = {
+				...imgStyle,
+				height: '100%',
+				width: 'auto'
+			};
+		} else if (layout === 'landscape') {
+			imgStyle = {
+				...imgStyle,
+				height: 'auto',
+				width: '100%'
+			};
+		}
+
+		const style = {
+			height: '100%',
+			width: '100%'
+		};
 
 		if (resolutions.src) {
-			return <Img resolutions={resolutions} onLoad={onLoad}/>;
+			return (
+				<Img
+					resolutions={resolutions}
+					onLoad={onLoad}
+					style={style}
+					imgStyle={imgStyle}
+				/>
+			);
 		}
 
 		if (sizes.src) {
-			return <Img sizes={sizes} onLoad={onLoad}/>;
+			return (
+				<Img
+					sizes={sizes}
+					onLoad={onLoad}
+					style={style}
+					imgStyle={imgStyle}
+				/>
+			);
 		}
 
 		return null;

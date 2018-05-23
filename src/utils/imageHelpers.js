@@ -54,6 +54,13 @@ export function isGif(image) {
 export class ImageLoader {
 	constructor(image) {
 		this.image = image;
+		this.reject = null;
+	}
+
+	cancel() {
+		if (this.reject) {
+			this.reject();
+		}
 	}
 
 	getImage() {
@@ -61,7 +68,9 @@ export class ImageLoader {
 	}
 
 	preloadImage(image) {
-		return new Promise(resolve => {
+		return new Promise((resolve, reject) => {
+			this.reject = reject;
+
 			if (isRetina() && !isGif(image)) {
 				const retinaFile = retinaUrl(image);
 				this.loadImage(retinaFile).then(retinaImage =>

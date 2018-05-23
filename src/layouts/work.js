@@ -9,7 +9,7 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 import Fragment from '../components/fragment';
 
-export default class DefaultLayout extends Component {
+export default class WorkLayout extends Component {
 	static propTypes = {
 		children: PropTypes.func.isRequired,
 		data: PropTypes.object,
@@ -19,32 +19,6 @@ export default class DefaultLayout extends Component {
 	static defaultProps = {
 		data: {}
 	};
-
-	componentDidMount() {
-		this.setDataTheme(this.props.location);
-	}
-
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.location.pathname !== this.props.location.pathname) {
-			this.setDataTheme(nextProps.location);
-		}
-	}
-
-	setDataTheme(location) {
-		const {pathname} = location;
-		let dataTheme = 'default';
-
-		if (pathname.includes('array13') && !pathname.includes('our-work')) {
-			dataTheme = 'array13';
-		}
-
-		if (pathname.includes('photo') && pathname.includes('lite')) {
-			dataTheme = 'photobooth-lite';
-		}
-
-		const body = document.querySelector('body');
-		body.setAttribute('data-theme', dataTheme);
-	}
 
 	render() {
 		const {mainMenu} = this.props.data;
@@ -60,7 +34,7 @@ export default class DefaultLayout extends Component {
 }
 
 export const layoutQuery = graphql`
-	query mainMenuQuery {
+	query workLayoutQuery {
 		mainMenu: wordpressWpApiMenusMenusItems(
 			name: {eq: "Primary Navigation"}
 		) {

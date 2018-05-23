@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Img from 'gatsby-image';
 
 import CSS from '../css/modules/hero.module.scss';
 import ScrollSpy from './scrollSpy';
-import Image from './image';
 import {replaceLinks} from '../utils/wordpressHelpers';
 
 export default class Hero extends Component {
@@ -56,7 +56,7 @@ export default class Hero extends Component {
 		return (
 			<div className={wrapClass.join(' ')}>
 				<div className={CSS.image}>
-					<Image
+					<Img
 						sizes={backgroundImage}
 						onLoad={this.handleImageLoad}
 					/>

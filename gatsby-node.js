@@ -10,25 +10,29 @@ exports.modifyWebpackConfig = ({config}) => {
 			new webpack.DefinePlugin({
 				API_URL: JSON.stringify(
 					isDev ?
-						'http://tagprints.info/wp-json' :
-						'http://tagprints.com/wp-json'
+						'http://admin.tagprints.com/wp-json' :
+						'http://admin.tagprints.com/wp-json'
 				),
 				GRAVITY_FORMS_API: JSON.stringify(
 					isDev ?
-						'http://tagprints.info/gravityformsapi' :
-						'http://tagprints.com/gravityformsapi'
+						'http://admin.tagprints.com/gravityformsapi' :
+						'http://admin.tagprints.com/gravityformsapi'
 				),
 				GRAVITY_FORMS_PUBLIC_KEY: JSON.stringify(
-					isDev ? '4a60f91bc9' : ''
+					isDev ? '4a60f91bc9' : '4a60f91bc9'
 				),
 				GRAVITY_FORMS_PRIVATE_KEY: JSON.stringify(
-					isDev ? 'f226e7f31e4acc7' : ''
+					isDev ? 'f226e7f31e4acc7' : 'f226e7f31e4acc7'
 				),
 				RECAPTCHA_KEY: JSON.stringify(
-					isDev ? '6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf' : ''
+					isDev ?
+						'6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf' :
+						'6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf'
 				),
 				RECAPTCHA_SECRET: JSON.stringify(
-					isDev ? '6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5' : ''
+					isDev ?
+						'6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5' :
+						'6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5'
 				)
 			})
 		]
@@ -39,7 +43,14 @@ exports.modifyWebpackConfig = ({config}) => {
 
 exports.createPages = ({graphql, boundActionCreators}) => {
 	const {createPage} = boundActionCreators;
-	return Promise.all([getPages(graphql, createPage)]);
+	return Promise.all([
+		getPages(graphql, createPage),
+		createOurWorkPage(graphql, createPage),
+		createLookbookPages(graphql, createPage)
+		// CreateCaseStudiesRoot(graphql, createPage),
+		// createCaseStudyCategories(graphql, createPage),
+		// createCaseStudies(graphql, createPage)
+	]);
 };
 
 function getPages(graphql, createPage) {
@@ -73,13 +84,175 @@ function getPages(graphql, createPage) {
 			}
 
 			result.data.pages.edges.forEach(edge => {
-				if (edge.node.title === 'TagPrints Homepage') {
+				if (
+					edge.node.title === 'TagPrints Homepage' ||
+					edge.node.slug === 'our-work'
+				) {
 					return;
 				}
 
 				createPage({
 					path: getSlug(edge, result.data.pages.edges),
 					component: slash(getPageTemplate(edge.node.template)),
+					context: {
+						id: edge.node.id
+					}
+				});
+			});
+
+			resolve();
+		});
+	});
+}
+
+function createOurWorkPage(graphql, createPage) {
+	return new Promise(resolve => {
+		createPage({
+			path: '/our-work',
+			layout: 'work',
+			component: slash(path.resolve('./src/templates/lookbooks.js'))
+		});
+
+		resolve();
+	});
+}
+
+function createLookbookPages(graphql, createPage) {
+	return new Promise((resolve, reject) => {
+		return graphql(
+			`
+				{
+					pages: allWordpressWpLookbook {
+						edges {
+							node {
+								id
+								title
+								wpid: wordpress_id
+								slug
+							}
+						}
+					}
+				}
+			`
+		).then(result => {
+			if (result.errors) {
+				console.log(result.errors);
+				reject(result.errors);
+			}
+
+			if (!result.data) {
+				return resolve();
+			}
+
+			result.data.pages.edges.forEach(edge => {
+				createPage({
+					path: `/our-work/lookbook/${edge.node.slug}`,
+					layout: 'work',
+					component: slash(
+						path.resolve('./src/templates/lookbooks.js')
+					),
+					context: {
+						view: 'lookbook',
+						lookbookId: edge.node.slug
+					}
+				});
+			});
+
+			resolve();
+		});
+	});
+}
+
+function createCaseStudiesRoot(graphql, createPage) {
+	return new Promise(resolve => {
+		createPage({
+			path: '/our-work/case-studies',
+			component: slash(path.resolve('./src/templates/work.js')),
+			context: {
+				view: 'caseStudies'
+			}
+		});
+
+		return resolve();
+	});
+}
+
+function createCaseStudyCategories(graphql, createPage) {
+	return new Promise((resolve, reject) => {
+		graphql(
+			`
+				{
+					categories: allWordpressWpCaseStudyCategory {
+						edges {
+							node {
+								id
+								wpid: wordpress_id
+								slug
+							}
+						}
+					}
+				}
+			`
+		).then(result => {
+			if (result.errors) {
+				console.log(result.errors);
+				reject(result.errors);
+			}
+
+			if (!result.data) {
+				return resolve();
+			}
+
+			result.data.categories.edges.forEach(edge => {
+				createPage({
+					path: `/our-work/case-studies/${edge.node.slug}`,
+					component: slash(path.resolve('./src/templates/work.js')),
+					context: {
+						caseStudyCategoryId: edge.node.wpid,
+						view: 'caseStudies'
+					}
+				});
+			});
+
+			resolve();
+		});
+	});
+}
+
+function createCaseStudies(graphql, createPage) {
+	return new Promise((resolve, reject) => {
+		graphql(
+			`
+				{
+					pages: allWordpressWpCaseStudy {
+						edges {
+							node {
+								id
+								title
+								wpid: wordpress_id
+								slug
+								status
+							}
+						}
+					}
+				}
+			`
+		).then(result => {
+			if (result.errors) {
+				console.log(result.errors);
+				reject(result.errors);
+			}
+
+			if (!result.data) {
+				return resolve();
+			}
+
+			result.data.pages.edges.forEach(edge => {
+				createPage({
+					path: `/our-work/case-studies/${edge.node.slug}`,
+					component: slash(
+						path.resolve('./src/templates/caseStudy.js')
+					),
 					context: {
 						id: edge.node.id
 					}

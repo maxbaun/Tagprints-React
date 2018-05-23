@@ -3,19 +3,20 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 
 import {innerHtml} from '../utils/wordpressHelpers';
+import Fragment from '../components/fragment';
 import Seo from '../components/seo';
 
 export default class Index extends Component {
 	static propTypes = {
 		data: PropTypes.object.isRequired,
 		location: PropTypes.object.isRequired
-	}
+	};
 
 	render() {
 		const {currentPage, site} = this.props.data;
 
 		return (
-			<div>
+			<Fragment>
 				<Seo
 					currentPage={currentPage}
 					site={site}
@@ -26,18 +27,18 @@ export default class Index extends Component {
 					className="main"
 					role="main"
 				/>
-			</div>
+			</Fragment>
 		);
 	}
 }
 
 export const pageQuery = graphql`
-query homePageQuery {
-  currentPage: wordpressPage(title: {eq: "TagPrints Homepage"}) {
-	...Page
-  }
-  site {
-	...Site
-  }
-}
+	query homePageQuery {
+		currentPage: wordpressPage(title: {eq: "TagPrints Homepage"}) {
+			...Page
+		}
+		site {
+			...Site
+		}
+	}
 `;
