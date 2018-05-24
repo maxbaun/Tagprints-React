@@ -76,7 +76,7 @@ export default class Lightbox extends Component {
 			slidesPerView: 1,
 			spaceBetween: 0,
 			grabCursor: true,
-			initialSlide: this.props.start,
+			initialSlide: 0,
 			navigation: {
 				nextEl,
 				prevEl

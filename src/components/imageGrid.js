@@ -20,12 +20,10 @@ export default class ImageGrid extends Component {
 		this.state = {
 			rows: List(),
 			items: List(),
-			width: 0,
 			shuffle: false
 		};
 
 		this.shuffleBtn = null;
-		this.handleWindowResize = this.handleWindowResize.bind(this);
 		this.getRows = this.getRows.bind(this);
 		this.getItems = this.getItems.bind(this);
 		this.getGrid = this.getGrid.bind(this);
@@ -43,7 +41,8 @@ export default class ImageGrid extends Component {
 		component: PropTypes.func.isRequired,
 		hasMore: PropTypes.bool.isRequired,
 		onLoadMore: PropTypes.func.isRequired,
-		onImageClick: PropTypes.func
+		onImageClick: PropTypes.func,
+		windowWidth: PropTypes.number.isRequired
 	};
 
 	static defaultProps = {
@@ -63,15 +62,12 @@ export default class ImageGrid extends Component {
 			this.shuffleBtn.addEventListener('click', this.handleShuffleClick);
 		}
 
-		window.addEventListener('resize', this.handleWindowResize);
-
-		this.handleWindowResize();
 		this.setNewItems(this.props.items);
 	}
 
-	componentWillReceiveProps(nextProps, nextState) {
-		const prevWidth = this.state.width;
-		const nextWidth = nextState.width;
+	componentWillReceiveProps(nextProps) {
+		const prevWidth = this.props.windowWidth;
+		const nextWidth = nextProps.windowWidth;
 
 		if (
 			!nextProps.items.equals(this.props.items) ||
@@ -88,14 +84,6 @@ export default class ImageGrid extends Component {
 				this.handleShuffleClick
 			);
 		}
-
-		window.removeEventListener('resize', this.handleWindowResize);
-	}
-
-	handleWindowResize() {
-		this.setState({
-			width: document.body.clientWidth
-		});
 	}
 
 	setNewItems(items, isShuffle = false) {
@@ -114,7 +102,11 @@ export default class ImageGrid extends Component {
 		});
 	}
 
-	getColumnsPerRow(windowWidth = typeof document === 'undefined' ? 0 : document.body.clientWidth) {
+	getColumnsPerRow(
+		windowWidth = typeof document === 'undefined' ?
+			0 :
+			document.body.clientWidth
+	) {
 		if (windowWidth > LargeMax) {
 			return 6;
 		}
@@ -163,7 +155,9 @@ export default class ImageGrid extends Component {
 	}
 
 	getRows({
-		windowWidth = typeof document === 'undefined' ? 0 : document.body.clientWidth,
+		windowWidth = typeof document === 'undefined' ?
+			0 :
+			document.body.clientWidth,
 		items = this.props.items
 	}) {
 		const columnHeight = windowWidth / this.getColumnsPerRow();
@@ -270,7 +264,8 @@ export default class ImageGrid extends Component {
 	}
 
 	getGrid() {
-		const windowWidth = typeof document === 'undefined' ? 0 : document.body.clientWidth;
+		const windowWidth =
+			typeof document === 'undefined' ? 0 : document.body.clientWidth;
 		const {rows} = this.state;
 
 		let gridHeight = 0;

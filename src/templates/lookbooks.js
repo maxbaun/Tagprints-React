@@ -12,7 +12,7 @@ import Lightbox from '../components/lightbox';
 import WorkCategories from '../components/workCategories';
 import LookbookItem from '../components/lookbookItem';
 
-const PerPage = 20;
+const PerPage = 40;
 
 export default class LookbooksTemplate extends Component {
 	constructor(props) {
@@ -23,6 +23,7 @@ export default class LookbooksTemplate extends Component {
 			page: 1,
 			modalOpen: false,
 			modalStart: 1,
+			windowWidth: 0,
 			lookbooks: interleaveGalleries(
 				this.getAllLookbooks(props.data.lookbooks)
 			)
@@ -37,6 +38,7 @@ export default class LookbooksTemplate extends Component {
 		this.handleModalClose = this.handleModalClose.bind(this);
 		this.getLightboxImages = this.getLightboxImages.bind(this);
 		this.getCategories = this.getCategories.bind(this);
+		this.handleResize = this.handleResize.bind(this);
 	}
 
 	static propTypes = {
@@ -44,6 +46,16 @@ export default class LookbooksTemplate extends Component {
 		location: PropTypes.object.isRequired,
 		pathContext: PropTypes.object.isRequired
 	};
+
+	componentDidMount() {
+		this.handleResize();
+
+		window.addEventListener('resize', this.handleResize);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resisze', this.handleResize);
+	}
 
 	getActiveCategory() {
 		const activeSlug = this.props.pathContext.lookbookId;
@@ -54,11 +66,11 @@ export default class LookbooksTemplate extends Component {
 
 		const {lookbooks} = this.props.data;
 
-		const activeLookbook = lookbooks.edges.find(
+		const activeCategory = lookbooks.edges.find(
 			l => l.node.slug === activeSlug
 		);
 
-		return fromJS(activeLookbook.node);
+		return fromJS(activeCategory.node);
 	}
 
 	getAllLookbooks(lookbooks) {
@@ -157,19 +169,36 @@ export default class LookbooksTemplate extends Component {
 		});
 	}
 
+	handleResize() {
+		this.setState({
+			windowWidth: document.body.clientWidth
+		});
+	}
+
 	render() {
 		const {site} = this.props.data;
 
 		const lookbooks = this.getPaginatedLookbooks();
 		const activeCategory = this.getActiveCategory();
 
+		let currentPage = {
+			title: 'Lookbook'
+		};
+
+		if (activeCategory) {
+			currentPage = {
+				...activeCategory.toJS(),
+				title: activeCategory.get('title') + ' Case Studies'
+			};
+		}
+
 		return (
 			<Fragment>
-				{/* <Seo
+				<Seo
 					currentPage={currentPage}
 					site={site}
 					location={this.props.location}
-				/> */}
+				/>
 				<Lightbox
 					images={this.getLightboxImages()}
 					open={this.state.modalOpen}
@@ -197,6 +226,7 @@ export default class LookbooksTemplate extends Component {
 								hasMore={this.state.hasMore}
 								onLoadMore={this.handleLoadMore}
 								onImageClick={this.handleImageClick}
+								windowWidth={this.state.windowWidth}
 							/>
 						</div>
 					</div>
@@ -214,6 +244,9 @@ export const pageQuery = graphql`
 					id
 					title
 					slug
+					yoast {
+						...LookbookYoast
+					}
 					acf {
 						link
 						gallery {

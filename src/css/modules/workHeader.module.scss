@@ -1,0 +1,140 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.header {
+	font-family: $fontGotham;
+	margin-bottom: 30px;
+	text-align: center;
+
+	@include mediumAndUp {
+		margin-bottom: 40px;
+	}
+}
+
+.title {
+	color: $color_37;
+	font-family: $fontUltra;
+	font-size: 36px;
+	line-height: 1.2;
+	margin-bottom: 0;
+	text-transform: uppercase;
+
+	@include mediumAndUp {
+		font-size: 69px;
+	}
+}
+
+.subtitle {
+	color: $color_36;
+	font-weight: 500;
+	font-style: italic;
+	font-size: 16px;
+	line-height: 1.2;
+	margin-bottom: 20px;
+	margin-top: 0;
+	@include mediumAndUp {
+		font-size: 20px;
+		margin-bottom: 30px;
+	}
+}
+
+.switch {
+	display: block;
+	cursor: pointer;
+	height: 30px;
+	margin: 0 auto;
+	width: 247px;
+	white-space: nowrap;
+}
+
+.switchText {
+	color: $color_40;
+	display: inline-block;
+	font-family: $fontGotham;
+	font-size: 12px;
+	font-weight: 900;
+	line-height: 30px;
+	vertical-align: top;
+	text-transform: uppercase;
+
+	&[data-active='true'] {
+		color: $color_5;
+	}
+}
+
+.switchInner {
+	background-color: $color_38;
+	display: inline-block;
+	border-radius: 14px;
+	height: 100%;
+	margin: 0 20px;
+	padding: 3px;
+	position: relative;
+	width: 60px;
+}
+
+.switchCircle {
+	border-radius: 50%;
+	height: 23px;
+	width: 23px;
+	background: -moz-linear-gradient(
+		50% 100% 90deg,
+		rgba(246, 246, 246, 1) 0%,
+		rgba(255, 255, 255, 1) 100%
+	);
+	background: -webkit-linear-gradient(
+		90deg,
+		rgba(246, 246, 246, 1) 0%,
+		rgba(255, 255, 255, 1) 100%
+	);
+	background: -webkit-gradient(
+		linear,
+		50% 100%,
+		50% 0%,
+		color-stop(0, rgba(246, 246, 246, 1)),
+		color-stop(1, rgba(255, 255, 255, 1))
+	);
+	background: -o-linear-gradient(
+		90deg,
+		rgba(246, 246, 246, 1) 0%,
+		rgba(255, 255, 255, 1) 100%
+	);
+	background: -ms-linear-gradient(
+		90deg,
+		rgba(246, 246, 246, 1) 0%,
+		rgba(255, 255, 255, 1) 100%
+	);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F6F6F6', endColorstr='#FFFFFF' ,GradientType=0)";
+	background: linear-gradient(
+		0deg,
+		rgba(246, 246, 246, 1) 0%,
+		rgba(255, 255, 255, 1) 100%
+	);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF',endColorstr='#F6F6F6' , GradientType=0);
+	position: absolute;
+	top: 3px;
+	transition: left 0.4s ease-in-out;
+
+	&[data-position='left'] {
+		left: 3px;
+	}
+
+	&[data-position='right'] {
+		left: calc(100% - 26px);
+	}
+
+	span {
+		color: $color_38;
+		font-size: 13px;
+		margin-top: -10px;
+		vertical-align: middle;
+
+		&.fa-chevron-left {
+			margin-left: -1px;
+		}
+
+		&.fa-chevron-right {
+			margin-left: 1px;
+		}
+	}
+}

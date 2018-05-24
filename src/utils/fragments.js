@@ -21,6 +21,48 @@ export const YoastFragment = graphql`
 	}
 `;
 
+export const LookbookYoast = graphql`
+	fragment LookbookYoast on yoast_8 {
+		metaKeywords: focuskw
+		title: title
+		metaDescription: metadesc
+		linkdex
+		metakeywords
+		noIndex: meta_robots_noindex
+		noFollow: meta_robots_nofollow
+		meta_robots_adv
+		canonical
+		redirect
+		ogTitle: opengraph_title
+		ogDescription: opengraph_description
+		ogImage: opengraph_image
+		twitterTitle: twitter_title
+		twitterDescription: twitter_description
+		twitterImage: twitter_image
+	}
+`;
+
+export const CaseStudyYoast = graphql`
+	fragment CaseStudyYoast on yoast_7 {
+		metaKeywords: focuskw
+		title: title
+		metaDescription: metadesc
+		linkdex
+		metakeywords
+		noIndex: meta_robots_noindex
+		noFollow: meta_robots_nofollow
+		meta_robots_adv
+		canonical
+		redirect
+		ogTitle: opengraph_title
+		ogDescription: opengraph_description
+		ogImage: opengraph_image
+		twitterTitle: twitter_title
+		twitterDescription: twitter_description
+		twitterImage: twitter_image
+	}
+`;
+
 export const PageFragment = graphql`
 	fragment Page on wordpress__PAGE {
 		id

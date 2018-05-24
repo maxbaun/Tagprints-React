@@ -55,10 +55,12 @@ export class ImageLoader {
 	constructor(image) {
 		this.image = image;
 		this.reject = null;
+		this.img = null;
 	}
 
 	cancel() {
 		if (this.reject) {
+			this.img.src = null;
 			this.reject();
 		}
 	}
@@ -71,34 +73,40 @@ export class ImageLoader {
 		return new Promise((resolve, reject) => {
 			this.reject = reject;
 
-			if (isRetina() && !isGif(image)) {
-				const retinaFile = retinaUrl(image);
-				this.loadImage(retinaFile).then(retinaImage =>
-					resolve(retinaImage)
-				);
-			}
+			// If (isRetina() && !isGif(image)) {
+			// 	const retinaFile = retinaUrl(image);
+			// 	this.loadImage(retinaFile).then(retinaImage =>
+			// 		resolve(retinaImage)
+			// 	);
+			// }
 
-			return this.loadImage(image).then(i => resolve(i));
+			return this.loadImage(image)
+				.then(resolve)
+				.catch(reject);
 		});
 	}
 
 	loadImage(image) {
-		return new Promise(resolve => {
-			const img = new window.Image();
-			img.onload = () => {
+		return new Promise((resolve, reject) => {
+			this.img = new window.Image();
+			this.img.onload = () => {
+				if (!this.img) {
+					return reject();
+				}
+
 				resolve({
-					height: img.height,
-					width: img.width,
+					height: this.img.height,
+					width: this.img.width,
 					url: image
 				});
 			};
-			img.onerror = () => resolve();
-			img.src = image;
+			this.img.onerror = () => resolve();
+			this.img.src = image;
 
-			if (img.complete) {
+			if (this.img.complete) {
 				return resolve({
-					height: img.height,
-					width: img.width,
+					height: this.img.height,
+					width: this.img.width,
 					url: image
 				});
 			}

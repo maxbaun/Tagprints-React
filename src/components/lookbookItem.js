@@ -24,6 +24,8 @@ export default class LookbookItem extends Component {
 			<div className="our-work-lookbook-item">
 				<Image
 					preload
+					inViewToggle
+					placeholder
 					sizes={sizes}
 					resolutions={resolutions}
 					naturalWidth={width}

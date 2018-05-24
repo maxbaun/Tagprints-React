@@ -1,0 +1,13 @@
+@import '../utils/mixins.scss';
+@import '../utils/variables.scss';
+
+.placeholder {
+	height: 100%;
+	width: 100%;
+}
+
+.inner {
+	background-color: $color_11;
+	height: 100%;
+	width: 100%;
+}

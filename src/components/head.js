@@ -9,9 +9,27 @@ import Favicon32 from '../images/favicon-32x32.png';
 import AppleTouchIcon from '../images/apple-touch-icon.png';
 import DefaultImage from '../images/updated-logos-x3.png';
 
-const Head = ({title, defaultTitle, metaKeywords, metaDescription, canonical, noFollow, noIndex, ogDescription, ogImage, ogTitle, twitterTitle, twitterDescription, twitterImage, image, excerpt}) => {
+const Head = ({
+	title,
+	defaultTitle,
+	metaKeywords,
+	metaDescription,
+	canonical,
+	noFollow,
+	noIndex,
+	ogDescription,
+	ogImage,
+	ogTitle,
+	twitterTitle,
+	twitterDescription,
+	twitterImage,
+	image,
+	excerpt,
+	site
+}) => {
 	if (!metaDescription || metaDescription === '') {
-		metaDescription = stripHtml(excerpt);
+		const ex = excerpt ? stripHtml(excerpt) : site.siteMeta.subtitle;
+		metaDescription = ex;
 	}
 
 	if (ogTitle === '') {
@@ -29,16 +47,34 @@ const Head = ({title, defaultTitle, metaKeywords, metaDescription, canonical, no
 		{property: 'og:type', content: 'website'},
 		{property: 'og:locale', content: 'en_US'},
 		{property: 'og:title', content: ogTitle},
-		{property: 'og:description', content: ogDescription && ogDescription !== '' ? ogDescription : metaDescription},
-		{property: 'og:image', content: ogImage && ogImage !== '' ? ogImage : image},
-		{property: 'og:url', content: 'http://czonemusic.com'},
-		{property: 'og:site_name', content: 'C-Zone Entertainment'},
+		{
+			property: 'og:description',
+			content:
+				ogDescription && ogDescription !== '' ?
+					ogDescription :
+					metaDescription
+		},
+		{
+			property: 'og:image',
+			content: ogImage && ogImage !== '' ? ogImage : image
+		},
+		{property: 'og:url', content: 'http://tagprints.com/'},
+		{property: 'og:site_name', content: 'TagPrints'},
 		{property: 'twitter:card', content: 'summary'},
-		{property: 'twitter:site', content: '@czonemusic'},
-		{property: 'twitter:creator', content: '@czonemusic'},
+		{property: 'twitter:site', content: '@TagPrints'},
+		{property: 'twitter:creator', content: '@TagPrints'},
 		{property: 'twitter:title', content: twitterTitle},
-		{property: 'twitter:description', content: twitterDescription && twitterDescription === '' ? metaDescription : twitterDescription},
-		{property: 'twitter:image', content: twitterImage && twitterImage !== '' ? twitterImage : image},
+		{
+			property: 'twitter:description',
+			content:
+				twitterDescription && twitterDescription === '' ?
+					metaDescription :
+					twitterDescription
+		},
+		{
+			property: 'twitter:image',
+			content: twitterImage && twitterImage !== '' ? twitterImage : image
+		},
 		{property: 'robots', content: noIndex},
 		{property: 'robots', content: noFollow}
 	];
@@ -55,10 +91,18 @@ const Head = ({title, defaultTitle, metaKeywords, metaDescription, canonical, no
 		<Helmet
 			htmlAttributes={{lang: 'en', amp: undefined}}
 			titleAttributes={{itemprop: 'name', lang: 'en'}}
-			meta={meta.map(data => data.content && data.content !== '' ? data : {})}
-			link={links.map(link => link.href && link.href !== '' ? link : {})}
+			meta={meta.map(
+				data => (data.content && data.content !== '' ? data : {})
+			)}
+			link={links.map(
+				link => (link.href && link.href !== '' ? link : {})
+			)}
 		>
-			<title>{title && title !== '' ? title : defaultTitle}</title>
+			<title>
+				{title && title !== '' ?
+					`${title} - ${site.siteMeta.title}` :
+					`${defaultTitle} - ${site.siteMeta.title}`}
+			</title>
 		</Helmet>
 	);
 };
@@ -79,7 +123,8 @@ Head.propTypes = {
 	twitterDescription: PropTypes.string,
 	twitterImage: PropTypes.string,
 	image: PropTypes.string,
-	excerpt: PropTypes.string
+	excerpt: PropTypes.string,
+	site: PropTypes.object.isRequired
 };
 
 Head.defaultProps = {

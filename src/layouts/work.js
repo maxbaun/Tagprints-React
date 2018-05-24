@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 
 import '../css/main.scss';
+import '../css/utils/animations.scss';
 import '../css/vendor/animate.css';
 
 import Header from '../components/header';
 import Footer from '../components/footer';
+import WorkHeader from '../components/workHeader';
 import Fragment from '../components/fragment';
 
 export default class WorkLayout extends Component {
@@ -26,6 +28,7 @@ export default class WorkLayout extends Component {
 		return (
 			<Fragment>
 				<Header items={mainMenu.items}/>
+				<WorkHeader location={this.props.location}/>
 				{this.props.children()}
 				<Footer menu={mainMenu}/>
 			</Fragment>

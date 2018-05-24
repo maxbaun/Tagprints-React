@@ -36,6 +36,9 @@ export const pageQuery = graphql`
 		caseStudy: wordpressWpCaseStudy(id: {eq: $id}) {
 			title
 			content
+			yoast {
+				...CaseStudyYoast
+			}
 		}
 		site {
 			...Site

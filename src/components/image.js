@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Img from 'gatsby-image';
+import Visibility from 'react-visibility-sensor';
 
 import {ImageLoader} from '../utils/imageHelpers';
-import {noop} from '../utils/componentHelpers';
+import {noop, click} from '../utils/componentHelpers';
 
 import CSS from '../css/modules/image.module.scss';
 import Placeholder from './placeholder';
+import Fragment from './fragment';
 
 export default class Image extends Component {
 	constructor(props) {
@@ -15,15 +17,19 @@ export default class Image extends Component {
 		this.state = {
 			height: 0,
 			width: 0,
-			url: null
+			url: null,
+			inView: false
 		};
 
 		this.imgLoader = null;
+		this.loader = null;
 
-		this.renderLightbox = this.renderLightbox.bind(this);
+		this.mounted = false;
+
 		this.getImageLayout = this.getImageLayout.bind(this);
-		this.renderImage = this.renderImage.bind(this);
 		this.renderGatsbyImage = this.renderGatsbyImage.bind(this);
+		this.renderImage = this.renderImage.bind(this);
+		this.toggleView = this.toggleView.bind(this);
 	}
 
 	static propTypes = {
@@ -39,7 +45,9 @@ export default class Image extends Component {
 		children: PropTypes.element, //eslint-disable-line
 		sizes: PropTypes.object,
 		resolutions: PropTypes.object,
-		onLoad: PropTypes.func
+		onLoad: PropTypes.func,
+		inViewToggle: PropTypes.bool,
+		imgStyle: PropTypes.object
 	};
 
 	static defaultProps = {
@@ -54,22 +62,17 @@ export default class Image extends Component {
 		style: {},
 		sizes: {},
 		resolutions: {},
-		onLoad: noop
+		onLoad: noop,
+		inViewToggle: false,
+		imgStyle: {}
 	};
 
-	componentWillMount() {
-		const {
-			naturalHeight,
-			naturalWidth,
-			thumbnail,
-			url,
-			resolutions,
-			sizes
-		} = this.props;
+	componentDidMount() {
+		const {naturalHeight, naturalWidth, thumbnail, url} = this.props;
 
 		const preloadUrl = !thumbnail || thumbnail === '' ? url : thumbnail;
 
-		if (this.props.preload && !resolutions.src && !sizes.src) {
+		if (this.shouldPreload()) {
 			this.preloadImage(preloadUrl);
 		} else {
 			this.setState({
@@ -78,13 +81,26 @@ export default class Image extends Component {
 				url
 			});
 		}
+
+		this.mounted = true;
 	}
 
 	componentWillUnmount() {
+		this.mounted = false;
+		this.cancelLoad();
+	}
+
+	cancelLoad() {
 		if (this.imgLoader) {
 			this.imgLoader.cancel();
 			this.imgLoader = null;
 		}
+	}
+
+	shouldPreload() {
+		const {preload, resolutions, sizes} = this.props;
+
+		return preload && !resolutions.src && !sizes.src;
 	}
 
 	preloadImage(url) {
@@ -92,6 +108,10 @@ export default class Image extends Component {
 		this.imgLoader
 			.getImage()
 			.then(img => {
+				if (!this.mounted) {
+					return;
+				}
+
 				this.setState(prevState => ({...prevState, ...img}));
 			})
 			.catch(() => {});
@@ -115,62 +135,67 @@ export default class Image extends Component {
 		return '';
 	}
 
-	render() {
-		const {style, lightbox, sizes, resolutions} = this.props;
-		const {url} = this.state;
+	toggleView(inView) {
+		this.setState({inView});
 
-		const showLightbox = Boolean(lightbox && lightbox !== '');
-
-		if (sizes.src || resolutions.src) {
-			return this.renderGatsbyImage();
+		if (!inView) {
+			this.cancelLoad();
 		}
 
-		const layout = this.getImageLayout();
+		if (inView && !this.state.url && this.shouldPreload()) {
+			this.preloadImage(this.props.url);
+		}
+	}
 
-		let wrapStyle = {...style};
-
+	render() {
+		const {inView} = this.state;
+		const {inViewToggle} = this.props;
+		const isLocal = this.props.sizes.src || this.props.resolutions.src;
+		const wrapCSS = [
+			CSS.imageWrap,
+			inViewToggle ? CSS.viewToggle : '',
+			inViewToggle && inView ? CSS.inView : ''
+		];
 		return (
-			<div data-layout={this.getImageLayout()} style={wrapStyle}>
-				<div
-					data-active={url ? 'true' : 'false'}
-					style={{height: '100%', width: '100%'}}
-				>
-					<figure style={{height: '100%', width: '100%'}}>
-						{this.renderImage(url)}
-					</figure>
-				</div>
+			<div
+				className={wrapCSS.join(' ')}
+				data-layout={this.getImageLayout()}
+				style={this.props.style}
+			>
+				<Visibility partialVisibility onChange={this.toggleView}>
+					{isLocal ? this.renderGatsbyImage() : this.renderImage()}
+				</Visibility>
 			</div>
 		);
 	}
 
-	renderLightbox(thumbnail, lightbox) {
-		const {url} = this.props;
+	renderImage() {
+		const {placeholder} = this.props;
+		const {url} = this.state;
+		const loaded = Boolean(url);
 
 		return (
-			<a
-				href={url}
-				data-lightbox={lightbox}
-				style={{height: '100%', width: '100%'}}
-			>
-				{this.renderImage(thumbnail)}
-			</a>
+			<Fragment>
+				{placeholder && !loaded ? (
+					<div className={CSS.placeholder}>
+						<Placeholder style={{height: '100%', width: '100%'}}/>
+					</div>
+				) : null}
+				<figure
+					className={[CSS.inner, loaded ? CSS.innerActive : ''].join(
+						' '
+					)}
+				>
+					{loaded ? <img src={url}/> : null}
+				</figure>
+			</Fragment>
 		);
 	}
 
-	renderImage(url) {
-		const {placeholder} = this.props;
-
-		return url ? (
-			<img src={url}/>
-		) : placeholder ? (
-			<Placeholder style={{height: '100%', width: '100%'}}/>
-		) : null;
-	}
-
 	renderGatsbyImage() {
-		const {sizes, resolutions, onLoad} = this.props;
+		const {sizes, resolutions, onLoad, imgStyle} = this.props;
 		const layout = this.getImageLayout();
-		let imgStyle = {
+		let imageStyle = {
 			width: '100%',
 			height: 'auto',
 			margin: '0 auto',
@@ -179,18 +204,23 @@ export default class Image extends Component {
 		};
 
 		if (layout === 'portrait') {
-			imgStyle = {
+			imageStyle = {
 				...imgStyle,
 				height: '100%',
 				width: 'auto'
 			};
 		} else if (layout === 'landscape') {
-			imgStyle = {
+			imageStyle = {
 				...imgStyle,
 				height: 'auto',
 				width: '100%'
 			};
 		}
+
+		imageStyle = {
+			...imageStyle,
+			...imgStyle
+		};
 
 		const style = {
 			height: '100%',
@@ -203,7 +233,7 @@ export default class Image extends Component {
 					resolutions={resolutions}
 					onLoad={onLoad}
 					style={style}
-					imgStyle={imgStyle}
+					imgStyle={imageStyle}
 				/>
 			);
 		}
@@ -214,7 +244,7 @@ export default class Image extends Component {
 					sizes={sizes}
 					onLoad={onLoad}
 					style={style}
-					imgStyle={imgStyle}
+					imgStyle={imageStyle}
 				/>
 			);
 		}

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import CSS from '../css/modules/placeholder.module.scss';
+
 const Placeholder = ({style, color}) => {
 	const innerStyle = {};
 
@@ -9,8 +11,11 @@ const Placeholder = ({style, color}) => {
 	}
 
 	return (
-		<div className="our-work-placeholder" style={style}>
-			<div className="our-work-placeholder__inner" style={innerStyle}/>
+		<div className={CSS.placeholder} style={style}>
+			<div
+				className={[CSS.inner, 'placeholder'].join(' ')}
+				style={innerStyle}
+			/>
 		</div>
 	);
 };

@@ -46,10 +46,10 @@ exports.createPages = ({graphql, boundActionCreators}) => {
 	return Promise.all([
 		getPages(graphql, createPage),
 		createOurWorkPage(graphql, createPage),
-		createLookbookPages(graphql, createPage)
-		// CreateCaseStudiesRoot(graphql, createPage),
-		// createCaseStudyCategories(graphql, createPage),
-		// createCaseStudies(graphql, createPage)
+		createLookbookPages(graphql, createPage),
+		createCaseStudiesRoot(graphql, createPage),
+		createCaseStudyCategories(graphql, createPage),
+		createCaseStudies(graphql, createPage)
 	]);
 };
 
@@ -113,6 +113,12 @@ function createOurWorkPage(graphql, createPage) {
 			component: slash(path.resolve('./src/templates/lookbooks.js'))
 		});
 
+		createPage({
+			path: '/our-work/lookbook',
+			layout: 'work',
+			component: slash(path.resolve('./src/templates/lookbooks.js'))
+		});
+
 		resolve();
 	});
 }
@@ -167,7 +173,8 @@ function createCaseStudiesRoot(graphql, createPage) {
 	return new Promise(resolve => {
 		createPage({
 			path: '/our-work/case-studies',
-			component: slash(path.resolve('./src/templates/work.js')),
+			layout: 'work',
+			component: slash(path.resolve('./src/templates/caseStudies.js')),
 			context: {
 				view: 'caseStudies'
 			}
@@ -206,7 +213,10 @@ function createCaseStudyCategories(graphql, createPage) {
 			result.data.categories.edges.forEach(edge => {
 				createPage({
 					path: `/our-work/case-studies/${edge.node.slug}`,
-					component: slash(path.resolve('./src/templates/work.js')),
+					layout: 'work',
+					component: slash(
+						path.resolve('./src/templates/caseStudies.js')
+					),
 					context: {
 						caseStudyCategoryId: edge.node.wpid,
 						view: 'caseStudies'
@@ -249,7 +259,7 @@ function createCaseStudies(graphql, createPage) {
 
 			result.data.pages.edges.forEach(edge => {
 				createPage({
-					path: `/our-work/case-studies/${edge.node.slug}`,
+					path: `/our-work/case-study/${edge.node.slug}`,
 					component: slash(
 						path.resolve('./src/templates/caseStudy.js')
 					),

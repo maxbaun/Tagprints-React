@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Link from 'gatsby-link';
 
+import CSS from '../css/modules/workHeader.module.scss';
+
 const HeaderViews = {
 	lookbook: {
 		title: 'Lookbook',
@@ -24,7 +26,6 @@ export default class WorkHeader extends Component {
 		super(props);
 
 		this.getView = this.getView.bind(this);
-		this.handleToggleView = this.handleToggleView.bind(this);
 	}
 
 	static propTypes = {
@@ -45,29 +46,27 @@ export default class WorkHeader extends Component {
 		const view = this.getView();
 
 		return (
-			<div className="our-work-header">
+			<div className={CSS.header}>
 				<div className="container">
-					<h1 className="our-work-header__title">{view.title}</h1>
-					<h3 className="our-work-header__subtitle">
-						{view.subtitle}
-					</h3>
-					<Link className="our-work-header__switch" to={view.link}>
+					<h1 className={CSS.title}>{view.title}</h1>
+					<h3 className={CSS.subtitle}>{view.subtitle}</h3>
+					<Link className={CSS.switch} to={view.link}>
 						<span
-							className="our-work-header__switch__text left"
+							className={CSS.switchText}
 							data-active={view.switch === 'left'}
 						>
 							Lookbook
 						</span>
-						<div className="our-work-header__switch__inner">
+						<div className={CSS.switchInner}>
 							<div
-								className="our-work-header__switch__circle"
+								className={CSS.switchCircle}
 								data-position={view.switch}
 							>
 								<span className={view.icon}/>
 							</div>
 						</div>
 						<span
-							className="our-work-header__switch__text right"
+							className={CSS.switchText}
 							data-active={view.switch === 'right'}
 						>
 							Case Studies

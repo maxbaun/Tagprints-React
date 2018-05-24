@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 
 import '../css/main.scss';
+import '../css/utils/animations.scss';
 import '../css/vendor/animate.css';
 
 import Header from '../components/header';

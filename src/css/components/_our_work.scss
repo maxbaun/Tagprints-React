@@ -270,7 +270,7 @@
 
 	&__inner {
 		@include placeholder();
-		background-color: $color_11;
+		background-color: $color_11, 10%;
 		height: 100%;
 		width: 100%;
 	}
