@@ -50,9 +50,10 @@ export const sortByMenuOrder = list => {
 };
 
 export const getLightboxImageObject = image => {
-	const sizes = image.localFile.childImageSharp ?
-		image.localFile.childImageSharp.sizes :
-		{};
+	const sizes =
+		image.localFile && image.localFile.childImageSharp ?
+			image.localFile.childImageSharp.sizes :
+			{};
 
 	const resolutions = image.localFile.childImageSharp ?
 		image.localFile.childImageSharp.resolutions :
