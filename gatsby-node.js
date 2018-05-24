@@ -10,13 +10,13 @@ exports.modifyWebpackConfig = ({config}) => {
 			new webpack.DefinePlugin({
 				API_URL: JSON.stringify(
 					isDev ?
-						'http://admin.tagprints.com/wp-json' :
-						'http://admin.tagprints.com/wp-json'
+						'https://admin.tagprints.com/wp-json' :
+						'https://admin.tagprints.com/wp-json'
 				),
 				GRAVITY_FORMS_API: JSON.stringify(
 					isDev ?
-						'http://admin.tagprints.com/gravityformsapi' :
-						'http://admin.tagprints.com/gravityformsapi'
+						'https://admin.tagprints.com/gravityformsapi' :
+						'https://admin.tagprints.com/gravityformsapi'
 				),
 				GRAVITY_FORMS_PUBLIC_KEY: JSON.stringify(
 					isDev ? '4a60f91bc9' : '4a60f91bc9'
