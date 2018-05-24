@@ -55,9 +55,10 @@ export const getLightboxImageObject = image => {
 			image.localFile.childImageSharp.sizes :
 			{};
 
-	const resolutions = image.localFile.childImageSharp ?
-		image.localFile.childImageSharp.resolutions :
-		{};
+	const resolutions =
+		image.localFile && image.localFile.childImageSharp ?
+			image.localFile.childImageSharp.resolutions :
+			{};
 
 	return {
 		url: image.url,
