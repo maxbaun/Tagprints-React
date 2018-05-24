@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import graphql from 'graphql';
+import Img from 'gatsby-image';
 
 import Fragment from '../components/fragment';
-import Image from '../components/image';
 import Location from '../components/location';
 import Form from '../components/form';
 import Seo from '../components/seo';
@@ -13,19 +13,20 @@ import {emailLink, phoneLink} from '../utils/componentHelpers';
 export default class ContactPageTemplate extends Component {
 	static propTypes = {
 		data: PropTypes.object.isRequired,
-		location: PropTypes.object.isRequired
+		location: PropTypes.object.isRequired,
+		site: PropTypes.object.isRequired
 	};
 
 	render() {
-		const {currentPage, site} = this.props.data;
+		const {currentPage} = this.props.data;
 
 		const {info, form, locations} = currentPage.acf;
-
+		console.log(currentPage);
 		return (
 			<Fragment>
 				<Seo
 					currentPage={currentPage}
-					site={site}
+					site={this.props.site}
 					location={this.props.location}
 				/>
 				<main className="main" role="main">
@@ -51,7 +52,7 @@ export default class ContactPageTemplate extends Component {
 						<div className={CSS.form}>
 							<div className="container">
 								<div className={CSS.formImage}>
-									<Image
+									<Img
 										resolutions={
 											form.image.localFile.childImageSharp
 												.resolutions
@@ -95,6 +96,8 @@ export default class ContactPageTemplate extends Component {
 	}
 }
 
+import {SmallImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
+
 export const pageQuery = graphql`
 	query contactPageQuery($id: String!) {
 		currentPage: wordpressPage(id: {eq: $id}) {
@@ -107,18 +110,7 @@ export const pageQuery = graphql`
 				form: contactForm {
 					form
 					image {
-						localFile {
-							childImageSharp {
-								resolutions(width: 222) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									width
-									height
-								}
-							}
-						}
+						...SmallImage
 					}
 				}
 				locations: contactLocations {
@@ -129,9 +121,6 @@ export const pageQuery = graphql`
 					directions
 				}
 			}
-		}
-		site {
-			...Site
 		}
 	}
 `;

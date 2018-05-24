@@ -36,7 +36,8 @@ export default class HashtagTemplate extends Component {
 
 	static propTypes = {
 		data: PropTypes.object.isRequired,
-		location: PropTypes.object.isRequired
+		location: PropTypes.object.isRequired,
+		site: PropTypes.object.isRequired
 	};
 
 	componentDidMount() {
@@ -54,13 +55,13 @@ export default class HashtagTemplate extends Component {
 	}
 
 	render() {
-		const {currentPage, site} = this.props.data;
+		const {currentPage} = this.props.data;
 
 		return (
 			<Fragment>
 				<Seo
 					currentPage={currentPage}
-					site={site}
+					site={this.props.site}
 					location={this.props.location}
 				/>
 				<main className="main" rol="main">
@@ -269,6 +270,8 @@ export default class HashtagTemplate extends Component {
 	}
 }
 
+import {SmallResponsiveImage, SmallImage, LargeImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
+
 export const pageQuery = graphql`
 	query hashtagPageQuery($id: String!) {
 		currentPage: wordpressPage(id: {eq: $id}) {
@@ -276,18 +279,7 @@ export const pageQuery = graphql`
 			acf {
 				hero: hashtagHero {
 					image {
-						localFile {
-							childImageSharp {
-								sizes(maxWidth: 1600) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									sizes
-									originalImg
-								}
-							}
-						}
+						...LargeImage
 					}
 					title
 					link {
@@ -298,18 +290,7 @@ export const pageQuery = graphql`
 				steps: hashtagSteps {
 					steps {
 						image {
-							localFile {
-								childImageSharp {
-									sizes(maxWidth: 268) {
-										base64
-										aspectRatio
-										src
-										srcSet
-										sizes
-										originalImg
-									}
-								}
-							}
+							...SmallResponsiveImage
 						}
 						title
 						tag
@@ -317,34 +298,12 @@ export const pageQuery = graphql`
 				}
 				image1: hashtagImage {
 					image {
-						localFile {
-							childImageSharp {
-								sizes(maxWidth: 1600) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									sizes
-									originalImg
-								}
-							}
-						}
+						...LargeImage
 					}
 				}
 				image2: hashtagImage2 {
 					image {
-						localFile {
-							childImageSharp {
-								sizes(maxWidth: 1600) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									sizes
-									originalImg
-								}
-							}
-						}
+						...LargeImage
 					}
 				}
 				features: hashtagFeatures {
@@ -361,25 +320,11 @@ export const pageQuery = graphql`
 				}
 				modal: hashtagModal {
 					image {
-						localFile {
-							childImageSharp {
-								resolutions(width: 222) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									width
-									height
-								}
-							}
-						}
+						...SmallImage
 					}
 					form
 				}
 			}
-		}
-		site {
-			...Site
 		}
 	}
 `;

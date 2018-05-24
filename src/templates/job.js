@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import graphql from 'graphql';
 
-import {innerHtml} from '../utils/wordpressHelpers';
+import {innerHtml, getLightboxImageObject} from '../utils/wordpressHelpers';
 import {click} from '../utils/componentHelpers';
 import Image from '../components/image';
 import Form from '../components/form';
@@ -27,27 +27,17 @@ export default class JobTemplate extends Component {
 
 	static propTypes = {
 		data: PropTypes.object.isRequired,
-		location: PropTypes.object.isRequired
+		location: PropTypes.object.isRequired,
+		site: PropTypes.object.isRequired
 	};
 
 	getLightboxImages() {
 		const {images} = this.props.data.currentPage.acf;
+		const {featuredImage, gallery} = images;
 
-		const featuredImage = {
-			full: images.featuredImage.full,
-			thumbnail: images.featuredImage.thumbnail,
-			url: images.featuredImage.url
-		};
+		const gridImages = gallery.map(getLightboxImageObject);
 
-		const gridImages = images.gallery.map(image => {
-			return {
-				full: image.full,
-				thumbnail: image.thumbnail,
-				url: image.url
-			};
-		});
-
-		return [featuredImage, ...gridImages];
+		return [getLightboxImageObject(featuredImage), ...gridImages];
 	}
 
 	handleModalOpen(modalStart) {
@@ -62,7 +52,7 @@ export default class JobTemplate extends Component {
 	}
 
 	render() {
-		const {currentPage, site} = this.props.data;
+		const {currentPage} = this.props.data;
 
 		const {content, images, form} = currentPage.acf;
 
@@ -70,7 +60,7 @@ export default class JobTemplate extends Component {
 			<Fragment>
 				<Seo
 					currentPage={currentPage}
-					site={site}
+					site={this.props.site}
 					location={this.props.location}
 				/>
 				<main className="main" role="main">
@@ -93,7 +83,7 @@ export default class JobTemplate extends Component {
 								>
 									<Image
 										sizes={
-											images.featuredImage.thumbnail
+											images.featuredImage.localFile
 												.childImageSharp.sizes
 										}
 									/>
@@ -160,6 +150,8 @@ export default class JobTemplate extends Component {
 	}
 }
 
+import {LargeImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
+
 export const pageQuery = graphql`
 	query jobPageQuery($id: String!) {
 		currentPage: wordpressPage(id: {eq: $id}) {
@@ -170,58 +162,10 @@ export const pageQuery = graphql`
 				}
 				images: jobImage {
 					featuredImage {
-						url: source_url
-						thumbnail: localFile {
-							childImageSharp {
-								sizes(maxWidth: 460) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									sizes
-									originalImg
-								}
-							}
-						}
-						full: localFile {
-							childImageSharp {
-								sizes {
-									base64
-									aspectRatio
-									src
-									srcSet
-									sizes
-									originalImg
-								}
-							}
-						}
+						...LargeImage
 					}
 					gallery {
-						url: source_url
-						thumbnail: localFile {
-							childImageSharp {
-								resolutions(width: 250, height: 250) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									width
-									height
-								}
-							}
-						}
-						full: localFile {
-							childImageSharp {
-								resolutions {
-									base64
-									aspectRatio
-									src
-									srcSet
-									width
-									height
-								}
-							}
-						}
+						...LargeImage
 					}
 				}
 				form: jobForm {
@@ -229,9 +173,6 @@ export const pageQuery = graphql`
 					form
 				}
 			}
-		}
-		site {
-			...Site
 		}
 	}
 `;

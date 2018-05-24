@@ -95,6 +95,9 @@ export const PageFragment = graphql`
 		yoast {
 			...Yoast
 		}
+		image: featured_media {
+			...LargeImage
+		}
 	}
 `;
 
@@ -112,19 +115,8 @@ export const Post = graphql`
 		yoast {
 			...PostYoast
 		}
-	}
-`;
-
-export const MenuItems = graphql`
-	fragment MenuItems on wordpress__wp_api_menus_menus_items {
-		name
-		items {
-			title
-			url
-			items: wordpress_children {
-				title
-				url
-			}
+		image: featured_media {
+			...LargeImage
 		}
 	}
 `;
@@ -134,6 +126,118 @@ export const Site = graphql`
 		id
 		siteMeta: siteMetadata {
 			title
+			subtitle
+		}
+	}
+`;
+
+export const MenuItems = graphql`
+	fragment MenuItems on wordpress__wp_api_menus_menus_items {
+		items {
+			title
+			url
+			classes
+			children: wordpress_children {
+				title
+				url
+			}
+		}
+	}
+`;
+
+export const ImageSizes = graphql`
+	fragment ImageSizes on ImageSharpSizes {
+		base64
+		aspectRatio
+		src
+		srcSet
+		sizes
+	}
+`;
+
+export const ImageResolutions = graphql`
+	fragment ImageResolutions on ImageSharpResolutions {
+		base64
+		aspectRatio
+		src
+		srcSet
+		width
+		height
+	}
+`;
+
+export const BaseImage = graphql`
+	fragment BaseImage on wordpress__wp_media {
+		url: source_url
+		mediaDetails: media_details {
+			width
+			height
+		}
+	}
+`;
+
+export const LargeImage = graphql`
+	fragment LargeImage on wordpress__wp_media {
+		...BaseImage
+		localFile {
+			childImageSharp {
+				sizes(maxWidth: 1600) {
+					...ImageSizes
+				}
+			}
+		}
+	}
+`;
+
+export const SmallResponsiveImage = graphql`
+	fragment SmallResponsiveImage on wordpress__wp_media {
+		...BaseImage
+		localFile {
+			childImageSharp {
+				sizes(maxWidth: 268) {
+					...ImageSizes
+				}
+			}
+		}
+	}
+`;
+
+export const SmallImage = graphql`
+	fragment SmallImage on wordpress__wp_media {
+		...BaseImage
+		localFile {
+			childImageSharp {
+				resolutions(width: 222) {
+					...ImageResolutions
+				}
+			}
+		}
+	}
+`;
+
+export const ExtraSmallImage = graphql`
+	fragment ExtraSmallImage on wordpress__wp_media {
+		...BaseImage
+		localFile {
+			childImageSharp {
+				resolutions(width: 149) {
+					...ImageResolutions
+				}
+			}
+		}
+	}
+`;
+
+export const CaseStudy = graphql`
+	fragment CaseStudy on wordpress__wp_case_study {
+		id: wordpress_id
+		title
+		slug
+		image: featured_media {
+			...LargeImage
+		}
+		acf {
+			logo
 			subtitle
 		}
 	}

@@ -9,17 +9,18 @@ import Seo from '../components/seo';
 export default class Index extends Component {
 	static propTypes = {
 		data: PropTypes.object.isRequired,
-		location: PropTypes.object.isRequired
+		location: PropTypes.object.isRequired,
+		site: PropTypes.object.isRequired
 	};
 
 	render() {
-		const {currentPage, site} = this.props.data;
+		const {currentPage} = this.props.data;
 
 		return (
 			<Fragment>
 				<Seo
 					currentPage={currentPage}
-					site={site}
+					site={this.props.site}
 					location={this.props.location}
 				/>
 				<main
@@ -36,9 +37,6 @@ export const pageQuery = graphql`
 	query homePageQuery {
 		currentPage: wordpressPage(title: {eq: "TagPrints Homepage"}) {
 			...Page
-		}
-		site {
-			...Site
 		}
 	}
 `;

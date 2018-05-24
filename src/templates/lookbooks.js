@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 import {fromJS} from 'immutable';
 
-import {innerHtml} from '../utils/wordpressHelpers';
 import {interleaveGalleries} from '../utils/lookbookHelpers';
 import Fragment from '../components/fragment';
 import Seo from '../components/seo';
@@ -44,7 +43,8 @@ export default class LookbooksTemplate extends Component {
 	static propTypes = {
 		data: PropTypes.object.isRequired,
 		location: PropTypes.object.isRequired,
-		pathContext: PropTypes.object.isRequired
+		pathContext: PropTypes.object.isRequired,
+		site: PropTypes.object.isRequired
 	};
 
 	componentDidMount() {
@@ -176,8 +176,6 @@ export default class LookbooksTemplate extends Component {
 	}
 
 	render() {
-		const {site} = this.props.data;
-
 		const lookbooks = this.getPaginatedLookbooks();
 		const activeCategory = this.getActiveCategory();
 
@@ -196,7 +194,7 @@ export default class LookbooksTemplate extends Component {
 			<Fragment>
 				<Seo
 					currentPage={currentPage}
-					site={site}
+					site={this.props.site}
 					location={this.props.location}
 				/>
 				<Lightbox
@@ -236,6 +234,8 @@ export default class LookbooksTemplate extends Component {
 	}
 }
 
+import {LargeImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
+
 export const pageQuery = graphql`
 	query lookbooksQuery {
 		lookbooks: allWordpressWpLookbook {
@@ -250,48 +250,11 @@ export const pageQuery = graphql`
 					acf {
 						link
 						gallery {
-							url: source_url
-							mediaDetails: media_details {
-								width
-								height
-							}
-							full: localFile {
-								childImageSharp {
-									sizes {
-										base64
-										aspectRatio
-										src
-										srcSet
-										srcWebp
-										srcSetWebp
-										sizes
-										originalImg
-										originalName
-									}
-								}
-							}
-							thumbnail: localFile {
-								childImageSharp {
-									sizes(maxWidth: 400) {
-										base64
-										aspectRatio
-										src
-										srcSet
-										srcWebp
-										srcSetWebp
-										sizes
-										originalImg
-										originalName
-									}
-								}
-							}
+							...LargeImage
 						}
 					}
 				}
 			}
-		}
-		site {
-			...Site
 		}
 	}
 `;

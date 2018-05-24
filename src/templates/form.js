@@ -12,11 +12,12 @@ import CSS from '../css/modules/formPage.module.scss';
 export default class FormTemplate extends Component {
 	static propTypes = {
 		data: PropTypes.object.isRequired,
-		location: PropTypes.object.isRequired
+		location: PropTypes.object.isRequired,
+		site: PropTypes.object.isRequired
 	};
 
 	render() {
-		const {currentPage, site} = this.props.data;
+		const {currentPage} = this.props.data;
 
 		const {content, form} = currentPage.acf;
 
@@ -24,7 +25,7 @@ export default class FormTemplate extends Component {
 			<Fragment>
 				<Seo
 					currentPage={currentPage}
-					site={site}
+					site={this.props.site}
 					location={this.props.location}
 				/>
 				<main className="main" role="main">
@@ -70,6 +71,8 @@ export default class FormTemplate extends Component {
 	}
 }
 
+import {SmallImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
+
 export const pageQuery = graphql`
 	query formPageQuery($id: String!) {
 		currentPage: wordpressPage(id: {eq: $id}) {
@@ -79,18 +82,7 @@ export const pageQuery = graphql`
 					view
 					content
 					image {
-						localFile {
-							childImageSharp {
-								resolutions(width: 222) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									width
-									height
-								}
-							}
-						}
+						...SmallImage
 					}
 				}
 				form: formForm {
@@ -98,9 +90,6 @@ export const pageQuery = graphql`
 					form
 				}
 			}
-		}
-		site {
-			...Site
 		}
 	}
 `;

@@ -48,12 +48,12 @@ export default class DefaultLayout extends Component {
 	}
 
 	render() {
-		const {mainMenu} = this.props.data;
+		const {mainMenu, site} = this.props.data;
 
 		return (
 			<Fragment>
 				<Header items={mainMenu.items}/>
-				{this.props.children()}
+				{this.props.children({...this.props, site})}
 				<Footer menu={mainMenu}/>
 			</Fragment>
 		);
@@ -61,19 +61,14 @@ export default class DefaultLayout extends Component {
 }
 
 export const layoutQuery = graphql`
-	query mainMenuQuery {
+	query mainLayoutQuery {
 		mainMenu: wordpressWpApiMenusMenusItems(
 			name: {eq: "Primary Navigation"}
 		) {
-			items {
-				title
-				url
-				classes
-				children: wordpress_children {
-					title
-					url
-				}
-			}
+			...MenuItems
+		}
+		site {
+			...Site
 		}
 	}
 `;

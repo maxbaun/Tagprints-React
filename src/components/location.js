@@ -45,8 +45,6 @@ export default class Location extends Component {
 			}
 		];
 
-		console.log(google);
-
 		const mapOptions = {
 			scrollwheel: false,
 			center: marker,

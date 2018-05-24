@@ -48,3 +48,21 @@ export const sortByMenuOrder = list => {
 		return a.menuOrder - b.menuOrder;
 	});
 };
+
+export const getLightboxImageObject = image => {
+	const sizes = image.localFile.childImageSharp ?
+		image.localFile.childImageSharp.sizes :
+		{};
+
+	const resolutions = image.localFile.childImageSharp ?
+		image.localFile.childImageSharp.resolutions :
+		{};
+
+	return {
+		url: image.url,
+		sizes,
+		resolutions,
+		height: image.mediaDetails ? image.mediaDetails.height : 0,
+		width: image.mediaDetails ? image.mediaDetails.width : 0
+	};
+};

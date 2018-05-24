@@ -99,8 +99,7 @@ function transformLookbookImage(image, lookbook) {
 		url: fullUrl,
 		width,
 		height,
-		full: image.getIn(['full', 'childImageSharp', 'sizes']),
-		sizes: image.getIn(['thumbnail', 'childImageSharp', 'sizes']),
+		sizes: image.getIn(['localFile', 'childImageSharp', 'sizes']),
 		layout:
 			width === height ?
 				imageLayouts.square :

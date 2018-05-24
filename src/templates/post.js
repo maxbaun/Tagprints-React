@@ -11,7 +11,8 @@ import CSS from '../css/modules/post.module.scss';
 export default class PostTemplate extends Component {
 	static propTypes = {
 		data: PropTypes.object.isRequired,
-		location: PropTypes.object.isRequired
+		location: PropTypes.object.isRequired,
+		site: PropTypes.object.isRequired
 	};
 
 	componentDidMount() {
@@ -19,13 +20,13 @@ export default class PostTemplate extends Component {
 	}
 
 	render() {
-		const {currentPost, site} = this.props.data;
+		const {currentPost} = this.props.data;
 
 		return (
 			<Fragment>
 				<Seo
 					currentPage={currentPost}
-					site={site}
+					site={this.props.site}
 					location={this.props.location}
 				/>
 				<main className="main" role="main">
@@ -67,30 +68,12 @@ export default class PostTemplate extends Component {
 	}
 }
 
+import {Post} from '../utils/fragments'; // eslint-disable-line no-unused-vars
+
 export const postQuery = graphql`
 	query postQuery($id: String!) {
 		currentPost: wordpressPost(id: {eq: $id}) {
 			...Post
-			image: featured_media {
-				localFile {
-					childImageSharp {
-						full: sizes(maxWidth: 1600) {
-							base64
-							aspectRatio
-							src
-							srcSet
-							srcWebp
-							srcSetWebp
-							sizes
-							originalImg
-							originalName
-						}
-					}
-				}
-			}
-		}
-		site {
-			...Site
 		}
 	}
 `;

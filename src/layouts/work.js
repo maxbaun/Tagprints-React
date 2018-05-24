@@ -23,13 +23,13 @@ export default class WorkLayout extends Component {
 	};
 
 	render() {
-		const {mainMenu} = this.props.data;
+		const {mainMenu, site} = this.props.data;
 
 		return (
 			<Fragment>
 				<Header items={mainMenu.items}/>
 				<WorkHeader location={this.props.location}/>
-				{this.props.children()}
+				{this.props.children({...this.props, site})}
 				<Footer menu={mainMenu}/>
 			</Fragment>
 		);
@@ -41,15 +41,10 @@ export const layoutQuery = graphql`
 		mainMenu: wordpressWpApiMenusMenusItems(
 			name: {eq: "Primary Navigation"}
 		) {
-			items {
-				title
-				url
-				classes
-				children: wordpress_children {
-					title
-					url
-				}
-			}
+			...MenuItems
+		}
+		site {
+			...Site
 		}
 	}
 `;

@@ -26,7 +26,8 @@ export default class TeamTemplate extends Component {
 
 	static propTypes = {
 		data: PropTypes.object.isRequired,
-		location: PropTypes.object.isRequired
+		location: PropTypes.object.isRequired,
+		site: PropTypes.object.isRequired
 	};
 
 	handleHeroLoad() {
@@ -36,13 +37,13 @@ export default class TeamTemplate extends Component {
 	}
 
 	render() {
-		const {currentPage, site} = this.props.data;
+		const {currentPage} = this.props.data;
 
 		return (
 			<Fragment>
 				<Seo
 					currentPage={currentPage}
-					site={site}
+					site={this.props.site}
 					location={this.props.location}
 				/>
 				<main className="main" role="main">
@@ -166,46 +167,26 @@ export default class TeamTemplate extends Component {
 	}
 }
 
+import {LargeImage, ExtraSmallImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
+
 export const pageQuery = graphql`
 	query teamPageQuery($id: String!) {
 		currentPage: wordpressPage(id: {eq: $id}) {
 			...Page
 			acf {
 				hero: teamHero {
-					image {
-						localFile {
-							childImageSharp {
-								sizes(maxWidth: 1600) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									sizes
-									originalImg
-								}
-							}
-						}
-					}
 					title
+					image {
+						...LargeImage
+					}
 				}
 				content: teamContent
 				teamMembers {
-					image {
-						localFile {
-							childImageSharp {
-								resolutions(width: 149) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									width
-									height
-								}
-							}
-						}
-					}
 					name
 					job
+					image {
+						...ExtraSmallImage
+					}
 				}
 				cta: teamCta {
 					title
@@ -215,9 +196,6 @@ export const pageQuery = graphql`
 					}
 				}
 			}
-		}
-		site {
-			...Site
 		}
 	}
 `;

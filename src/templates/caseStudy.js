@@ -4,7 +4,7 @@ import graphql from 'graphql';
 import Img from 'gatsby-image';
 import Link from 'gatsby-link';
 
-import {innerHtml} from '../utils/wordpressHelpers';
+import {innerHtml, getLightboxImageObject} from '../utils/wordpressHelpers';
 import {click} from '../utils/componentHelpers';
 import Seo from '../components/seo';
 import ScrollSpy from '../components/scrollSpy';
@@ -29,25 +29,14 @@ export default class CaseStudyTemplate extends Component {
 
 	static propTypes = {
 		data: PropTypes.object.isRequired,
-		location: PropTypes.object.isRequired
+		location: PropTypes.object.isRequired,
+		site: PropTypes.object.isRequired
 	};
 
 	getLightboxImages() {
 		const {caseStudy} = this.props.data;
 
-		return caseStudy.acf.images.map(data => {
-			const image = data.image;
-			const sizes = image.localFile.childImageSharp ?
-				image.localFile.childImageSharp.full :
-				{};
-
-			return {
-				url: image.url,
-				sizes,
-				height: image.mediaDetails.height,
-				width: image.mediaDetails.width
-			};
-		});
+		return caseStudy.acf.images.map(getLightboxImageObject);
 	}
 
 	handleModalOpen(index) {
@@ -64,13 +53,13 @@ export default class CaseStudyTemplate extends Component {
 	}
 
 	render() {
-		const {caseStudy, site} = this.props.data;
+		const {caseStudy} = this.props.data;
 
 		return (
 			<div>
 				<Seo
 					currentPage={caseStudy}
-					site={site}
+					site={this.props.site}
 					location={this.props.location}
 				/>
 				<Lightbox
@@ -89,7 +78,7 @@ export default class CaseStudyTemplate extends Component {
 								<Img
 									sizes={
 										caseStudy.acf.hero.localFile
-											.childImageSharp.full
+											.childImageSharp.sizes
 									}
 								/>
 							</div>
@@ -182,91 +171,27 @@ export default class CaseStudyTemplate extends Component {
 	}
 }
 
+import {CaseStudy, LargeImage} from '../utils/fragments'; //eslint-disable-line
+
 export const pageQuery = graphql`
 	query caseStudyQuery($id: String!) {
 		caseStudy: wordpressWpCaseStudy(id: {eq: $id}) {
-			title
+			...CaseStudy
 			content
 			yoast {
 				...CaseStudyYoast
 			}
-			image: featured_media {
-				localFile {
-					childImageSharp {
-						full: sizes(maxWidth: 1600) {
-							base64
-							aspectRatio
-							src
-							srcSet
-							srcWebp
-							srcSetWebp
-							sizes
-							originalImg
-							originalName
-						}
-					}
-				}
-			}
 			acf {
-				logo
-				subtitle
 				hero: caseStudyHeroImage {
-					localFile {
-						childImageSharp {
-							full: sizes(maxWidth: 1600) {
-								base64
-								aspectRatio
-								src
-								srcSet
-								srcWebp
-								srcSetWebp
-								sizes
-								originalImg
-								originalName
-							}
-						}
-					}
+					...LargeImage
 				}
 				images: caseStudyImages {
 					width
 					image {
-						url: source_url
-						mediaDetails: media_details {
-							width
-							height
-						}
-						localFile {
-							childImageSharp {
-								sizes(maxWidth: 800) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									srcWebp
-									srcSetWebp
-									sizes
-									originalImg
-									originalName
-								}
-								full: sizes(maxWidth: 1600) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									srcWebp
-									srcSetWebp
-									sizes
-									originalImg
-									originalName
-								}
-							}
-						}
+						...LargeImage
 					}
 				}
 			}
-		}
-		site {
-			...Site
 		}
 	}
 `;

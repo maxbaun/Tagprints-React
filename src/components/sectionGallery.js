@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import * as ImmutablePropTypes from 'react-immutable-proptypes';
+import {fromJS} from 'immutable';
 import Link from 'gatsby-link';
 
 import {noop} from '../utils/componentHelpers';
@@ -18,34 +18,36 @@ class GalleryItem extends Component {
 		height: PropTypes.number,
 		width: PropTypes.number,
 		preload: PropTypes.bool,
-		lightbox: PropTypes.string.isRequired,
-		thumbnail: PropTypes.string.isRequired,
-		children: PropTypes.element //eslint-disable-line
+		sizes: PropTypes.object,
+		resolutions: PropTypes.object
 	};
 
 	static defaultProps = {
 		preload: false,
 		classname: '',
 		height: 0,
-		width: 0
+		width: 0,
+		sizes: {},
+		resolutions: {}
 	};
 
 	render() {
-		const {height, width, url, thumbnail, lightbox} = this.props;
+		const {height, width, url, sizes, resolutions} = this.props;
 
 		return (
 			<div className={CSS.galleryItem}>
 				<Image
 					preload
+					inViewToggle
 					placeholder
-					lightbox={lightbox}
-					thumbnail={thumbnail}
-					url={url}
+					sizes={sizes}
+					resolutions={resolutions}
 					naturalWidth={width}
 					naturalHeight={height}
+					url={url}
 					style={{
-						height,
-						width
+						height: '100%',
+						width: '100%'
 					}}
 				/>
 			</div>
@@ -64,15 +66,14 @@ export default class SectionGallery extends Component {
 		};
 
 		this.handleWindowResize = this.handleWindowResize.bind(this);
-		this.getLightboxImages = this.getLightboxImages.bind(this);
 		this.handleModalClose = this.handleModalClose.bind(this);
 		this.handleModalOpen = this.handleModalOpen.bind(this);
 		this.handleImageClick = this.handleImageClick.bind(this);
 	}
 
 	static propTypes = {
-		images: ImmutablePropTypes.list.isRequired,
-		link: ImmutablePropTypes.map.isRequired,
+		images: PropTypes.array.isRequired,
+		link: PropTypes.object.isRequired,
 		children: PropTypes.element.isRequired
 	};
 
@@ -86,23 +87,11 @@ export default class SectionGallery extends Component {
 		window.removeEventListener('resize', this.handleWindowResize);
 	}
 
-	getLightboxImages() {
-		const images = this.props.images.toJS();
-
-		const gridImages = images.map(image => {
-			return {
-				thumbnail: image.thumbnail,
-				url: image.url
-			};
-		});
-
-		return gridImages;
-	}
-
 	handleImageClick(image) {
 		const index = this.props.images.findIndex(
 			i => image.id === i.get('id')
 		);
+
 		this.handleModalOpen(index + 1);
 	}
 
@@ -128,12 +117,13 @@ export default class SectionGallery extends Component {
 		const {width} = this.state;
 
 		const isMobile = width < 1000;
-		const filteredImages = isMobile ? images.take(8) : images;
+		const filteredImages =
+			width > 0 && isMobile ? fromJS(images).take(8) : fromJS(images);
 
 		return (
 			<Fragment>
 				<Lightbox
-					images={this.getLightboxImages()}
+					images={filteredImages.toJS()}
 					open={this.state.modalOpen}
 					start={this.state.modalStart}
 					onClose={this.handleModalClose}
@@ -146,6 +136,7 @@ export default class SectionGallery extends Component {
 							component={GalleryItem}
 							hasMore={false}
 							onLoadMore={noop}
+							windowWidth={width}
 							onImageClick={this.handleImageClick}
 						/>
 					</div>
@@ -158,9 +149,9 @@ export default class SectionGallery extends Component {
 						>
 							<Link
 								className="btn btn-cta"
-								to={replaceLinks(link.get('url'))}
+								to={replaceLinks(link.url)}
 							>
-								{link.get('title')}
+								{link.title}
 							</Link>
 						</div>
 					) : null}

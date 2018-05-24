@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import graphql from 'graphql';
 import Link from 'gatsby-link';
-import {fromJS} from 'immutable';
 
-import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
+import {
+	innerHtml,
+	replaceLinks,
+	getLightboxImageObject
+} from '../utils/wordpressHelpers';
 import CSS from '../css/modules/pbl.module.scss';
 import Fragment from '../components/fragment';
 import Seo from '../components/seo';
@@ -24,24 +27,20 @@ export default class PblPageTemplate extends Component {
 
 	static propTypes = {
 		data: PropTypes.object.isRequired,
-		location: PropTypes.object.isRequired
+		location: PropTypes.object.isRequired,
+		site: PropTypes.object.isRequired
 	};
 
 	render() {
-		const {currentPage, site} = this.props.data;
+		const {currentPage} = this.props.data;
 		const {acf: data} = currentPage;
 
 		const galleryImages = data.galleryImages.map(image => {
 			return {
-				id: image.id,
-				key: image.id,
-				preload: true,
-				lightbox: 'pbl-gallery',
-				url: image.url,
-				thumbnail: image.url,
-				height: image.mediaDetails.height,
-				width: image.mediaDetails.width,
-				sizes: image.sizes
+				...getLightboxImageObject(image),
+				id: image.url,
+				key: image.url,
+				preload: true
 			};
 		});
 
@@ -49,13 +48,13 @@ export default class PblPageTemplate extends Component {
 			<Fragment>
 				<Seo
 					currentPage={currentPage}
-					site={site}
+					site={this.props.site}
 					location={this.props.location}
 				/>
 				<main className="main" role="main">
 					<Hero
 						backgroundImage={
-							currentPage.image.localFile.childImageSharp.full
+							currentPage.image.localFile.childImageSharp.sizes
 						}
 						heroClass="heroPbl"
 						buttons={data.heroButtons}
@@ -86,8 +85,8 @@ export default class PblPageTemplate extends Component {
 					<SectionGallery
 						title={data.galleryTitle}
 						subtitle={data.gallerySubtitle}
-						images={fromJS(galleryImages)}
-						link={fromJS(data.galleryLink)}
+						images={galleryImages}
+						link={data.galleryLink}
 					>
 						<div className={CSS.gallerySectionTitle}>
 							<div className="container">
@@ -164,27 +163,12 @@ export default class PblPageTemplate extends Component {
 	}
 }
 
+import {Page, SmallResponsiveImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
+
 export const pageQuery = graphql`
 	query pblPageQuery($id: String!) {
 		currentPage: wordpressPage(id: {eq: $id}) {
 			...Page
-			image: featured_media {
-				localFile {
-					childImageSharp {
-						full: sizes(maxWidth: 1600) {
-							base64
-							aspectRatio
-							src
-							srcSet
-							srcWebp
-							srcSetWebp
-							sizes
-							originalImg
-							originalName
-						}
-					}
-				}
-			}
 			acf {
 				heroTitle: pblHeroTitle
 				heroButtons: pblHeroButtons {
@@ -196,26 +180,7 @@ export const pageQuery = graphql`
 				sliderTag: pblSectionSliderTag
 				sliderImages: pblSectionSliderImages {
 					image {
-						url: source_url
-						mediaDetails: media_details {
-							width
-							height
-						}
-						localFile {
-							childImageSharp {
-								sizes(maxWidth: 200) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									srcWebp
-									srcSetWebp
-									sizes
-									originalImg
-									originalName
-								}
-							}
-						}
+						...SmallResponsiveImage
 					}
 				}
 				sliderSlides: pblSectionSliderSlides {
@@ -228,44 +193,7 @@ export const pageQuery = graphql`
 					url
 				}
 				galleryImages: pblSectionGalleryGallery {
-					url: source_url
-					id
-					mediaDetails: media_details {
-						width
-						height
-					}
-					thumbnail: localFile {
-						childImageSharp {
-							sizes(maxWidth: 300) {
-								base64
-								tracedSVG
-								aspectRatio
-								src
-								srcSet
-								srcWebp
-								srcSetWebp
-								sizes
-								originalImg
-								originalName
-							}
-						}
-					}
-					full: localFile {
-						childImageSharp {
-							sizes {
-								base64
-								tracedSVG
-								aspectRatio
-								src
-								srcSet
-								srcWebp
-								srcSetWebp
-								sizes
-								originalImg
-								originalName
-							}
-						}
-					}
+					...LargeImage
 				}
 				cta: pblSectionCtaLink {
 					title
@@ -301,9 +229,6 @@ export const pageQuery = graphql`
 					content
 				}
 			}
-		}
-		site {
-			...Site
 		}
 	}
 `;

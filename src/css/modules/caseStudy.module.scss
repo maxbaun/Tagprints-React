@@ -2,7 +2,7 @@
 @import '../utils/mixins.scss';
 
 .hero {
-	max-height: 80vh;
+	max-height: 60vh;
 }
 
 .heroInner {
@@ -10,7 +10,11 @@
 }
 
 .heroImage {
-	height: 80vh;
+	height: 40vh;
+
+	@include largeAndUp {
+		height: 60vh;
+	}
 
 	> div > div {
 		height: 100%;

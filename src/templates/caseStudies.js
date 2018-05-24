@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 import {fromJS} from 'immutable';
 
-import {innerHtml} from '../utils/wordpressHelpers';
 import Seo from '../components/seo';
 import WorkCategories from '../components/workCategories';
 import CaseStudyItem from '../components/caseStudyItem';
@@ -22,7 +21,8 @@ export default class CaseStudiesTemplate extends Component {
 	static propTypes = {
 		data: PropTypes.object.isRequired,
 		location: PropTypes.object.isRequired,
-		pathContext: PropTypes.object.isRequired
+		pathContext: PropTypes.object.isRequired,
+		site: PropTypes.object.isRequired
 	};
 
 	transformCases(caseStudyData) {
@@ -47,7 +47,7 @@ export default class CaseStudiesTemplate extends Component {
 				name: category.name,
 				slug: category.slug,
 				id: category.id,
-				link: `/case-study/${category.slug}`
+				link: `/our-work/case-studies/${category.slug}`
 			};
 		});
 	}
@@ -66,7 +66,6 @@ export default class CaseStudiesTemplate extends Component {
 	}
 
 	render() {
-		const {site} = this.props.data;
 		const {caseStudies, categories} = this.state;
 		const activeCategory = this.getActiveCategory();
 
@@ -82,7 +81,7 @@ export default class CaseStudiesTemplate extends Component {
 			<div>
 				<Seo
 					currentPage={currentPage}
-					site={site}
+					site={this.props.site}
 					location={this.props.location}
 				/>
 				<main className="main" role="main">
@@ -99,6 +98,7 @@ export default class CaseStudiesTemplate extends Component {
 						<div className="container">
 							{caseStudies.length > 0 ?
 								caseStudies.map(c => {
+									console.log(c.image);
 									return (
 										<div
 											key={c.id}
@@ -126,6 +126,8 @@ export default class CaseStudiesTemplate extends Component {
 	}
 }
 
+import {CaseStudy} from '../utils/fragments'; //eslint-disable-line
+
 export const pageQuery = graphql`
 	query caseStudiesQuery($caseStudyCategoryId: Int) {
 		caseStudies: allWordpressWpCaseStudy(
@@ -133,36 +135,7 @@ export const pageQuery = graphql`
 		) {
 			edges {
 				node {
-					id: wordpress_id
-					title
-					content
-					slug
-					image: featured_media {
-						url: source_url
-						mediaDetails: media_details {
-							width
-							height
-						}
-						localFile {
-							childImageSharp {
-								sizes(maxWidth: 360) {
-									base64
-									aspectRatio
-									src
-									srcSet
-									srcWebp
-									srcSetWebp
-									sizes
-									originalImg
-									originalName
-								}
-							}
-						}
-					}
-					acf {
-						logo
-						subtitle
-					}
+					...CaseStudy
 				}
 			}
 		}
@@ -174,9 +147,6 @@ export const pageQuery = graphql`
 					slug
 				}
 			}
-		}
-		site {
-			...Site
 		}
 	}
 `;
