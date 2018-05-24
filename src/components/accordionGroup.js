@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Badger from 'badger-accordion';
 
 import {innerHtml} from '../utils/wordpressHelpers';
 import Fragment from './fragment';
@@ -25,6 +24,7 @@ export default class AccordionGroup extends Component {
 	};
 
 	componentDidMount() {
+		const Badger = require('badger-accordion');
 		this.badger = new Badger(`#${this.props.id}`);
 	}
 

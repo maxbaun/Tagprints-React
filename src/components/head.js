@@ -124,7 +124,7 @@ Head.propTypes = {
 	twitterImage: PropTypes.string,
 	image: PropTypes.string,
 	excerpt: PropTypes.string,
-	site: PropTypes.object.isRequired
+	site: PropTypes.object
 };
 
 Head.defaultProps = {
@@ -142,7 +142,14 @@ Head.defaultProps = {
 	twitterDescription: '',
 	twitterImage: '',
 	image: DefaultImage,
-	excerpt: ''
+	excerpt: '',
+	site: {
+		siteMeta: {
+			title: 'TagPrints',
+			subtitle:
+				'Hashtag Printers and Social Photo Booth rentals built to capture branded memories at your events. From turnkey solutions to totally custom, challenge us!'
+		}
+	}
 };
 
 export default Head;

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Badger from 'badger-accordion';
 
 import AccordionGroup from './accordionGroup';
 import CSS from '../css/modules/sectionFaq.module.scss';
@@ -26,6 +25,7 @@ export default class SectionFaq extends Component {
 	};
 
 	componentDidMount() {
+		const Badger = require('badger-accordion');
 		this.badger = new Badger(`#${this.props.id}`);
 	}
 
