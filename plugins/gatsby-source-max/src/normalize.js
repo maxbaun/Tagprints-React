@@ -403,7 +403,7 @@ exports.downloadMediaFiles = async ({
   Promise.all(
     entities.map(async e => {
 	  let fileNodeID
-      if (e.__type === `wordpress__wp_media`) {
+      if (e.__type === `wordpress__wp_media` && e.mime_type !== 'image/gif') {
         const mediaDataCacheKey = `wordpress-media-${e.wordpress_id}`
         const cacheMediaData = await cache.get(mediaDataCacheKey)
 
@@ -427,6 +427,7 @@ exports.downloadMediaFiles = async ({
 
 			console.log('+++++++++++++++++')
 			console.log('filenodeCreated', count)
+			console.log(e.mime_type);
 			console.log(e.source_url)
 			console.log(fileNode.id)
 			console.log('+++++++++++++++++')

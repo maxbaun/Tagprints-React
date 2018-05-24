@@ -453,8 +453,8 @@ exports.downloadMediaFiles = function () {
                       case 0:
                         fileNodeID = void 0;
 
-                        if (!(e.__type === 'wordpress__wp_media')) {
-                          _context.next = 26;
+                        if (!(e.__type === 'wordpress__wp_media' && e.mime_type !== 'image/gif')) {
+                          _context.next = 27;
                           break;
                         }
 
@@ -476,7 +476,7 @@ exports.downloadMediaFiles = function () {
                         // If we don't have cached data, download the file
 
                         if (fileNodeID) {
-                          _context.next = 26;
+                          _context.next = 27;
                           break;
                         }
 
@@ -496,33 +496,34 @@ exports.downloadMediaFiles = function () {
 
                         console.log('+++++++++++++++++');
                         console.log('filenodeCreated', count);
+                        console.log(e.mime_type);
                         console.log(e.source_url);
                         console.log(fileNode.id);
                         console.log('+++++++++++++++++');
                         count++;
 
                         if (!fileNode) {
-                          _context.next = 22;
+                          _context.next = 23;
                           break;
                         }
 
                         fileNodeID = fileNode.id;
 
-                        _context.next = 22;
+                        _context.next = 23;
                         return cache.set(mediaDataCacheKey, {
                           fileNodeID: fileNodeID,
                           modified: e.modified
                         });
 
-                      case 22:
-                        _context.next = 26;
+                      case 23:
+                        _context.next = 27;
                         break;
 
-                      case 24:
-                        _context.prev = 24;
+                      case 25:
+                        _context.prev = 25;
                         _context.t0 = _context['catch'](8);
 
-                      case 26:
+                      case 27:
 
                         if (fileNodeID) {
                           e.localFile___NODE = fileNodeID;
@@ -531,12 +532,12 @@ exports.downloadMediaFiles = function () {
 
                         return _context.abrupt('return', e);
 
-                      case 28:
+                      case 29:
                       case 'end':
                         return _context.stop();
                     }
                   }
-                }, _callee, undefined, [[8, 24]]);
+                }, _callee, undefined, [[8, 25]]);
               }));
 
               return function (_x4) {
