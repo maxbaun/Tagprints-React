@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 
 import {innerHtml} from '../utils/wordpressHelpers';
+import {click} from '../utils/componentHelpers';
 import Image from '../components/image';
 import Form from '../components/form';
 import Lightbox from '../components/lightbox';
 import Seo from '../components/seo';
+import Fragment from '../components/fragment';
 import CSS from '../css/modules/job.module.scss';
-import {click} from '../utils/componentHelpers';
 
 export default class JobTemplate extends Component {
 	constructor(props) {
@@ -66,7 +67,7 @@ export default class JobTemplate extends Component {
 		const {content, images, form} = currentPage.acf;
 
 		return (
-			<div>
+			<Fragment>
 				<Seo
 					currentPage={currentPage}
 					site={site}
@@ -153,7 +154,7 @@ export default class JobTemplate extends Component {
 					className="main"
 					role="main"
 				/> */}
-			</div>
+			</Fragment>
 		);
 	}
 }

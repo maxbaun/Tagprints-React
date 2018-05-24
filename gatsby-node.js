@@ -45,6 +45,7 @@ exports.createPages = ({graphql, boundActionCreators}) => {
 	const {createPage} = boundActionCreators;
 	return Promise.all([
 		getPages(graphql, createPage),
+		getPosts(graphql, createPage),
 		createOurWorkPage(graphql, createPage),
 		createLookbookPages(graphql, createPage),
 		createCaseStudiesRoot(graphql, createPage),
@@ -94,6 +95,49 @@ function getPages(graphql, createPage) {
 				createPage({
 					path: getSlug(edge, result.data.pages.edges),
 					component: slash(getPageTemplate(edge.node.template)),
+					context: {
+						id: edge.node.id
+					}
+				});
+			});
+
+			resolve();
+		});
+	});
+}
+
+function getPosts(graphql, createPage) {
+	return new Promise((resolve, reject) => {
+		graphql(
+			`
+				{
+					posts: allWordpressPost {
+						edges {
+							node {
+								id
+								title
+								wpid: wordpress_id
+								slug
+								status
+							}
+						}
+					}
+				}
+			`
+		).then(result => {
+			if (result.errors) {
+				console.log(result.errors);
+				reject(result.errors);
+			}
+
+			if (!result.data) {
+				return resolve();
+			}
+
+			result.data.posts.edges.forEach(edge => {
+				createPage({
+					path: `/${edge.node.slug}`,
+					component: slash(path.resolve('./src/templates/post.js')),
 					context: {
 						id: edge.node.id
 					}
@@ -259,7 +303,7 @@ function createCaseStudies(graphql, createPage) {
 
 			result.data.pages.edges.forEach(edge => {
 				createPage({
-					path: `/our-work/case-study/${edge.node.slug}`,
+					path: `/case-study/${edge.node.slug}`,
 					component: slash(
 						path.resolve('./src/templates/caseStudy.js')
 					),

@@ -21,6 +21,27 @@ export const YoastFragment = graphql`
 	}
 `;
 
+export const PostYoast = graphql`
+	fragment PostYoast on yoast_5 {
+		metaKeywords: focuskw
+		title: title
+		metaDescription: metadesc
+		linkdex
+		metakeywords
+		noIndex: meta_robots_noindex
+		noFollow: meta_robots_nofollow
+		meta_robots_adv
+		canonical
+		redirect
+		ogTitle: opengraph_title
+		ogDescription: opengraph_description
+		ogImage: opengraph_image
+		twitterTitle: twitter_title
+		twitterDescription: twitter_description
+		twitterImage: twitter_image
+	}
+`;
+
 export const LookbookYoast = graphql`
 	fragment LookbookYoast on yoast_8 {
 		metaKeywords: focuskw
@@ -73,6 +94,23 @@ export const PageFragment = graphql`
 		template
 		yoast {
 			...Yoast
+		}
+	}
+`;
+
+export const Post = graphql`
+	fragment Post on wordpress__POST {
+		id
+		content
+		title
+		date(formatString: "MMMM DD, YYYY")
+		excerpt
+		categories {
+			name
+			link
+		}
+		yoast {
+			...PostYoast
 		}
 	}
 `;

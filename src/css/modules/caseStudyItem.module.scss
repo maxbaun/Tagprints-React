@@ -83,19 +83,27 @@
 	position: absolute;
 	top: 0;
 	width: 100%;
+	opacity: 1;
 	background-color: rgba($color_5, 0.8);
-	opacity: 0;
 	transition: all 0.3s ease-in-out;
 	z-index: 2;
+
+	@include mediumAndUp {
+		opacity: 0;
+	}
 
 	a {
 		display: block;
 		padding-left: 20px;
 		padding-right: 20px;
-		transform: rotateY(90deg);
 		transform-origin: center;
 		width: 150px;
+		transform: rotateY(0deg);
 		transition: all 0.3s ease-in-out;
+
+		@include mediumAndUp {
+			transform: rotateY(90deg);
+		}
 
 		&:hover {
 			color: $color_white;

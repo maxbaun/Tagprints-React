@@ -166,6 +166,9 @@ export default class PblPageTemplate extends Component {
 
 export const pageQuery = graphql`
 	query pblPageQuery($id: String!) {
+		site {
+			...Site
+		}
 		currentPage: wordpressPage(id: {eq: $id}) {
 			...Page
 			image: featured_media {

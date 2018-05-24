@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Swiper from 'swiper';
+import Img from 'gatsby-image';
 
 import {ref, click} from '../utils/componentHelpers';
 import Modal from './modal';
-import Image from './image';
 import CSS from '../css/modules/lightbox.module.scss';
 
 export default class Lightbox extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {};
+		this.state = {
+			height: 0,
+			width: 0
+		};
 
 		this.swiper = null;
 		this.wrapper = null;
@@ -22,6 +25,7 @@ export default class Lightbox extends Component {
 		this.handlePrevClick = this.handlePrevClick.bind(this);
 		this.handleModalClose = this.handleModalClose.bind(this);
 		this.handleModalShow = this.handleModalShow.bind(this);
+		this.handleResize = this.handleResize.bind(this);
 		this.currentIndex = this.currentIndex.bind(this);
 	}
 
@@ -43,6 +47,8 @@ export default class Lightbox extends Component {
 
 	componentDidMount() {
 		this.init();
+		this.handleResize();
+		window.addEventListener('resize', this.handleResize);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -53,6 +59,8 @@ export default class Lightbox extends Component {
 
 	componentWillUnmount() {
 		this.destroy();
+
+		window.removeEventListener('resize', this.handleResize);
 	}
 
 	init() {
@@ -111,6 +119,13 @@ export default class Lightbox extends Component {
 		return this.swiper.realIndex;
 	}
 
+	handleResize() {
+		this.setState({
+			height: window.innerHeight,
+			width: window.innerWidth
+		});
+	}
+
 	handlePrevClick() {
 		this.swiper.slidePrev();
 	}
@@ -135,6 +150,7 @@ export default class Lightbox extends Component {
 
 	render() {
 		const {open, images} = this.props;
+		const {height, width} = this.state;
 
 		return (
 			<Modal
@@ -151,6 +167,34 @@ export default class Lightbox extends Component {
 							style={{height: '100%'}}
 						>
 							{images.map(image => {
+								let imgStyle = {
+									maxHeight: image.height ?
+										image.height :
+										'100%',
+									maxWidth: image.width ?
+										image.width :
+										'100%',
+									right: 0
+								};
+
+								if (height < width) {
+									imgStyle = {
+										...imgStyle,
+										margin: '0 auto',
+										width: 'auto',
+										height: '100%'
+									};
+								} else if (width < height) {
+									imgStyle = {
+										...imgStyle,
+										width: '100%',
+										height: 'auto',
+										position: 'absolute',
+										top: '50%',
+										transform: 'translateY(-50%)'
+									};
+								}
+
 								return (
 									<div
 										key={image.url}
@@ -159,16 +203,22 @@ export default class Lightbox extends Component {
 											textAlign: 'center',
 											display: 'flex',
 											alignItems: 'center',
-											justifyContent: 'center'
+											justifyContent: 'center',
+											position: 'relative'
 										}}
 									>
-										<Image
-											url={image.url}
-											sizes={image.sizes}
-											resolutions={image.resolutions}
-											naturalHeight={image.height}
-											naturalWidth={image.width}
-										/>
+										{image.sizes && image.sizes.src ? (
+											<Img
+												sizes={image.sizes}
+												style={{height: '100%'}}
+												imgStyle={imgStyle}
+											/>
+										) : (
+											<img
+												src={image.url}
+												style={imgStyle}
+											/>
+										)}
 									</div>
 								);
 							})}

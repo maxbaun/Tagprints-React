@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import graphql from 'graphql';
-import Img from 'gatsby-image';
 
-import {innerHtml} from '../utils/wordpressHelpers';
+import Fragment from '../components/fragment';
 import Image from '../components/image';
 import Location from '../components/location';
 import Form from '../components/form';
@@ -23,7 +22,7 @@ export default class ContactPageTemplate extends Component {
 		const {info, form, locations} = currentPage.acf;
 
 		return (
-			<div>
+			<Fragment>
 				<Seo
 					currentPage={currentPage}
 					site={site}
@@ -91,7 +90,7 @@ export default class ContactPageTemplate extends Component {
 					className="main"
 					role="main"
 				/> */}
-			</div>
+			</Fragment>
 		);
 	}
 }

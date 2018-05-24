@@ -47,7 +47,7 @@ export default class CaseStudiesTemplate extends Component {
 				name: category.name,
 				slug: category.slug,
 				id: category.id,
-				link: `/our-work/case-studies/${category.slug}`
+				link: `/case-study/${category.slug}`
 			};
 		});
 	}

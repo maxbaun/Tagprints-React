@@ -4,7 +4,7 @@ import Img from 'gatsby-image';
 import Visibility from 'react-visibility-sensor';
 
 import {ImageLoader} from '../utils/imageHelpers';
-import {noop, click} from '../utils/componentHelpers';
+import {noop} from '../utils/componentHelpers';
 
 import CSS from '../css/modules/image.module.scss';
 import Placeholder from './placeholder';
@@ -47,7 +47,8 @@ export default class Image extends Component {
 		resolutions: PropTypes.object,
 		onLoad: PropTypes.func,
 		inViewToggle: PropTypes.bool,
-		imgStyle: PropTypes.object
+		imgStyle: PropTypes.object,
+		onClick: PropTypes.func
 	};
 
 	static defaultProps = {
@@ -64,7 +65,8 @@ export default class Image extends Component {
 		resolutions: {},
 		onLoad: noop,
 		inViewToggle: false,
-		imgStyle: {}
+		imgStyle: {},
+		onClick: noop
 	};
 
 	componentDidMount() {
@@ -149,7 +151,7 @@ export default class Image extends Component {
 
 	render() {
 		const {inView} = this.state;
-		const {inViewToggle} = this.props;
+		const {inViewToggle, onClick} = this.props;
 		const isLocal = this.props.sizes.src || this.props.resolutions.src;
 		const wrapCSS = [
 			CSS.imageWrap,
@@ -161,6 +163,7 @@ export default class Image extends Component {
 				className={wrapCSS.join(' ')}
 				data-layout={this.getImageLayout()}
 				style={this.props.style}
+				onClick={onClick}
 			>
 				<Visibility partialVisibility onChange={this.toggleView}>
 					{isLocal ? this.renderGatsbyImage() : this.renderImage()}
@@ -170,7 +173,7 @@ export default class Image extends Component {
 	}
 
 	renderImage() {
-		const {placeholder} = this.props;
+		const {placeholder, imgStyle} = this.props;
 		const {url} = this.state;
 		const loaded = Boolean(url);
 
@@ -186,7 +189,7 @@ export default class Image extends Component {
 						' '
 					)}
 				>
-					{loaded ? <img src={url}/> : null}
+					{loaded ? <img src={url} style={imgStyle}/> : null}
 				</figure>
 			</Fragment>
 		);

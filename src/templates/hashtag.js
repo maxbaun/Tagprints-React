@@ -11,6 +11,7 @@ import Form from '../components/form';
 import ModalContent from '../components/modalContent';
 import Seo from '../components/seo';
 import ScrollSpy from '../components/scrollSpy';
+import Fragment from '../components/fragment';
 import CSS from '../css/modules/hashtag.module.scss';
 
 export default class HashtagTemplate extends Component {
@@ -56,7 +57,7 @@ export default class HashtagTemplate extends Component {
 		const {currentPage, site} = this.props.data;
 
 		return (
-			<div>
+			<Fragment>
 				<Seo
 					currentPage={currentPage}
 					site={site}
@@ -77,7 +78,7 @@ export default class HashtagTemplate extends Component {
 					className="main"
 					role="main"
 				/> */}
-			</div>
+			</Fragment>
 		);
 	}
 

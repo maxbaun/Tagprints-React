@@ -41,6 +41,23 @@ export const pageQuery = graphql`
 	query defaultPageQuery($id: String!) {
 		currentPage: wordpressPage(id: {eq: $id}) {
 			...Page
+			image: featured_media {
+				localFile {
+					childImageSharp {
+						full: sizes(maxWidth: 1600) {
+							base64
+							aspectRatio
+							src
+							srcSet
+							srcWebp
+							srcSetWebp
+							sizes
+							originalImg
+							originalName
+						}
+					}
+				}
+			}
 		}
 		site {
 			...Site

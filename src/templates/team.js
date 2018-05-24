@@ -6,6 +6,7 @@ import Link from 'gatsby-link';
 
 import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
 import Seo from '../components/seo';
+import Fragment from '../components/fragment';
 import CSS from '../css/modules/team.module.scss';
 
 export default class TeamTemplate extends Component {
@@ -38,7 +39,7 @@ export default class TeamTemplate extends Component {
 		const {currentPage, site} = this.props.data;
 
 		return (
-			<div>
+			<Fragment>
 				<Seo
 					currentPage={currentPage}
 					site={site}
@@ -55,7 +56,7 @@ export default class TeamTemplate extends Component {
 					className="main"
 					role="main"
 				/> */}
-			</div>
+			</Fragment>
 		);
 	}
 

@@ -4,6 +4,7 @@ import graphql from 'graphql';
 import Img from 'gatsby-image';
 
 import {innerHtml} from '../utils/wordpressHelpers';
+import Fragment from '../components/fragment';
 import Form from '../components/form';
 import Seo from '../components/seo';
 import CSS from '../css/modules/formPage.module.scss';
@@ -20,7 +21,7 @@ export default class FormTemplate extends Component {
 		const {content, form} = currentPage.acf;
 
 		return (
-			<div>
+			<Fragment>
 				<Seo
 					currentPage={currentPage}
 					site={site}
@@ -64,7 +65,7 @@ export default class FormTemplate extends Component {
 					className="main"
 					role="main"
 				/> */}
-			</div>
+			</Fragment>
 		);
 	}
 }

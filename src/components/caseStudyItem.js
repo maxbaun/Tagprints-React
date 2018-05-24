@@ -30,7 +30,7 @@ const CaseStudyItem = ({image, logo, title, subtitle, slug}) => {
 				</div>
 				<div className={CSS.overlay}>
 					<Link
-						to={`/our-work/case-study/${slug}`}
+						to={`/case-study/${slug}`}
 						className="btn btn-cta-white"
 					>
 						Learn More

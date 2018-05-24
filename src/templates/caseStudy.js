@@ -2,17 +2,66 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import graphql from 'graphql';
 import Img from 'gatsby-image';
+import Link from 'gatsby-link';
 
 import {innerHtml} from '../utils/wordpressHelpers';
+import {click} from '../utils/componentHelpers';
 import Seo from '../components/seo';
 import ScrollSpy from '../components/scrollSpy';
+import Image from '../components/image';
+import Lightbox from '../components/lightbox';
 import CSS from '../css/modules/caseStudy.module.scss';
 
 export default class CaseStudyTemplate extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			modalOpen: false,
+			modalStart: 1
+		};
+
+		this.renderImages = this.renderImages.bind(this);
+		this.getLightboxImages = this.getLightboxImages.bind(this);
+		this.handleModalClose = this.handleModalClose.bind(this);
+		this.handleModalOpen = this.handleModalOpen.bind(this);
+	}
+
 	static propTypes = {
 		data: PropTypes.object.isRequired,
 		location: PropTypes.object.isRequired
 	};
+
+	getLightboxImages() {
+		const {caseStudy} = this.props.data;
+
+		return caseStudy.acf.images.map(data => {
+			const image = data.image;
+			const sizes = image.localFile.childImageSharp ?
+				image.localFile.childImageSharp.full :
+				{};
+
+			return {
+				url: image.url,
+				sizes,
+				height: image.mediaDetails.height,
+				width: image.mediaDetails.width
+			};
+		});
+	}
+
+	handleModalOpen(index) {
+		this.setState({
+			modalOpen: true,
+			modalStart: index + 1
+		});
+	}
+
+	handleModalClose() {
+		this.setState({
+			modalOpen: false
+		});
+	}
 
 	render() {
 		const {caseStudy, site} = this.props.data;
@@ -24,10 +73,19 @@ export default class CaseStudyTemplate extends Component {
 					site={site}
 					location={this.props.location}
 				/>
+				<Lightbox
+					images={this.getLightboxImages()}
+					open={this.state.modalOpen}
+					start={this.state.modalStart}
+					onClose={this.handleModalClose}
+				/>
 				<main className="main" role="main">
 					<div className={CSS.caseStudy}>
 						<div className={CSS.hero}>
 							<div className={CSS.heroImage}>
+								{caseStudy.acf.heroOverlay ? (
+									<div className={CSS.overlay}/>
+								) : null}
 								<Img
 									sizes={
 										caseStudy.acf.hero.localFile
@@ -58,14 +116,68 @@ export default class CaseStudyTemplate extends Component {
 										/>
 									</div>
 									<div className="col-sm-8">
-										<div className={CSS.images}>images</div>
+										<div className={CSS.images}>
+											{this.renderImages()}
+										</div>
 									</div>
 								</div>
+							</div>
+							<div className={CSS.cta}>
+								<Link
+									to="/free-quote"
+									className="btn btn btn-cta-transparent readmore"
+								>
+									Free Quote
+								</Link>
 							</div>
 						</div>
 					</div>
 				</main>
 			</div>
+		);
+	}
+
+	renderImages() {
+		const {caseStudy} = this.props.data;
+
+		return (
+			<ul>
+				{caseStudy.acf.images.map((data, index) => {
+					const style = {
+						width: `calc(100% / ${data.width})`
+					};
+
+					const image = data.image;
+
+					const mediaDetails = image.mediaDetails;
+
+					const sizes = image.localFile.childImageSharp ?
+						image.localFile.childImageSharp.sizes :
+						{};
+
+					const props = {
+						preload: true,
+						naturalWidth: mediaDetails.width,
+						naturalHeight: mediaDetails.height,
+						url: image.url,
+						sizes,
+						imgStyle: {
+							width: '100%',
+							height: 'auto'
+						}
+					};
+
+					return (
+						<li
+							key={image.url}
+							style={style}
+							onClick={click(this.handleModalOpen, index)}
+						>
+							<Image {...props}/>
+						</li>
+					);
+				})}
+			</ul>
 		);
 	}
 }
@@ -98,7 +210,7 @@ export const pageQuery = graphql`
 			acf {
 				logo
 				subtitle
-				hero: caseStudyHero {
+				hero: caseStudyHeroImage {
 					localFile {
 						childImageSharp {
 							full: sizes(maxWidth: 1600) {
@@ -126,6 +238,17 @@ export const pageQuery = graphql`
 						localFile {
 							childImageSharp {
 								sizes(maxWidth: 800) {
+									base64
+									aspectRatio
+									src
+									srcSet
+									srcWebp
+									srcSetWebp
+									sizes
+									originalImg
+									originalName
+								}
+								full: sizes(maxWidth: 1600) {
 									base64
 									aspectRatio
 									src
