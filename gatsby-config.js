@@ -20,7 +20,7 @@ module.exports = {
 				*/
 				baseUrl: `admin.tagprints.com`,
 				// The protocol. This can be http or https.
-				protocol: `http`,
+				protocol: `https`,
 				// Indicates whether the site is hosted on wordpress.com.
 				// If false, then the asumption is made that the site is self hosted.
 				// If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
@@ -29,7 +29,19 @@ module.exports = {
 				// If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
 				// This feature is untested for sites hosted on Wordpress.com
 				useACF: true,
-				verboseOutput: true
+				verboseOutput: true,
+				concurrentRequests: 10,
+				excludedRoutes: [
+					'/yoast/v1',
+					'/gf/v2/forms/schema',
+					'/acf/v3/posts',
+					'/acf/v3/pages',
+					'/acf/v3/case-study',
+					'/acf/v3/lookbook',
+					'/acf/v3/categories',
+					'/acf/v3/case-study-category',
+					'/wp-api-menus/v2/menu-locations'
+				]
 			}
 		},
 		`gatsby-transformer-sharp`,

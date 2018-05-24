@@ -397,16 +397,15 @@ function getValidRoutes({
       ]
 
       const routePath = getRoutePath(url, route._links.self)
-
       if (excludedTypes.includes(entityType)) {
         if (_verbose)
           console.log(
             colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
           )
       } else if (
-        _excludedRoutes.some(excludedRoute =>
-          minimatch(routePath, excludedRoute)
-        )
+		_excludedRoutes.some(excludedRoute =>
+			minimatch(routePath, excludedRoute)
+		)
       ) {
         if (_verbose)
           console.log(

@@ -101,12 +101,13 @@ export default class JobTemplate extends Component {
 								<div className={CSS.gallery}>
 									<ul>
 										{images.gallery.map((image, index) => {
-											const resolutions = image.thumbnail
-												.childImageSharp ?
-												image.thumbnail
-													.childImageSharp
-													.resolutions :
-												{};
+											const resolutions =
+												image.thumbnail &&
+												image.thumbnail.childImageSharp ?
+													image.thumbnail
+														.childImageSharp
+														.resolutions :
+													{};
 
 											return (
 												<li

@@ -617,7 +617,6 @@ var requestInQueue = require("./request-in-queue");function getValidRoutes(_ref9
           var excludedTypes = [undefined, "v2", "v3", "1.0", "2.0", "embed", "proxy", "", baseUrl];
 
           var routePath = getRoutePath(url, route._links.self);
-
           if (excludedTypes.includes(entityType)) {
             if (_verbose) console.log(colorized.out("Invalid route.", colorized.color.Font.FgRed));
           } else if (_excludedRoutes.some(function (excludedRoute) {
