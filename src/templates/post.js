@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 
 import {innerHtml} from '../utils/wordpressHelpers';
-import {initPageElements} from '../utils/documentHelpers';
 import Fragment from '../components/fragment';
 import Seo from '../components/seo';
 import CSS from '../css/modules/post.module.scss';
@@ -14,10 +13,6 @@ export default class PostTemplate extends Component {
 		location: PropTypes.object.isRequired,
 		site: PropTypes.object.isRequired
 	};
-
-	componentDidMount() {
-		initPageElements();
-	}
 
 	render() {
 		const {currentPost} = this.props.data;
