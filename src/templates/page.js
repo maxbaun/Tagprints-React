@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 
 import {innerHtml} from '../utils/wordpressHelpers';
-import {initPageElements} from '../utils/documentHelpers';
 import Fragment from '../components/fragment';
 import Seo from '../components/seo';
 
@@ -13,10 +12,6 @@ export default class PageTemplate extends Component {
 		location: PropTypes.object.isRequired,
 		site: PropTypes.object.isRequired
 	};
-
-	componentDidMount() {
-		initPageElements();
-	}
 
 	render() {
 		const {currentPage} = this.props.data;

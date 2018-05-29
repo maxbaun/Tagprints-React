@@ -10,6 +10,7 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 import WorkHeader from '../components/workHeader';
 import Fragment from '../components/fragment';
+import {setDataTheme} from '../utils/documentHelpers';
 
 export default class WorkLayout extends Component {
 	static propTypes = {
@@ -21,6 +22,16 @@ export default class WorkLayout extends Component {
 	static defaultProps = {
 		data: {}
 	};
+
+	componentDidMount() {
+		setDataTheme(this.props.location);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.location.pathname !== this.props.location.pathname) {
+			setDataTheme(nextProps.location);
+		}
+	}
 
 	render() {
 		const {mainMenu, site} = this.props.data;

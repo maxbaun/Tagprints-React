@@ -18,7 +18,11 @@ const Nav = ({items, classes, id, onLinkClick: handleLinkClick}) => {
 					return (
 						<li key={item.url} className={classes}>
 							<Link
-								to={replaceLinks(item.url)}
+								to={
+									hasChildren ?
+										replaceLinks(item.children[0].url) :
+										replaceLinks(item.url)
+								}
 								onClick={click(handleLinkClick, item)}
 								title={item.title}
 							>

@@ -4,7 +4,6 @@ import graphql from 'graphql';
 import Img from 'gatsby-image';
 
 import {innerHtml} from '../utils/wordpressHelpers';
-import {initPageElements} from '../utils/documentHelpers';
 import {click} from '../utils/componentHelpers';
 import Modal from '../components/modal';
 import Form from '../components/form';
@@ -39,10 +38,6 @@ export default class HashtagTemplate extends Component {
 		location: PropTypes.object.isRequired,
 		site: PropTypes.object.isRequired
 	};
-
-	componentDidMount() {
-		initPageElements();
-	}
 
 	handleHeroLoad() {
 		this.setState({
