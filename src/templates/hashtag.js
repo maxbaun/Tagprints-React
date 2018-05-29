@@ -64,7 +64,7 @@ export default class HashtagTemplate extends Component {
 					site={this.props.site}
 					location={this.props.location}
 				/>
-				<main className="main" rol="main">
+				<main className="main" role="main">
 					{this.renderHero()}
 					{this.renderSteps()}
 					{this.renderImage1()}
@@ -252,12 +252,10 @@ export default class HashtagTemplate extends Component {
 					<div className={CSS.modalInner}>
 						<Img
 							style={{
-								marginBottom: 30
+								width: 222,
+								margin: '0 auto 30px'
 							}}
-							resolutions={
-								modal.image.localFile.childImageSharp
-									.resolutions
-							}
+							sizes={modal.image.localFile.childImageSharp.sizes}
 						/>
 						<Form
 							location={this.props.location}
@@ -270,7 +268,7 @@ export default class HashtagTemplate extends Component {
 	}
 }
 
-import {SmallResponsiveImage, SmallImage, LargeImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
+import {LargeImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
 
 export const pageQuery = graphql`
 	query hashtagPageQuery($id: String!) {
@@ -290,7 +288,7 @@ export const pageQuery = graphql`
 				steps: hashtagSteps {
 					steps {
 						image {
-							...SmallResponsiveImage
+							...LargeImage
 						}
 						title
 						tag
@@ -320,7 +318,7 @@ export const pageQuery = graphql`
 				}
 				modal: hashtagModal {
 					image {
-						...SmallImage
+						...LargeImage
 					}
 					form
 				}

@@ -53,9 +53,13 @@ export default class ContactPageTemplate extends Component {
 							<div className="container">
 								<div className={CSS.formImage}>
 									<Img
-										resolutions={
+										style={{
+											width: 222,
+											margin: '0 auto'
+										}}
+										sizes={
 											form.image.localFile.childImageSharp
-												.resolutions
+												.sizes
 										}
 									/>
 								</div>
@@ -96,7 +100,7 @@ export default class ContactPageTemplate extends Component {
 	}
 }
 
-import {SmallImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
+import {LargeImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
 
 export const pageQuery = graphql`
 	query contactPageQuery($id: String!) {
@@ -110,7 +114,7 @@ export const pageQuery = graphql`
 				form: contactForm {
 					form
 					image {
-						...SmallImage
+						...LargeImage
 					}
 				}
 				locations: contactLocations {

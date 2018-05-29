@@ -163,7 +163,7 @@ export default class PblPageTemplate extends Component {
 	}
 }
 
-import {Page, SmallResponsiveImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
+import {Page, LargeImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
 
 export const pageQuery = graphql`
 	query pblPageQuery($id: String!) {
@@ -180,7 +180,7 @@ export const pageQuery = graphql`
 				sliderTag: pblSectionSliderTag
 				sliderImages: pblSectionSliderImages {
 					image {
-						...SmallResponsiveImage
+						...LargeImage
 					}
 				}
 				sliderSlides: pblSectionSliderSlides {

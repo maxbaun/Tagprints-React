@@ -189,45 +189,6 @@ export const LargeImage = graphql`
 	}
 `;
 
-export const SmallResponsiveImage = graphql`
-	fragment SmallResponsiveImage on wordpress__wp_media {
-		...BaseImage
-		localFile {
-			childImageSharp {
-				sizes(maxWidth: 268) {
-					...ImageSizes
-				}
-			}
-		}
-	}
-`;
-
-export const SmallImage = graphql`
-	fragment SmallImage on wordpress__wp_media {
-		...BaseImage
-		localFile {
-			childImageSharp {
-				resolutions(width: 222) {
-					...ImageResolutions
-				}
-			}
-		}
-	}
-`;
-
-export const ExtraSmallImage = graphql`
-	fragment ExtraSmallImage on wordpress__wp_media {
-		...BaseImage
-		localFile {
-			childImageSharp {
-				resolutions(width: 149) {
-					...ImageResolutions
-				}
-			}
-		}
-	}
-`;
-
 export const CaseStudy = graphql`
 	fragment CaseStudy on wordpress__wp_case_study {
 		id: wordpress_id

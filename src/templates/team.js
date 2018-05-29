@@ -123,10 +123,14 @@ export default class TeamTemplate extends Component {
 										<div className={CSS.member}>
 											<div className={CSS.memberImage}>
 												<Img
-													resolutions={
+													style={{
+														width: 149,
+														margin: '0 auto'
+													}}
+													sizes={
 														member.image.localFile
 															.childImageSharp
-															.resolutions
+															.sizes
 													}
 												/>
 											</div>
@@ -167,7 +171,7 @@ export default class TeamTemplate extends Component {
 	}
 }
 
-import {LargeImage, ExtraSmallImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
+import {LargeImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
 
 export const pageQuery = graphql`
 	query teamPageQuery($id: String!) {
@@ -185,7 +189,7 @@ export const pageQuery = graphql`
 					name
 					job
 					image {
-						...ExtraSmallImage
+						...LargeImage
 					}
 				}
 				cta: teamCta {

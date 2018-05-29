@@ -35,9 +35,13 @@ export default class FormTemplate extends Component {
 								{content.view === 'image' ? (
 									<div className={CSS.image}>
 										<Img
-											resolutions={
+											style={{
+												width: 222,
+												margin: '0 auto'
+											}}
+											sizes={
 												content.image.localFile
-													.childImageSharp.resolutions
+													.childImageSharp.sizes
 											}
 										/>
 									</div>
@@ -71,7 +75,7 @@ export default class FormTemplate extends Component {
 	}
 }
 
-import {SmallImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
+import {LargeImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
 
 export const pageQuery = graphql`
 	query formPageQuery($id: String!) {
@@ -82,7 +86,7 @@ export const pageQuery = graphql`
 					view
 					content
 					image {
-						...SmallImage
+						...LargeImage
 					}
 				}
 				form: formForm {
