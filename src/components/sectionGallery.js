@@ -89,7 +89,7 @@ export default class SectionGallery extends Component {
 
 	handleImageClick(image) {
 		const index = this.props.images.findIndex(
-			i => image.id === i.get('id')
+			i => image.id === i.id
 		);
 
 		this.handleModalOpen(index + 1);

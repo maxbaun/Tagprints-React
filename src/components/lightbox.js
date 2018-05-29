@@ -174,7 +174,9 @@ export default class Lightbox extends Component {
 									maxWidth: image.width ?
 										image.width :
 										'100%',
-									right: 0
+									right: 0,
+									left: 0,
+									margin: '0 auto'
 								};
 
 								if (height < width) {
