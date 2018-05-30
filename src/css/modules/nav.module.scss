@@ -1,0 +1,291 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.menu {
+	@include noList();
+	display: flex;
+	flex-direction: column;
+
+	li {
+		display: block;
+	}
+
+	@include largeAndUp {
+		align-items: center;
+		justify-content: center;
+		flex-direction: row;
+	}
+}
+
+.menuHeader {
+	@include largeAndUp {
+		justify-content: flex-end;
+	}
+}
+
+.menuFooter {
+	.link {
+		padding: 4px 0;
+
+		@include largeAndUp {
+			padding: 0 30px;
+		}
+	}
+}
+
+.link {
+	display: block;
+	font-family: $fontGotham;
+	font-weight: 700;
+	font-size: 13px;
+	text-transform: uppercase;
+	padding: 5px 0;
+	white-space: nowrap;
+
+	@media screen and (min-width: 1072px) {
+		padding: 2.5px 15px;
+	}
+}
+
+.linkBordered {
+	@include largeAndUp {
+		border-right: 1px solid transparent;
+	}
+}
+
+.ctaWrap {
+	display: inherit;
+
+	@include largeAndUp {
+		display: block;
+		margin-left: 7.5px;
+	}
+}
+
+.cta {
+	@extend .link;
+	border-radius: 4px;
+	display: inline-block;
+	font-weight: 500;
+	line-height: 1;
+	padding: 12px 18px 10px;
+	border: 1px solid transparent;
+	transition: all 0.3s ease-in-out;
+
+	@include largeAndUp {
+		padding: 18px 24px 16px;
+		display: block;
+	}
+}
+
+.dropdownWrap {
+	position: relative;
+
+	&:hover {
+		.dropdown {
+			opacity: 1;
+		}
+	}
+}
+
+.dropdown {
+	margin: -5px 0 10px 10px;
+
+	li {
+		display: block;
+
+		&:not(:last-child) {
+			a {
+				@include largeAndUp {
+					border-right: 1px solid transparent;
+				}
+			}
+		}
+	}
+
+	@include largeAndUp {
+		padding-top: 15px;
+		position: absolute;
+		top: 100%;
+		z-index: 1;
+		left: 50%;
+		margin: 0;
+		opacity: 0;
+		transform: translateX(-50%);
+		transition: opacity 0.15s ease-in-out;
+	}
+}
+
+.dropdownInner {
+	@include noList();
+
+	@include largeAndUp {
+		border: 1px solid transparent;
+		display: flex;
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+	}
+}
+
+.dropdownLink {
+	font-weight: 700;
+	font-size: 13px;
+	text-transform: uppercase;
+	line-height: 1.2;
+	transition: all 0.3s ease-in-out;
+
+	@include largeAndUp {
+		padding: 13px 29px;
+	}
+}
+
+.menu[data-theme='default'] {
+	.link {
+		font-weight: 300;
+
+		&:hover {
+			color: $color_5;
+		}
+	}
+
+	&.menuHeader {
+		.link {
+			color: rgb(77, 77, 77);
+
+			&:hover {
+				color: $color_5;
+			}
+		}
+
+		.linkBordered {
+			border-right-color: rgb(235, 235, 235);
+		}
+
+		.cta {
+			color: rgb(77, 77, 77);
+			border-color: rgb(77, 77, 77);
+			font-weight: 500;
+
+			&:hover {
+				color: rgb(77, 77, 77);
+			}
+		}
+
+		.dropdownLink {
+			color: rgb(77, 77, 77);
+		}
+	}
+
+	&.menuFooter {
+		.link {
+			color: $color_12;
+		}
+
+		.linkBordered {
+			border-right-color: $color_8;
+		}
+
+		.dropdownLink {
+			color: $color_12;
+
+			@include largeAndUp {
+				&:hover {
+					color: $color_5;
+				}
+			}
+		}
+	}
+
+	.dropdownInner {
+		border-color: rgba(0, 0, 0, 0.15);
+
+		li {
+			&:not(:last-child) {
+				a {
+					border-right-color: #ebebeb;
+				}
+			}
+		}
+	}
+
+	.dropdownLink {
+		@include largeAndUp {
+			background-color: white;
+
+			&:hover {
+				color: $color_5;
+				background-color: $color_25;
+			}
+		}
+	}
+}
+
+.menu[data-theme='photobooth-lite'] {
+	.link {
+		font-weight: 700;
+
+		&:hover {
+			color: $color_42;
+		}
+	}
+
+	&.menuHeader {
+		.link {
+			color: white;
+
+			&:hover {
+				color: $color_42;
+			}
+		}
+
+		.linkBordered {
+			border-right-color: transparent;
+		}
+
+		.cta {
+			color: white;
+			border-color: $color_42;
+			background-color: $color_42;
+			font-weight: 500;
+
+			&:hover {
+				color: white;
+				border-color: $color_42;
+				background-color: transparent;
+			}
+		}
+	}
+
+	&.menuFooter {
+		.link {
+			color: $color_12;
+		}
+
+		.linkBordered {
+			border-right-color: $color_8;
+		}
+	}
+
+	.dropdownInner {
+		border-color: rgba(0, 0, 0, 0.15);
+
+		li {
+			&:not(:last-child) {
+				a {
+					border-right-color: #ebebeb;
+				}
+			}
+		}
+	}
+
+	.dropdownLink {
+		@include largeAndUp {
+			background-color: white;
+			color: $color_43;
+
+			&:hover {
+				color: white;
+				background-color: $color_42;
+			}
+		}
+	}
+}

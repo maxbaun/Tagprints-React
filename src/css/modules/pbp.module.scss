@@ -1,0 +1,27 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.hero {
+	h1 {
+		color: $color_white;
+		font-family: $fontUltra;
+		line-height: 1.164;
+		max-width: 95%;
+		margin: 0 auto;
+		font-size: 53px;
+
+		@include largeAndUp {
+			font-size: 86px;
+			line-height: 1.164;
+			max-width: 1040px;
+		}
+
+		&:last-child {
+			margin: 0 auto 35px;
+
+			@include largeAndUp {
+				margin-bottom: 70px;
+			}
+		}
+	}
+}

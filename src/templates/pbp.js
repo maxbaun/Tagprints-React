@@ -9,17 +9,16 @@ import {
 	getLightboxImageObject
 } from '../utils/wordpressHelpers';
 import {setDataTheme} from '../utils/documentHelpers';
-import CSS from '../css/modules/pbl.module.scss';
+import CSS from '../css/modules/pbp.module.scss';
 import Fragment from '../components/fragment';
 import Seo from '../components/seo';
 import Hero from '../components/hero';
 import SectionSlider from '../components/sectionSlider';
-import SectionGallery from '../components/sectionGallery';
 import IconBlocks from '../components/iconBlocks';
 import SectionRental from '../components/sectionRental';
 import SectionFaq from '../components/sectionFaq';
 
-export default class PblPageTemplate extends Component {
+export default class PbpPageTemplate extends Component {
 	constructor(props) {
 		super(props);
 
@@ -33,7 +32,7 @@ export default class PblPageTemplate extends Component {
 	};
 
 	componentDidMount() {
-		setDataTheme('photobooth-lite');
+		setDataTheme('photobooth-pro');
 	}
 
 	componentWillUnmount() {
@@ -44,14 +43,14 @@ export default class PblPageTemplate extends Component {
 		const {currentPage} = this.props.data;
 		const {acf: data} = currentPage;
 
-		const galleryImages = data.galleryImages.map(image => {
-			return {
-				...getLightboxImageObject(image),
-				id: image.url,
-				key: image.url,
-				preload: true
-			};
-		});
+		// Const galleryImages = data.galleryImages.map(image => {
+		// 	return {
+		// 		...getLightboxImageObject(image),
+		// 		id: image.url,
+		// 		key: image.url,
+		// 		preload: true
+		// 	};
+		// });
 
 		return (
 			<Fragment>
@@ -65,16 +64,43 @@ export default class PblPageTemplate extends Component {
 						backgroundImage={
 							currentPage.image.localFile.childImageSharp.sizes
 						}
-						heroClass="heroPbl"
+						heroClass="heroPbp"
+						buttons={[data.hero.button1, data.hero.button2]}
+						scrollTo="#pbpSectionSlider"
+					>
+						<div
+							className={CSS.hero} // eslint-disable-next-line react/no-danger
+							dangerouslySetInnerHTML={innerHtml(
+								data.hero.content
+							)}
+						/>
+					</Hero>
+				</main>
+			</Fragment>
+		);
+
+		return (
+			<Fragment>
+				<Seo
+					currentPage={currentPage}
+					site={this.props.site}
+					location={this.props.location}
+				/>
+				<main className="main" role="main">
+					<Hero
+						backgroundImage={
+							currentPage.image.localFile.childImageSharp.sizes
+						}
+						heroClass="heroPbp"
 						buttons={data.heroButtons}
-						scrollTo="#pblSectionSlider"
+						scrollTo="#pbpSectionSlider"
 					>
 						<div className={CSS.hero}>
 							<h1>{data.heroTitle}</h1>
 						</div>
 					</Hero>
 					<SectionSlider
-						id="pblSectionSlider"
+						id="pbpSectionSlider"
 						socialTitle="GREAT SHARING CAPABILITIES"
 						slides={data.sliderSlides}
 						images={[data.sliderImages[0].image]}
@@ -175,67 +201,62 @@ export default class PblPageTemplate extends Component {
 import {Page, LargeImage} from '../utils/fragments'; // eslint-disable-line no-unused-vars
 
 export const pageQuery = graphql`
-	query pblPageQuery($id: String!) {
+	query pbpPageQuery($id: String!) {
 		currentPage: wordpressPage(id: {eq: $id}) {
 			...Page
 			acf {
-				heroTitle: pblHeroTitle
-				heroButtons: pblHeroButtons {
-					url
-					text
-					class
-				}
-				sliderTitle: pblSectionSliderTitle
-				sliderTag: pblSectionSliderTag
-				sliderImages: pblSectionSliderImages {
-					image {
-						...LargeImage
+				hero: pbpHero {
+					content
+					button1 {
+						title
+						url
+					}
+					button2 {
+						title
+						url
 					}
 				}
-				sliderSlides: pblSectionSliderSlides {
-					content
+				slider: pbpSlider {
+					slides {
+						content
+					}
 				}
-				galleryTitle: pblSectionGalleryTitle
-				gallerySubtitle: pblSectionGallerySubtitle
-				galleryLink: pblSectionGalleryLink {
+				gallery: pbpGallery {
 					title
-					url
+					categories {
+						title
+						featuredImage {
+							...LargeImage
+						}
+						images {
+							...LargeImage
+						}
+					}
 				}
-				galleryImages: pblSectionGalleryGallery {
-					...LargeImage
-				}
-				cta: pblSectionCtaLink {
+				bonuses: pbpBonuses {
 					title
-					url
+					subtitle
+					note
+					blocks {
+						icon
+						title
+						text
+					}
 				}
-				perkTitle: pblSectionPerksTitle
-				perkSubtitle: pblSectionPerksSubtitle
-				perkBlocks: pblSectionPerksBlocks {
-					icon
+				promises: pbpPromises {
 					title
-					text
+					subtitle
+					blocks {
+						icon
+						title
+						text
+					}
 				}
-				factsTitle: pblSectionFactsTitle
-				factsSubtitle: pblSectionFactsSubtitle
-				factsBlocks: pblSectionFactsBlocks {
-					icon
-					title
-					text
-				}
-				rentalTitle: pblSectionRentalTitle
-				rentalCta: pblSectionRentalCta {
-					title
-					url
-				}
-				rentalBlocks: pblSectionRentalOptions {
-					title
-					accent
-					text
-				}
-				faqTitle: pblSectionFaqTitle
-				faqFaqs: pblSectionFaqFaqs {
-					header
-					content
+				rental: pbpRental {
+					options {
+						title
+						text
+					}
 				}
 			}
 		}

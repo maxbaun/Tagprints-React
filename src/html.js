@@ -45,13 +45,12 @@ export default class Html extends React.Component {
 					{/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css"/> */}
 					{css}
 				</head>
-				<body data-theme="default">
+				<body data-theme="default" data-theme-toggle="true">
 					<div
 						id="___gatsby"
 						dangerouslySetInnerHTML={{__html: this.props.body}} //eslint-disable-line
 					/>
 					{this.props.postBodyComponents}
-					<script src="//npmcdn.com/flickity@1.2.1/dist/flickity.pkgd.js"/>
 					<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAZyFJjtN1lLLz3UoVF_mDelyTQOSZ0-rY"/>
 				</body>
 			</html>

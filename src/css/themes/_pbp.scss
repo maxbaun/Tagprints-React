@@ -1,0 +1,14 @@
+body[data-theme='photobooth-pro'] {
+	font-family: $fontGotham;
+	background-color: $color_white;
+	color: $color_7;
+	position: relative;
+
+	header {
+		position: absolute;
+		z-index: 1;
+		top: 0;
+		left: 0;
+		width: 100%;
+	}
+}

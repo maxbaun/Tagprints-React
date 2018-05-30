@@ -1,0 +1,60 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.footer {
+}
+
+.inner {
+	padding: 25px 15px;
+	margin: 0 auto;
+	max-width: 1170px;
+	height: 100%;
+}
+
+.main {
+	padding: 25px 0;
+}
+
+.social {
+	margin: 40px 0 20px;
+}
+
+.logo {
+	display: flex;
+	justify-content: center;
+}
+
+.copy {
+	font-size: 14px;
+	line-height: 18px;
+	padding: 20.5px 0 0;
+	text-align: center;
+}
+
+.footer[data-theme='default'] {
+	background-color: $color_2;
+
+	.copy {
+		color: hsla(0, 0%, 97%, 0.4);
+
+		a {
+			color: $color_1;
+		}
+	}
+}
+
+.footer[data-theme='photobooth-lite'] {
+	background-color: $color_43;
+
+	.copy {
+		color: white;
+
+		a {
+			color: white;
+
+			&:hover {
+				color: $color_42;
+			}
+		}
+	}
+}

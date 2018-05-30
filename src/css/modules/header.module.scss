@@ -1,0 +1,169 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.header {
+	height: 72px;
+
+	@include largeAndUp {
+		height: 157px;
+	}
+}
+
+.inner {
+	padding: 0 15px;
+	margin: 0 auto;
+	max-width: 1170px;
+	height: 100%;
+}
+
+.navTop {
+	display: none;
+	padding-top: 10px;
+	text-align: right;
+
+	@include largeAndUp {
+		display: block;
+	}
+}
+
+.socialMobile {
+	display: block;
+	margin-top: 10px;
+
+	@include largeAndUp {
+		display: none;
+	}
+}
+
+.navMain {
+	align-items: center;
+	display: flex;
+	flex-wrap: nowrap;
+	position: relative;
+	height: 100%;
+
+	@include largeAndUp {
+		height: auto;
+		padding: 25px 0;
+	}
+}
+
+.main {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+
+	@include largeAndUp {
+		width: 164px;
+	}
+}
+
+.toggle {
+	align-self: flex-end;
+	background-color: transparent;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	display: block;
+	height: 38px;
+	width: 44px;
+	padding: 10px;
+	outline: none !important;
+
+	span {
+		display: block;
+		height: 2px;
+		width: 22px;
+
+		&:not(:first-child) {
+			margin-top: 4px;
+		}
+	}
+
+	@include largeAndUp {
+		display: none;
+	}
+}
+
+.menu {
+	visibility: hidden;
+	padding: 20px 15px;
+	opacity: 0;
+	position: absolute;
+	max-height: 0;
+	width: calc(100% + 30px);
+	top: 100%;
+	left: -15px;
+	right: -15px;
+	z-index: 1;
+	transition: all 0.3s ease-in-out, visibility 0s 0.3s;
+
+	@include largeAndUp {
+		max-height: none;
+		position: relative;
+		opacity: 1;
+		padding: 0;
+		left: 0;
+		right: 0;
+		visibility: visible;
+		width: calc(100% - 164px);
+		transition: none;
+	}
+}
+
+.menuActive {
+	opacity: 1;
+	max-height: 100vh;
+	visibility: visible;
+	transition: all 0.3s ease-in-out;
+}
+
+.header[data-theme='default'] {
+	.menu {
+		background-color: white;
+
+		@include largeAndUp {
+			background-color: transparent;
+		}
+	}
+
+	.toggle {
+		border-color: $color_6;
+
+		span {
+			background-color: $color_6;
+		}
+	}
+}
+
+.header[data-theme='photobooth-lite'] {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+
+	.menu {
+		background-color: rgba($color_43, 0.5);
+
+		@include largeAndUp {
+			background-color: transparent;
+		}
+	}
+
+	.toggle {
+		border-color: white;
+
+		span {
+			background-color: white;
+		}
+	}
+}
+
+:global {
+	.tagprints-logo-svg {
+		svg {
+			display: block;
+		}
+	}
+}

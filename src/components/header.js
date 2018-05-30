@@ -6,6 +6,7 @@ import Logo from './logo';
 import Nav from './nav';
 import NavSocial from './navSocial';
 import {clickPrevent, ref, click} from '../utils/componentHelpers';
+import CSS from '../css/modules/header.module.scss';
 
 export default class Header extends Component {
 	constructor(props) {
@@ -55,25 +56,27 @@ export default class Header extends Component {
 	render() {
 		const {menuActive} = this.state;
 
-		const navClass = ['collapse', 'navbar-collapse'];
+		const menuClass = [CSS.menu];
 
 		if (menuActive) {
-			navClass.push('in');
+			menuClass.push(CSS.menuActive);
 		}
 
 		return (
-			<header>
-				<div className="banner navbar navbar-social" role="banner">
-					<div className="container">
-						<NavSocial
-							showPhone
-							classes="nav navbar-nav navbar-right social-icons"
-						/>
+			<header
+				className={CSS.header}
+				data-theme="default"
+				data-theme-toggle="true"
+			>
+				<div className={CSS.inner}>
+					<div className={CSS.navTop} role="banner">
+						<NavSocial showPhone classname="header"/>
 					</div>
-				</div>
-				<div className="banner navbar navbar-main" role="banner">
-					<div className="container">
-						<div className="navbar-header">
+					<div className={CSS.navMain}>
+						<div className={CSS.main}>
+							<Link to="/">
+								<Logo classname="header"/>
+							</Link>
 							<button
 								ref={ref.call(this, 'toggle')}
 								type="button"
@@ -81,48 +84,29 @@ export default class Header extends Component {
 									this.handleToggle,
 									!menuActive
 								)}
-								className="navbar-toggle collapsed"
+								className={CSS.toggle}
 								data-toggle="collapse"
 								data-target=".navbar-collapse"
 							>
-								<span className="icon-bar"/>
-								<span className="icon-bar"/>
-								<span className="icon-bar"/>
+								<span/>
+								<span/>
+								<span/>
 							</button>
-							<Link className="navbar-brand" to="/">
-								<Logo/>
-							</Link>
 						</div>
 						<div
 							ref={ref.call(this, 'menu')}
-							className={navClass.join(' ')}
-							role="navigation"
+							className={menuClass.join(' ')}
 						>
-							<div className="navbar-right">
-								<Nav
-									items={this.props.items}
-									id="menu-primary-navigation"
-									classes="nav navbar-nav main-navigation"
-									onLinkClick={click(
-										this.handleToggle,
-										false
-									)}
-								/>
-								<ul className="nav navbar-nav navbar-cta">
-									<li>
-										<Link
-											to="/free-quote"
-											className="btn btn-cta-transparent"
-										>
-											Free Quote
-										</Link>
-									</li>
-								</ul>
-							</div>
-							<NavSocial
-								showPhone
-								classes="nav navbar-nav navbar-right social-icons"
+							<Nav
+								showCta
+								items={this.props.items}
+								id="menu-primary-navigation"
+								classes="menuHeader"
+								onLinkClick={click(this.handleToggle, false)}
 							/>
+							<div className={CSS.socialMobile}>
+								<NavSocial showPhone classname="header"/>
+							</div>
 						</div>
 					</div>
 				</div>

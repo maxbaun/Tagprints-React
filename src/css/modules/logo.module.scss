@@ -1,0 +1,48 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.logo {
+	display: block;
+
+	> svg {
+		display: block;
+	}
+}
+
+[data-theme='default'] {
+	.header {
+		.st0,
+		.st1,
+		.st3 {
+			fill: $color_35;
+		}
+
+		.st2,
+		.st4 {
+			fill: $color_33;
+		}
+	}
+
+	.footer {
+		.st0,
+		.st1,
+		.st2,
+		.st3,
+		.st4 {
+			fill: hsla(0, 0%, 97%, 0.4);
+		}
+	}
+}
+
+[data-theme='photobooth-lite'] {
+	.header,
+	.footer {
+		.st0,
+		.st1,
+		.st2,
+		.st3,
+		.st4 {
+			fill: white;
+		}
+	}
+}

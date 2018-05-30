@@ -74,17 +74,36 @@
 }
 
 .scrollTo {
-	background-image: url('../../images/more-information.png');
-	background-size: 18px 139px;
-	background-repeat: no-repeat;
-	@include image-2x('../../images/more-information@2x.png', 18px, 139px);
-	height: 139px;
-	width: 18px;
 	cursor: pointer;
 	display: block;
 	position: absolute;
 	bottom: 30px;
 	left: 10%;
+}
+
+.heroPbl {
+	.scrollTo {
+		background-image: url('../../images/more-information.png');
+		background-size: 18px 139px;
+		background-repeat: no-repeat;
+		@include image-2x('../../images/more-information@2x.png', 18px, 139px);
+		height: 139px;
+		width: 18px;
+	}
+}
+
+.heroPbp {
+	.image {
+		&::after {
+			content: ' ';
+			height: 100%;
+			width: 100%;
+			top: 0;
+			left: 0;
+			position: absolute;
+			background: rgba($color_black, 0.5);
+		}
+	}
 }
 
 // .heroPbl {

@@ -353,5 +353,9 @@ function getPageTemplate(template) {
 		return path.resolve('./src/templates/pbl.js');
 	}
 
+	if (template === 'template-photobooth-pro.php') {
+		return path.resolve('./src/templates/pbp.js');
+	}
+
 	return path.resolve(`./src/templates/page.js`);
 }

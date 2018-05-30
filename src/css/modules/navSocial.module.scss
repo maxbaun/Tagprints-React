@@ -1,0 +1,116 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.icons {
+	@include noList();
+}
+
+.icon,
+.separator,
+.number {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.separator {
+	height: 18px;
+	width: 1px;
+	margin: 3.5px 10px;
+}
+
+.number {
+	font-family: $fontGotham;
+	font-size: 14px;
+	line-height: 18px;
+	padding-left: 10px;
+}
+
+.header {
+	.icon {
+		font-size: 18px;
+		line-height: 18px;
+
+		a {
+			padding: 3.5px 10px;
+		}
+	}
+}
+
+.footer {
+	@include largeAndUp {
+		text-align: center;
+	}
+
+	.icon {
+		margin: 0 10px;
+
+		a {
+			display: block;
+			border-radius: 10px;
+			border: 1px solid transparent;
+			height: 40px;
+			width: 40px;
+			font-size: 20px;
+			text-align: center;
+			line-height: 18px;
+			padding: 10px 0;
+		}
+	}
+}
+
+[data-theme='default'] {
+	&.header {
+		.icon,
+		.number {
+			a {
+				color: $color_7;
+
+				&:hover {
+					color: $color_5;
+				}
+			}
+		}
+
+		.separator {
+			background-color: $color_6;
+		}
+	}
+
+	&.footer {
+		.icon {
+			a {
+				color: hsla(0, 0%, 97%, 0.4);
+				border-color: hsla(0, 0%, 97%, 0.4);
+
+				&:hover {
+					color: $color_12;
+					border-color: $color_12;
+				}
+			}
+		}
+	}
+}
+
+[data-theme='photobooth-lite'] {
+	&.header,
+	&.footer {
+		.icon,
+		.number {
+			a {
+				color: white;
+			}
+		}
+
+		.icon {
+			a {
+				border-color: white;
+			}
+		}
+	}
+
+	&.header {
+		.separator {
+			background-color: white;
+		}
+	}
+}
