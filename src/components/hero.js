@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Img from 'gatsby-image';
+import Link from 'gatsby-link';
 
 import CSS from '../css/modules/hero.module.scss';
 import ScrollSpy from './scrollSpy';
@@ -70,8 +71,8 @@ export default class Hero extends Component {
 									buttons.map(button => {
 										return (
 											<li key={button.url}>
-												<a
-													href={replaceLinks(
+												<Link
+													to={replaceLinks(
 														button.url
 													)}
 													className={`btn ${
@@ -79,7 +80,7 @@ export default class Hero extends Component {
 													}`}
 												>
 													{button.text}
-												</a>
+												</Link>
 											</li>
 										);
 									})}
