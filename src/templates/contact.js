@@ -21,14 +21,10 @@ export default class ContactPageTemplate extends Component {
 		const {currentPage} = this.props.data;
 
 		const {info, form, locations} = currentPage.acf;
-		console.log(currentPage);
+
 		return (
 			<Fragment>
-				<Seo
-					currentPage={currentPage}
-					site={this.props.site}
-					location={this.props.location}
-				/>
+				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<main className="main" role="main">
 					<div className={CSS.wrap}>
 						<div className={CSS.header}>
@@ -57,17 +53,10 @@ export default class ContactPageTemplate extends Component {
 											width: 222,
 											margin: '0 auto'
 										}}
-										sizes={
-											form.image.localFile.childImageSharp
-												.sizes
-										}
+										sizes={form.image.localFile.childImageSharp.sizes}
 									/>
 								</div>
-								<Form
-									location={this.props.location}
-									formId={form.form}
-									labelPlacement={form.labelPlacement}
-								/>
+								<Form location={this.props.location} formId={form.form} labelPlacement={form.labelPlacement}/>
 							</div>
 						</div>
 						<div className={CSS.locationSection}>
@@ -75,14 +64,8 @@ export default class ContactPageTemplate extends Component {
 								{locations &&
 									locations.map(location => {
 										return (
-											<li
-												key={location.title}
-												className={CSS.location}
-											>
-												<Location
-													key={location.title}
-													{...location}
-												/>
+											<li key={location.title} className={CSS.location}>
+												<Location key={location.title} {...location}/>
 											</li>
 										);
 									})}

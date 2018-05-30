@@ -34,6 +34,10 @@ export default class Location extends Component {
 	}
 
 	init() {
+		if (typeof google === 'undefined') {
+			return setTimeout(() => this.init(), 300);
+		}
+
 		const {lat, lng} = this.props;
 		const marker = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
 
@@ -92,16 +96,7 @@ export default class Location extends Component {
 							<h3 className={CSS.title}>{title}</h3>
 							<h5 className={CSS.address}>{address}</h5>
 							<hr className={CSS.break}/>
-							<a
-								href={directions}
-								target="_blank"
-								className={[
-									'btn',
-									'btn-cta-transparent-white',
-									'readmore',
-									CSS.link
-								].join(' ')}
-							>
+							<a href={directions} target="_blank" className={['btn', 'btn-cta-transparent-white', 'readmore', CSS.link].join(' ')}>
 								Get Directions
 							</a>
 						</div>
