@@ -12,7 +12,7 @@ export default class SectionSlider extends Component {
 		super(props);
 
 		this.state = {
-			currentIndex: 1
+			currentIndex: 0
 		};
 
 		this.slider = null;
