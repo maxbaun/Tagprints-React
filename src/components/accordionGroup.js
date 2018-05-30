@@ -24,8 +24,10 @@ export default class AccordionGroup extends Component {
 	};
 
 	componentDidMount() {
-		const Badger = require('badger-accordion');
-		this.badger = new Badger(`#${this.props.id}`);
+		setTimeout(() => {
+			const Badger = require('badger-accordion');
+			this.badger = new Badger(`#${this.props.id}`);
+		}, 300);
 	}
 
 	render() {
@@ -37,7 +39,10 @@ export default class AccordionGroup extends Component {
 					{items.map(item => {
 						return (
 							<Fragment key={item.header}>
-								<dt key={item.header} className={CSS.header}>
+								<dt
+									key={item.header}
+									className="badger-accordion__header"
+								>
 									<div className="badger-accordion__trigger js-badger-accordion-header">
 										<div className="badger-accordion__trigger-title">
 											{item.header}

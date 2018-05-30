@@ -10,6 +10,10 @@
 .number {
 	display: inline-block;
 	vertical-align: middle;
+
+	a {
+		transition: all 0.2s ease-in-out;
+	}
 }
 
 .separator {
@@ -58,7 +62,8 @@
 	}
 }
 
-[data-theme='default'] {
+[data-theme='default'],
+[data-theme='photobooth-pro'] {
 	&.header {
 		.icon,
 		.number {
@@ -85,6 +90,23 @@
 				&:hover {
 					color: $color_12;
 					border-color: $color_12;
+				}
+			}
+		}
+	}
+}
+
+[data-theme='photobooth-pro'] {
+	&.footer {
+		.icon {
+			a {
+				color: white;
+				background-color: #616160;
+				border-color: #616160;
+
+				&:hover {
+					background-color: $color_5;
+					border-color: $color_5;
 				}
 			}
 		}

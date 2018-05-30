@@ -18,6 +18,47 @@
 	}
 }
 
+.title {
+	display: inline-block;
+	position: relative;
+
+	h1 {
+		font-family: $fontUltra;
+		white-space: nowrap;
+		font-size: 30px;
+		padding-right: 40px;
+
+		@media (min-width: 370px) {
+			padding-right: 50px;
+			font-size: 45px;
+		}
+
+		@include largeAndUp {
+			font-size: 85px;
+			padding-right: 56px;
+		}
+	}
+
+	span {
+		font-family: $fontGotham;
+		font-size: 21px;
+		font-weight: bold;
+		position: absolute;
+		right: 0;
+		bottom: 21px;
+
+		@media (min-width: 370px) {
+			font-size: 26px;
+			bottom: 42px;
+		}
+
+		@include largeAndUp {
+			font-size: 32px;
+			bottom: 75px;
+		}
+	}
+}
+
 .image {
 	display: none;
 	width: 192px;
@@ -130,13 +171,14 @@
 	h4,
 	h5,
 	h6 {
+		font-family: $fontGotham;
 		font-weight: 500;
 		font-size: 30px;
 		margin-bottom: 20px;
-		color: $color_42;
 	}
 
 	p {
+		font-family: $fontGotham;
 		font-size: 18px;
 		font-weight: 300;
 	}
@@ -201,13 +243,23 @@
 	h5 {
 		font-size: 15px;
 		line-height: 18px;
-		font-weight: 900;
+		font-weight: 700;
 		text-transform: uppercase;
 		margin: 0;
 	}
 }
 
 .pblSection {
+	.title {
+		h1 {
+			color: $color_44;
+		}
+
+		span {
+			color: $color_42;
+		}
+	}
+
 	.page {
 		span {
 			background-color: lighten($color_7, 20%);
@@ -217,6 +269,17 @@
 	.activePage {
 		span {
 			background-color: $color_42;
+		}
+	}
+
+	.carouselSlide {
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			color: $color_42;
 		}
 	}
 
@@ -256,6 +319,84 @@
 
 		h5 {
 			color: $color_white;
+		}
+	}
+}
+
+.pbpSection {
+	.title {
+		h1 {
+			color: $color_46;
+		}
+
+		span {
+			color: $color_48;
+		}
+	}
+
+	.carouselSlide {
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			color: $color_5;
+		}
+
+		p {
+			color: $color_7;
+		}
+	}
+
+	.page {
+		span {
+			background-color: $color_12;
+		}
+	}
+
+	.activePage {
+		span {
+			background-color: $color_48;
+		}
+	}
+
+	.carouselBullets {
+		border-left: 1px solid $color_7;
+	}
+
+	.bullet {
+		span {
+			color: $color_7;
+		}
+	}
+
+	.activeBullet {
+		span {
+			color: $color_white;
+			background-color: $color_48;
+		}
+	}
+
+	.socialSharing {
+		background-color: #ECECEC;
+
+		ul {
+			li {
+				background-color: $color_white;
+
+				span {
+					color: $color_48;
+				}
+			}
+
+			li:last-child {
+				background-color: transparent;
+			}
+		}
+
+		h5 {
+			color: $color_7;
 		}
 	}
 }

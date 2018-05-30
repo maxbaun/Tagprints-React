@@ -18,7 +18,6 @@ export default class SectionSlider extends Component {
 		this.slider = null;
 		this.swiper = null;
 
-		this.currentIndex = this.currentIndex.bind(this);
 		this.handleSlideChange = this.handleSlideChange.bind(this);
 		this.handlePaginationClick = this.handlePaginationClick.bind(this);
 	}
@@ -27,16 +26,21 @@ export default class SectionSlider extends Component {
 		id: PropTypes.string,
 		slides: PropTypes.array,
 		images: PropTypes.array.isRequired,
-		children: PropTypes.element.isRequired,
+		children: PropTypes.node,
 		socialTitle: PropTypes.string,
-		sectionClass: PropTypes.string
+		sectionClass: PropTypes.string,
+		title: PropTypes.string,
+		tag: PropTypes.string
 	};
 
 	static defaultProps = {
 		id: 'sectionSlider',
 		slides: [],
+		children: null,
 		socialTitle: null,
-		sectionClass: null
+		sectionClass: null,
+		title: '',
+		tag: ''
 	};
 
 	componentDidMount() {
@@ -72,17 +76,9 @@ export default class SectionSlider extends Component {
 		this.swiper.on('slideChange', this.handleSlideChange);
 	}
 
-	currentIndex() {
-		if (!this.swiper) {
-			return 0;
-		}
-
-		return this.swiper.activeIndex;
-	}
-
 	handleSlideChange() {
 		this.setState({
-			currentIndex: this.swiper.activeIndex
+			currentIndex: this.swiper.realIndex
 		});
 	}
 
@@ -95,7 +91,8 @@ export default class SectionSlider extends Component {
 			images,
 			socialTitle,
 			slides,
-			children,
+			title,
+			tag,
 			id,
 			sectionClass
 		} = this.props;
@@ -118,7 +115,13 @@ export default class SectionSlider extends Component {
 							/>
 						</div>
 						<div className={CSS.content}>
-							{children}
+							<div className={CSS.title}>
+								<h1
+									// eslint-disable-next-line react/no-danger
+									dangerouslySetInnerHTML={innerHtml(title)}
+								/>
+								<span>{tag}</span>
+							</div>
 							<div className={CSS.slider}>
 								<div
 									ref={ref.call(this, 'slider')}
@@ -141,8 +144,7 @@ export default class SectionSlider extends Component {
 																	}
 																	className={
 																		index ===
-																		currentIndex -
-																			1 ?
+																		currentIndex ?
 																			CSS.activePage :
 																			CSS.page
 																	}
@@ -192,7 +194,7 @@ export default class SectionSlider extends Component {
 															key={slide.content}
 															className={
 																index ===
-																currentIndex - 1 ?
+																currentIndex ?
 																	CSS.activeBullet :
 																	CSS.bullet
 															}

@@ -7,6 +7,14 @@
 	> svg {
 		display: block;
 	}
+
+	.st0,
+	.st1,
+	.st2,
+	.st3,
+	.st4 {
+		transition: all 0.3s ease-in-out;
+	}
 }
 
 [data-theme='default'] {
@@ -30,6 +38,31 @@
 		.st3,
 		.st4 {
 			fill: hsla(0, 0%, 97%, 0.4);
+		}
+	}
+}
+
+[data-theme='photobooth-pro'] {
+	.header {
+		.st0,
+		.st1,
+		.st3 {
+			fill: $color_48;
+		}
+
+		.st2,
+		.st4 {
+			fill: $color_33;
+		}
+	}
+
+	.footer {
+		.st0,
+		.st1,
+		.st2,
+		.st3,
+		.st4 {
+			fill: #BBBBBA;
 		}
 	}
 }

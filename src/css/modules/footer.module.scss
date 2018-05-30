@@ -2,6 +2,7 @@
 @import '../utils/mixins.scss';
 
 .footer {
+	display: block;
 }
 
 .inner {
@@ -27,8 +28,11 @@
 .copy {
 	font-size: 14px;
 	line-height: 18px;
-	padding: 20.5px 0 0;
-	text-align: center;
+	margin: 40px 0 0;
+
+	@include largeAndUp {
+		text-align: center;
+	}
 }
 
 .footer[data-theme='default'] {
@@ -54,6 +58,22 @@
 
 			&:hover {
 				color: $color_42;
+			}
+		}
+	}
+}
+
+.footer[data-theme='photobooth-pro'] {
+	background-color: #1D1D1D;
+
+	.copy {
+		color: white;
+
+		a {
+			color: white;
+
+			&:hover {
+				color: $color_48;
 			}
 		}
 	}

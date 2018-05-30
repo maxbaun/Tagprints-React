@@ -34,43 +34,44 @@
 // 	box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.5), inset 0 2px 5px rgba(0, 0, 0, 0.15);
 // }
 
-
-.btn{
+.btn {
 	@include transition(all $trans_time);
-	text-transform:uppercase;
-}
-.btn:active{
-	box-shadow:none !important;
-}
-.btn-cta-wrapper{
-	margin-top:30px;
+	text-transform: uppercase;
 }
 
-input[type="submit"],
+.btn:active {
+	box-shadow: none !important;
+}
+
+.btn-cta-wrapper {
+	margin-top: 30px;
+}
+
+input[type='submit'],
 .btn-cta,
 .btn-cta-transparent,
 .btn-cta-transparent-inverse,
-.btn-cta-white{
+.btn-cta-white {
 	text-transform: uppercase;
 	font-weight: 400;
 	letter-spacing: 2px;
 	border-radius: 4px;
 	padding: 12px 40px;
 	line-height: 18px;
-	outline:none !important;
+	outline: none !important;
 }
 
-.btn-lg{
+.btn-lg {
 	padding: 20px 40px;
 	font-size: 18px;
 }
 
-.btn.readmore{
+.btn.readmore {
 	padding: 14px 16px;
-	font-weight:500;
+	font-weight: 500;
 }
 
-.btn-cta{
+.btn-cta {
 	background-color: $color_5;
 	color: $color_white;
 	border: 1px solid $color_5;
@@ -78,24 +79,25 @@ input[type="submit"],
 
 .btn-cta:hover,
 .btn-cta:active,
-.btn-cta:focus{
+.btn-cta:focus {
 	background-color: transparent;
 	color: $color_5;
 }
 
-.btn-cta-transparent{
+.btn-cta-transparent {
 	color: $color_4;
 	border-color: $color_4;
 	background-color: transparent;
 }
+
 .btn-cta-transparent:hover,
 .btn-cta-transparent:active,
-.btn-cta-transparent:focus{
+.btn-cta-transparent:focus {
 	border-color: $color_5;
 	color: $color_5;
 }
 
-.btn-cta-transparent-inverse{
+.btn-cta-transparent-inverse {
 	border-color: $color_5;
 	color: $color_5;
 	background-color: transparent;
@@ -103,12 +105,12 @@ input[type="submit"],
 
 .btn-cta-transparent-inverse:hover,
 .btn-cta-transparent-inverse:active,
-.btn-cta-transparent-inverse:focus{
+.btn-cta-transparent-inverse:focus {
 	color: $color_4;
 	border-color: $color_4;
 }
 
-.btn-cta-transparent-white{
+.btn-cta-transparent-white {
 	background-color: transparent;
 	border-color: $color_white;
 	color: $color_white;
@@ -116,37 +118,37 @@ input[type="submit"],
 
 .btn-cta-transparent-white:hover,
 .btn-cta-transparent-white:active,
-.btn-cta-transparent-white:focus{
+.btn-cta-transparent-white:focus {
 	background-color: $color_white;
 	border-color: transparent;
 	color: $color_2;
 }
 
-.btn-cta-white{
+.btn-cta-white {
 	border-color: $color_white;
 	color: $color_white;
-
 }
+
 .btn-cta-white:hover,
 .btn-cta-white:active,
-.btn-cta-white:focus{
+.btn-cta-white:focus {
 	border-color: $color_5;
 	color: $color_5;
 }
 
 .btn-cta.arrow:after,
-input[type="submit"].arrow:after{
-  content: '\f105';
-  font-family: 'FontAwesome';
-  margin-left: 10px;
-  position: absolute;
+input[type='submit'].arrow:after {
+	content: '\f105';
+	font-family: 'FontAwesome';
+	margin-left: 10px;
+	position: absolute;
 
-  @include transition(margin-left $trans_time);
+	@include transition(margin-left $trans_time);
 }
 
 .btn-cta.arrow:hover:after,
-input[type="submit"].arrow:hover:after{
-  margin-left: 20px;
+input[type='submit'].arrow:hover:after {
+	margin-left: 20px;
 }
 
 .btn-spbl {
@@ -235,7 +237,7 @@ input[type="submit"].arrow:hover:after{
 	color: $color_42;
 	background-color: $color_white;
 	border-color: $color_white;
-	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 	font-size: 16px;
 	font-weight: 500;
 	line-height: 19px;
@@ -248,5 +250,71 @@ input[type="submit"].arrow:hover:after{
 		color: $color_white;
 		background-color: transparent;
 		border-color: $color-white;
+	}
+}
+
+.btn-pbp {
+	color: $color_46;
+	background-color: $color_white;
+	border-color: $color_white;
+
+	&:hover {
+		color: $color_white;
+		background-color: transparent;
+		border-color: $color_white;
+	}
+}
+
+.btn-pbp-outline {
+	color: $color_white;
+	background-color: transparent;
+	border-color: $color_white;
+
+	&:hover,
+	&:active,
+	&:focus {
+		color: $color_46;
+		background-color: $color_white;
+		border-color: $color-white;
+	}
+}
+
+.btn-pbp-cta {
+	color: $color_46;
+	background-color: $color_white;
+	border-color: $color_white;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 19px;
+	text-transform: uppercase;
+	padding: 20px 30px;
+
+	&:hover,
+	&:active,
+	&:focus {
+		color: $color_white;
+		background-color: transparent;
+		border-color: $color-white;
+	}
+}
+
+.btn-pbp-cta-accent {
+	color: $color_white;
+	background-color: $color_5;
+	border-color: $color_5;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 19px;
+	text-transform: uppercase;
+	padding: 20px 30px;
+
+	&:hover,
+	&:active,
+	&:focus {
+		color: $color_white;
+		background-color: darken($color_5, 10%);
+		border-color: darken($color_5, 10%);
 	}
 }

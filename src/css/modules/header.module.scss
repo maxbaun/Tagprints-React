@@ -118,7 +118,8 @@
 	transition: all 0.3s ease-in-out;
 }
 
-.header[data-theme='default'] {
+.header[data-theme='default'],
+.header[data-theme='photobooth-pro'] {
 	.menu {
 		background-color: white;
 

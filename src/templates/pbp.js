@@ -65,7 +65,7 @@ export default class PbpPageTemplate extends Component {
 							currentPage.image.localFile.childImageSharp.sizes
 						}
 						heroClass="heroPbp"
-						buttons={[data.hero.button1, data.hero.button2]}
+						buttons={data.hero.buttons}
 						scrollTo="#pbpSectionSlider"
 					>
 						<div
@@ -75,6 +75,66 @@ export default class PbpPageTemplate extends Component {
 							)}
 						/>
 					</Hero>
+					<SectionSlider
+						id="pbpSectionSlider"
+						socialTitle="GREAT SHARING CAPABILITIES"
+						slides={data.slider.slides}
+						images={[data.slider.image]}
+						sectionClass="pbpSection"
+						title="Social <br/>Photobooth"
+						tag="Pro"
+					/>
+					{this.renderCta('/free-quote/', 'Request A Free Quote')}
+					{/* TODO - section gallery portfolio */}
+					<section className={CSS.bonusesSection}>
+						<div className="container">
+							<div className={CSS.bonusesHeader}>
+								<h2>{data.bonuses.title}</h2>
+								<h4>{data.bonuses.subtitle}</h4>
+								<h6>{data.bonuses.note}</h6>
+							</div>
+							<IconBlocks
+								classname="pbpBonuses"
+								blocks={data.bonuses.blocks}
+							/>
+						</div>
+					</section>
+					{this.renderCta('/free-quote/', 'Request A Free Quote')}
+					{console.log(data.promises)}
+					<section className={CSS.promisesSection}>
+						<div className="container">
+							<div className={CSS.promisesHeader}>
+								<h2
+									// eslint-disable-next-line react/no-danger
+									dangerouslySetInnerHTML={innerHtml(
+										data.promises.title
+									)}
+								/>
+								<h4>{data.promises.subtitle}</h4>
+							</div>
+							<IconBlocks
+								classname="pbpPromises"
+								blocks={data.promises.blocks}
+							/>
+						</div>
+					</section>
+					<SectionRental
+						classname="pbpRental"
+						btnClass="btn btn-pbp-cta-accent"
+						title="Rental Options"
+						cta={{
+							url: '/free-quote',
+							title: 'Request A Free Quote'
+						}}
+						options={data.rental.options}
+					/>
+					<SectionFaq
+						id="pbpFaqs"
+						title="FAQS"
+						faqs={data.faqs}
+						classname="pbpFaqs"
+						accordionClass="pbpAccordion"
+					/>
 				</main>
 			</Fragment>
 		);
@@ -189,7 +249,7 @@ export default class PbpPageTemplate extends Component {
 		return (
 			<section className={CSS.sectionCta}>
 				<div className={CSS.sectionCtaInner}>
-					<Link className="btn btn-pbl-cta" to={replaceLinks(url)}>
+					<Link className="btn btn-pbp-cta" to={replaceLinks(url)}>
 						{title}
 					</Link>
 				</div>
@@ -207,16 +267,16 @@ export const pageQuery = graphql`
 			acf {
 				hero: pbpHero {
 					content
-					button1 {
-						title
+					buttons {
 						url
-					}
-					button2 {
-						title
-						url
+						text
+						class
 					}
 				}
 				slider: pbpSlider {
+					image {
+						...LargeImage
+					}
 					slides {
 						content
 					}
@@ -257,6 +317,10 @@ export const pageQuery = graphql`
 						title
 						text
 					}
+				}
+				faqs: pbpFaqs {
+					header
+					content
 				}
 			}
 		}
