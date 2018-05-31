@@ -43,10 +43,10 @@
 	white-space: nowrap;
 
 	@include largeAndUp {
-		padding: 2.5px 7.5px;
+		padding: 2.5px 4px;
 	}
 
-	@media screen and (min-width: 1072px) {
+	@media screen and (min-width: 1115px) {
 		padding: 2.5px 15px;
 	}
 }
@@ -98,6 +98,7 @@
 
 .dropdown {
 	margin: -5px 0 10px 10px;
+	transition: none;
 
 	li {
 		display: block;
@@ -284,6 +285,46 @@
 			&:hover {
 				color: white;
 				background-color: $color_42;
+			}
+		}
+	}
+}
+
+[data-theme='array13'] {
+	.menuHeader {
+		.link {
+			color: white;
+
+			&:hover {
+				color: $color_49;
+			}
+		}
+
+		.cta {
+			color: white;
+			border-color: $color_49;
+			background-color: $color_49;
+		}
+	}
+
+	.menuFooter {
+		color: white;
+
+		&:hover {
+			color: $color_49;
+		}
+	}
+
+	.dropdownLink {
+		color: white;
+
+		@include largeAndUp {
+			background-color: white;
+			color: $color_46;
+
+			&:hover {
+				color: white;
+				background-color: $color_49;
 			}
 		}
 	}

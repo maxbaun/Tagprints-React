@@ -136,3 +136,35 @@
 		}
 	}
 }
+
+[data-theme='array13'] {
+	.header {
+		.number,
+		.icon {
+			a {
+				color: white;
+
+				&:hover {
+					color: $color_49;
+				}
+			}
+		}
+
+		.separator {
+			background-color: $color_6;
+		}
+	}
+
+	.footer {
+		.icon {
+			a {
+				background-color: #616160;
+				color: white;
+
+				&:hover {
+					background-color: $color_49;
+				}
+			}
+		}
+	}
+}

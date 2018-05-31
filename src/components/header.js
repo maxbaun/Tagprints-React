@@ -39,10 +39,7 @@ export default class Header extends Component {
 	}
 
 	checkClick(e) {
-		if (
-			(this.menu && this.menu.contains(e.target)) ||
-			(this.toggle && this.toggle.contains(e.target))
-		) {
+		if ((this.menu && this.menu.contains(e.target)) || (this.toggle && this.toggle.contains(e.target))) {
 			return;
 		}
 
@@ -63,11 +60,7 @@ export default class Header extends Component {
 		}
 
 		return (
-			<header
-				className={CSS.header}
-				data-theme="default"
-				data-theme-toggle="true"
-			>
+			<header className={CSS.header} data-theme="default" data-theme-toggle="true">
 				<div className={CSS.inner}>
 					<div className={CSS.navTop} role="banner">
 						<NavSocial showPhone classname="header"/>
@@ -75,15 +68,12 @@ export default class Header extends Component {
 					<div className={CSS.navMain}>
 						<div className={CSS.main}>
 							<Link to="/">
-								<Logo classname="header"/>
+								<Logo classname="header" width={223} height={43}/>
 							</Link>
 							<button
 								ref={ref.call(this, 'toggle')}
 								type="button"
-								onClick={clickPrevent(
-									this.handleToggle,
-									!menuActive
-								)}
+								onClick={clickPrevent(this.handleToggle, !menuActive)}
 								className={CSS.toggle}
 								data-toggle="collapse"
 								data-target=".navbar-collapse"
@@ -93,10 +83,7 @@ export default class Header extends Component {
 								<span/>
 							</button>
 						</div>
-						<div
-							ref={ref.call(this, 'menu')}
-							className={menuClass.join(' ')}
-						>
+						<div ref={ref.call(this, 'menu')} className={menuClass.join(' ')}>
 							<Nav
 								showCta
 								items={this.props.items}

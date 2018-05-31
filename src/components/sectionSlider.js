@@ -112,10 +112,12 @@ export default class SectionSlider extends Component {
 						</div>
 						<div className={CSS.content}>
 							<div className={CSS.title}>
-								<h1
-									// eslint-disable-next-line react/no-danger
-									dangerouslySetInnerHTML={innerHtml(title)}
-								/>
+								{title ? (
+									<h1
+										// eslint-disable-next-line react/no-danger
+										dangerouslySetInnerHTML={innerHtml(title)}
+									/>
+								) : null}
 								{subtitle ? (
 									<h3
 										// eslint-disable-next-line react/no-danger

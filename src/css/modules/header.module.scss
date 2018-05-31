@@ -3,6 +3,8 @@
 
 .header {
 	height: 72px;
+	overflow: hidden;
+	transition: all 0.3s ease-in-out;
 
 	@include largeAndUp {
 		height: 157px;
@@ -60,12 +62,12 @@
 }
 
 .toggle {
-	align-self: flex-end;
 	background-color: transparent;
 	border: 1px solid transparent;
 	border-radius: 4px;
 	display: block;
 	height: 38px;
+	justify-self: flex-end;
 	width: 44px;
 	padding: 10px;
 	outline: none !important;
@@ -146,6 +148,26 @@
 
 	.menu {
 		background-color: rgba($color_43, 0.5);
+
+		@include largeAndUp {
+			background-color: transparent;
+		}
+	}
+
+	.toggle {
+		border-color: white;
+
+		span {
+			background-color: white;
+		}
+	}
+}
+
+.header[data-theme='array13'] {
+	background-color: black;
+
+	.menu {
+		background-color: black;
 
 		@include largeAndUp {
 			background-color: transparent;

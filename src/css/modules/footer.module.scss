@@ -78,3 +78,19 @@
 		}
 	}
 }
+
+.footer[data-theme='array13'] {
+	background-color: $color_46;
+
+	.copy {
+		color: $color_7;
+
+		a {
+			color: $color_7;
+
+			&:hover {
+				color: $color_48;
+			}
+		}
+	}
+}
