@@ -30,7 +30,8 @@ export default class SectionSlider extends Component {
 		socialTitle: PropTypes.string,
 		sectionClass: PropTypes.string,
 		title: PropTypes.string,
-		tag: PropTypes.string
+		tag: PropTypes.string,
+		subtitle: PropTypes.string
 	};
 
 	static defaultProps = {
@@ -39,8 +40,9 @@ export default class SectionSlider extends Component {
 		children: null,
 		socialTitle: null,
 		sectionClass: null,
-		title: '',
-		tag: ''
+		title: null,
+		subtitle: null,
+		tag: null
 	};
 
 	componentDidMount() {
@@ -89,15 +91,7 @@ export default class SectionSlider extends Component {
 	}
 
 	render() {
-		const {
-			images,
-			socialTitle,
-			slides,
-			title,
-			tag,
-			id,
-			sectionClass
-		} = this.props;
+		const {images, socialTitle, slides, title, subtitle, tag, id, sectionClass} = this.props;
 		const {currentIndex} = this.state;
 
 		const image = images[0];
@@ -122,64 +116,40 @@ export default class SectionSlider extends Component {
 									// eslint-disable-next-line react/no-danger
 									dangerouslySetInnerHTML={innerHtml(title)}
 								/>
-								<span>{tag}</span>
+								{subtitle ? (
+									<h3
+										// eslint-disable-next-line react/no-danger
+										dangerouslySetInnerHTML={innerHtml(subtitle)}
+									/>
+								) : null}
+								{tag && !subtitle ? <span>{tag}</span> : null}
 							</div>
 							<div className={CSS.slider}>
-								<div
-									ref={ref.call(this, 'slider')}
-									className={CSS.carousel}
-								>
+								<div ref={ref.call(this, 'slider')} className={CSS.carousel}>
 									<div className={CSS.carouselWrap}>
 										<div className={CSS.carouselInner}>
 											<div className="swiper-container">
-												<ul
-													className={
-														CSS.carouselPagination
-													}
-												>
-													{slides.map(
-														(slide, index) => {
-															return (
-																<li
-																	key={
-																		slide.content
-																	}
-																	className={
-																		index ===
-																		currentIndex ?
-																			CSS.activePage :
-																			CSS.page
-																	}
-																	onClick={click(
-																		this
-																			.handlePaginationClick,
-																		index +
-																			1
-																	)}
-																>
-																	<span/>
-																</li>
-															);
-														}
-													)}
+												<ul className={CSS.carouselPagination}>
+													{slides.map((slide, index) => {
+														return (
+															<li
+																key={slide.content}
+																className={index === currentIndex ? CSS.activePage : CSS.page}
+																onClick={click(this.handlePaginationClick, index + 1)}
+															>
+																<span/>
+															</li>
+														);
+													})}
 												</ul>
 												<div className="swiper-wrapper">
 													{slides.map(slide => {
 														return (
-															<div
-																key={
-																	slide.content
-																}
-																className="swiper-slide"
-															>
+															<div key={slide.content} className="swiper-slide">
 																{/* eslint-disable react/no-danger */}
 																<div
-																	dangerouslySetInnerHTML={innerHtml(
-																		slide.content
-																	)}
-																	className={
-																		CSS.carouselSlide
-																	}
+																	dangerouslySetInnerHTML={innerHtml(slide.content)}
+																	className={CSS.carouselSlide}
 																/>
 																{/* eslint-enable react/no-danger */}
 															</div>
@@ -194,21 +164,10 @@ export default class SectionSlider extends Component {
 													return (
 														<li
 															key={slide.content}
-															className={
-																index ===
-																currentIndex ?
-																	CSS.activeBullet :
-																	CSS.bullet
-															}
-															onClick={click(
-																this
-																	.handlePaginationClick,
-																index + 1
-															)}
+															className={index === currentIndex ? CSS.activeBullet : CSS.bullet}
+															onClick={click(this.handlePaginationClick, index + 1)}
 														>
-															<span>
-																{index + 1}
-															</span>
+															<span>{index + 1}</span>
 														</li>
 													);
 												})}

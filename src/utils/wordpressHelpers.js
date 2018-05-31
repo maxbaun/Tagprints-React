@@ -18,10 +18,7 @@ export const replaceIcons = content => {
 	let match = content.match(/%.*?%/);
 
 	while (match) {
-		content = content.replace(
-			match[0],
-			`<span class="fa fa-${match[0].split('%')[1]}"></span>`
-		);
+		content = content.replace(match[0], `<span class="fa fa-${match[0].split('%')[1]}"></span>`);
 		match = content.match(/%.*?%/);
 	}
 
@@ -50,15 +47,9 @@ export const sortByMenuOrder = list => {
 };
 
 export const getLightboxImageObject = image => {
-	const sizes =
-		image.localFile && image.localFile.childImageSharp ?
-			image.localFile.childImageSharp.sizes :
-			{};
+	const sizes = image.localFile && image.localFile.childImageSharp ? image.localFile.childImageSharp.sizes : {};
 
-	const resolutions =
-		image.localFile && image.localFile.childImageSharp ?
-			image.localFile.childImageSharp.resolutions :
-			{};
+	const resolutions = image.localFile && image.localFile.childImageSharp ? image.localFile.childImageSharp.resolutions : {};
 
 	return {
 		url: image.url,
@@ -69,4 +60,17 @@ export const getLightboxImageObject = image => {
 		naturalHeight: image.mediaDetails ? image.mediaDetails.height : 0,
 		naturalWidth: image.mediaDetails ? image.mediaDetails.width : 0
 	};
+};
+
+export const getYoutubeIdFromLink = link => {
+	if (!link) {
+		return;
+	}
+
+	var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+	var match = link.match(regExp);
+
+	if (match && match[2].length === 11) {
+		return match[2];
+	}
 };

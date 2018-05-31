@@ -39,6 +39,16 @@
 		}
 	}
 
+	h3 {
+		font-family: $fontUltra;
+		white-space: nowrap;
+		font-size: 24px;
+
+		@include largeAndUp {
+			font-size: 35px;
+		}
+	}
+
 	span {
 		font-family: $fontGotham;
 		font-size: 21px;
@@ -81,6 +91,10 @@
 
 .slider {
 	max-width: 785px;
+}
+
+.carousel {
+	margin-bottom: 30px;
 }
 
 .carouselWrap {
@@ -397,6 +411,95 @@
 
 		h5 {
 			color: $color_7;
+		}
+	}
+}
+
+.a13Section {
+	.title {
+		h1 {
+			color: $color_46;
+		}
+
+		h3 {
+			color: $color_49;
+		}
+	}
+
+	.image {
+		width: 384px;
+		margin-right: 40px;
+	}
+
+	.content {
+		@include largeAndUp {
+			width: calc(100% - 424px);
+		}
+	}
+
+	.carouselSlide {
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			color: $color_49;
+		}
+
+		p {
+			color: $color_7;
+		}
+	}
+
+	.page {
+		span {
+			background-color: $color_12;
+		}
+	}
+
+	.activePage {
+		span {
+			background-color: $color_49;
+		}
+	}
+
+	.carouselBullets {
+		border-left: 1px solid $color_7;
+	}
+
+	.bullet {
+		span {
+			color: $color_7;
+		}
+	}
+
+	.activeBullet {
+		span {
+			color: $color_white;
+			background-color: $color_49;
+		}
+	}
+
+	.socialSharing {
+		background-color: $color_46;
+
+		ul {
+			li {
+				background-color: white;
+
+				span {
+					color: $color_49;
+				}
+			}
+
+			li:last-child {
+				background-color: transparent;
+			}
+		}
+
+		h5 {
+			color: white;
 		}
 	}
 }

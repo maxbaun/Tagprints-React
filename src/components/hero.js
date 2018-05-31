@@ -1,21 +1,28 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Img from 'gatsby-image';
-import Link from 'gatsby-link';
+import Youtube from 'react-youtube';
 
 import CSS from '../css/modules/hero.module.scss';
 import ScrollSpy from './scrollSpy';
-import {replaceLinks} from '../utils/wordpressHelpers';
+import Modal from './modal';
+import Link from './link';
+import {replaceLinks, getYoutubeIdFromLink} from '../utils/wordpressHelpers';
 
 export default class Hero extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			active: false
+			active: false,
+			modalOpen: false,
+			content: ''
 		};
 
 		this.handleImageLoad = this.handleImageLoad.bind(this);
+		this.handleLinkClick = this.handleLinkClick.bind(this);
+		this.handleModalClose = this.handleModalClose.bind(this);
+		this.renderModalContent = this.renderModalContent.bind(this);
 	}
 
 	static propTypes = {
@@ -32,35 +39,67 @@ export default class Hero extends Component {
 		scrollTo: null
 	};
 
+	isModalLink(link) {
+		const youtubeId = getYoutubeIdFromLink(link);
+
+		if (youtubeId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	openModal(url) {
+		return this.setState({
+			modalOpen: true,
+			content: url
+		});
+	}
+
+	handleModalClose() {
+		this.setState({
+			modalOpen: false,
+			content: null
+		});
+	}
+
 	handleImageLoad() {
 		setTimeout(() => {
 			this.setState({active: true});
 		}, 150);
 	}
 
-	render() {
-		const {
-			heroClass,
-			buttons,
-			scrollTo,
-			children,
-			backgroundImage
-		} = this.props;
-		const {active} = this.state;
+	handleLinkClick(url) {
+		return e => {
+			let isMobile = false;
 
-		const wrapClass = [
-			CSS.hero,
-			CSS[heroClass],
-			active ? CSS.heroActive : ''
-		];
+			if (typeof window !== 'undefined') {
+				isMobile = window.innerWidth < 992;
+			}
+
+			if (!this.isModalLink(url) || isMobile) {
+				return;
+			}
+
+			e.preventDefault();
+
+			return this.openModal(url);
+		};
+	}
+
+	render() {
+		const {heroClass, buttons, scrollTo, children, backgroundImage} = this.props;
+		const {active, modalOpen} = this.state;
+
+		const wrapClass = [CSS.hero, CSS[heroClass], active ? CSS.heroActive : ''];
 
 		return (
 			<div className={wrapClass.join(' ')}>
+				<Modal showClose active={modalOpen} onClose={this.handleModalClose} height={558} width={992}>
+					{this.renderModalContent()}
+				</Modal>
 				<div className={CSS.image}>
-					<Img
-						sizes={backgroundImage}
-						onLoad={this.handleImageLoad}
-					/>
+					<Img sizes={backgroundImage} onLoad={this.handleImageLoad}/>
 				</div>
 				<div className={CSS.inner}>
 					<div className={CSS.content}>
@@ -72,12 +111,9 @@ export default class Hero extends Component {
 										return (
 											<li key={button.url}>
 												<Link
-													to={replaceLinks(
-														button.url
-													)}
-													className={`btn ${
-														button.class
-													}`}
+													onClick={this.handleLinkClick(button.url)}
+													to={replaceLinks(button.url)}
+													className={`btn ${button.class}`}
 												>
 													{button.text}
 												</Link>
@@ -95,5 +131,27 @@ export default class Hero extends Component {
 				</div>
 			</div>
 		);
+	}
+
+	renderModalContent() {
+		const {content} = this.state;
+		const youtubeId = getYoutubeIdFromLink(content);
+
+		if (youtubeId) {
+			return (
+				<Youtube
+					videoId={youtubeId}
+					opts={{
+						height: 558,
+						width: 992,
+						playerVars: {
+							autoplay: 1,
+							controls: 0,
+							showinfo: 0
+						}
+					}}
+				/>
+			);
+		}
 	}
 }

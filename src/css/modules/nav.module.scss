@@ -91,6 +91,7 @@
 	&:hover {
 		.dropdown {
 			opacity: 1;
+			transform: translateX(-50%) scale(1);
 		}
 	}
 }
@@ -118,8 +119,8 @@
 		left: 50%;
 		margin: 0;
 		opacity: 0;
-		transform: translateX(-50%);
-		transition: opacity 0.15s ease-in-out;
+		transform: translateX(-50%) scale(0.9);
+		transition: all 0.15s ease-in-out;
 	}
 }
 

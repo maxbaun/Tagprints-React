@@ -16,6 +16,8 @@ $iconBreakpoint: $blockWidth * 2 + 30;
 
 	ul {
 		@include noList();
+		display: flex;
+		flex-wrap: wrap;
 
 		li {
 			border-color: transparent;
@@ -24,7 +26,6 @@ $iconBreakpoint: $blockWidth * 2 + 30;
 			width: 100%;
 
 			@media (min-width: $iconBreakpoint) {
-				display: inline-block;
 				width: 50%;
 				border-bottom-width: 1px;
 				border-bottom-style: solid;
@@ -163,6 +164,30 @@ $iconBreakpoint: $blockWidth * 2 + 30;
 
 		h5 {
 			color: $color_46;
+		}
+
+		p {
+			color: $color_7;
+		}
+	}
+}
+
+.a13Freebies {
+	ul {
+		li {
+			@media (min-width: $iconBreakpoint) {
+				border-color: $color_26;
+			}
+		}
+	}
+
+	.block {
+		span {
+			color: $color_7;
+		}
+
+		h5 {
+			color: $color_49;
 		}
 
 		p {

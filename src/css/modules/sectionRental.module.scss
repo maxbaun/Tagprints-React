@@ -259,3 +259,58 @@ $optionBreakpoint: $screen-sm-min;
 		}
 	}
 }
+
+.a13Rental {
+	h3 {
+		color: $color_49;
+	}
+
+	.left {
+		background-color: $color_46;
+	}
+
+	.right {
+		background-color: #F6F6F6;
+	}
+
+	.options {
+		border-color: rgba($color_7, 0.3);
+	}
+
+	.option {
+		h5 {
+			color: $color_46;
+		}
+
+		p {
+			color: #575756;
+		}
+
+		&:nth-child(1) {
+			span {
+				background-image: url('../../images/a13-rental-daily.svg');
+				background-size: auto 60px;
+				width: 60px;
+				height: 60px;
+			}
+		}
+
+		&:nth-child(2) {
+			span {
+				background-image: url('../../images/a13-rental-monthly.svg');
+				background-size: auto 60px;
+				width: 60px;
+				height: 60px;
+			}
+		}
+
+		&:nth-child(3) {
+			span {
+				background-image: url('../../images/a13-rental-permanent.svg');
+				background-size: auto 60px;
+				width: 60px;
+				height: 60px;
+			}
+		}
+	}
+}

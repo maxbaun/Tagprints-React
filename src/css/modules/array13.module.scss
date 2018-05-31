@@ -1,0 +1,227 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.hero {
+	margin-bottom: 35px;
+
+	@include largeAndUp {
+		margin-bottom: 70px;
+	}
+
+	img {
+		display: block;
+		max-width: 100%;
+		margin: 0 auto -35px;
+		width: 671px;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: $color_white;
+		font-family: $fontGotham;
+		font-size: 28px;
+		font-weight: 300;
+		line-height: 1.401;
+		max-width: 570px;
+		margin: 0 auto;
+		white-space: nowrap;
+
+		@include largeAndUp {
+			font-size: 50px;
+		}
+	}
+}
+
+.section {
+	padding: 40px 0;
+
+	@include largeAndUp {
+		padding: 80px 0;
+	}
+}
+
+.title {
+	font-family: $fontUltra;
+	font-size: 40px;
+	line-height: 1.13;
+	margin: 0 0 15px;
+	text-transform: uppercase;
+
+	@include mediumAndUp {
+		font-size: 60px;
+		line-height: 1.23;
+	}
+
+	@include largeAndUp {
+		font-size: 70px;
+	}
+}
+
+.sectionCta {
+	@extend .section;
+	background-color: $color_49;
+
+	@include largeAndUp {
+		padding: 40px 0;
+	}
+}
+
+.sectionCtaInner {
+	text-align: center;
+
+	> a {
+		max-width: 100%;
+		width: 286;
+	}
+}
+
+.iconSection {
+	@extend .section;
+}
+
+.iconSectionHeader {
+	margin-bottom: 40px;
+	text-align: center;
+
+	@include largeAndUp {
+		margin-bottom: 80px;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: $color_46;
+		font-family: $fontUltra;
+		font-size: 40px;
+		line-height: 1.13;
+		margin: 0 0 15px;
+		text-transform: uppercase;
+
+		@include mediumAndUp {
+			font-size: 43px;
+			line-height: 1.23;
+			margin: 0 0 30px;
+		}
+
+		@include largeAndUp {
+			font-size: 53.75px;
+		}
+	}
+}
+
+.iconSectionBody {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	max-width: 630px;
+
+	@include mediumAndUp {
+		flex-wrap: nowrap;
+	}
+}
+
+.iconSectionIcon {
+	display: none;
+	font-size: 136px;
+	margin-right: 40px;
+
+	@include mediumAndUp {
+		display: block;
+	}
+}
+
+.iconSectionBody {
+	color: $color_46;
+	font-family: $fontGotham;
+	font-size: 18px;
+	font-weight: 300;
+	line-height: 1.556;
+
+	p {
+		margin-bottom: 18px;
+	}
+
+	a {
+		color: $color_49;
+	}
+}
+
+.gallerySectionHeader {
+	margin-bottom: 40px;
+	text-align: center;
+
+	@include largeAndUp {
+		margin-bottom: 80px;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: $fontUltra;
+	}
+
+	h1,
+	h2,
+	h3 {
+		@extend .title;
+		color: white;
+	}
+
+	h4,
+	h5,
+	h6 {
+		color: $color_49;
+		font-size: 20px;
+		line-height: 2.147;
+		margin: 0;
+
+		@include mediumAndUp {
+			font-size: 24px;
+		}
+	}
+}
+
+.freebiesSection {
+	@extend .section;
+}
+
+.freebiesSectionHeader {
+	margin-bottom: 40px;
+	text-align: center;
+
+	@include largeAndUp {
+		margin-bottom: 80px;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@extend .title;
+		color: $color_46;
+
+		&:first-child {
+			margin-top: 0;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		&:only-child {
+			margin: 0;
+		}
+	}
+}

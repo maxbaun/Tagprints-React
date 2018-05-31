@@ -8,32 +8,14 @@ exports.modifyWebpackConfig = ({config}) => {
 	config.merge({
 		plugins: [
 			new webpack.DefinePlugin({
-				API_URL: JSON.stringify(
-					isDev ?
-						'https://admin.tagprints.com/wp-json' :
-						'https://admin.tagprints.com/wp-json'
-				),
+				API_URL: JSON.stringify(isDev ? 'https://admin.tagprints.com/wp-json' : 'https://admin.tagprints.com/wp-json'),
 				GRAVITY_FORMS_API: JSON.stringify(
-					isDev ?
-						'https://admin.tagprints.com/gravityformsapi' :
-						'https://admin.tagprints.com/gravityformsapi'
+					isDev ? 'https://admin.tagprints.com/gravityformsapi' : 'https://admin.tagprints.com/gravityformsapi'
 				),
-				GRAVITY_FORMS_PUBLIC_KEY: JSON.stringify(
-					isDev ? '4a60f91bc9' : '4a60f91bc9'
-				),
-				GRAVITY_FORMS_PRIVATE_KEY: JSON.stringify(
-					isDev ? 'f226e7f31e4acc7' : 'f226e7f31e4acc7'
-				),
-				RECAPTCHA_KEY: JSON.stringify(
-					isDev ?
-						'6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf' :
-						'6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf'
-				),
-				RECAPTCHA_SECRET: JSON.stringify(
-					isDev ?
-						'6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5' :
-						'6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5'
-				)
+				GRAVITY_FORMS_PUBLIC_KEY: JSON.stringify(isDev ? '4a60f91bc9' : '4a60f91bc9'),
+				GRAVITY_FORMS_PRIVATE_KEY: JSON.stringify(isDev ? 'f226e7f31e4acc7' : 'f226e7f31e4acc7'),
+				RECAPTCHA_KEY: JSON.stringify(isDev ? '6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf' : '6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf'),
+				RECAPTCHA_SECRET: JSON.stringify(isDev ? '6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5' : '6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5')
 			})
 		]
 	});
@@ -85,10 +67,7 @@ function getPages(graphql, createPage) {
 			}
 
 			result.data.pages.edges.forEach(edge => {
-				if (
-					edge.node.title === 'TagPrints Homepage' ||
-					edge.node.slug === 'our-work'
-				) {
+				if (edge.node.title === 'TagPrints Homepage' || edge.node.slug === 'our-work') {
 					return;
 				}
 
@@ -198,9 +177,7 @@ function createLookbookPages(graphql, createPage) {
 				createPage({
 					path: `/our-work/lookbook/${edge.node.slug}`,
 					layout: 'work',
-					component: slash(
-						path.resolve('./src/templates/lookbooks.js')
-					),
+					component: slash(path.resolve('./src/templates/lookbooks.js')),
 					context: {
 						view: 'lookbook',
 						lookbookId: edge.node.slug
@@ -258,9 +235,7 @@ function createCaseStudyCategories(graphql, createPage) {
 				createPage({
 					path: `/our-work/case-studies/${edge.node.slug}`,
 					layout: 'work',
-					component: slash(
-						path.resolve('./src/templates/caseStudies.js')
-					),
+					component: slash(path.resolve('./src/templates/caseStudies.js')),
 					context: {
 						caseStudyCategoryId: edge.node.wpid,
 						view: 'caseStudies'
@@ -304,9 +279,7 @@ function createCaseStudies(graphql, createPage) {
 			result.data.pages.edges.forEach(edge => {
 				createPage({
 					path: `/case-study/${edge.node.slug}`,
-					component: slash(
-						path.resolve('./src/templates/caseStudy.js')
-					),
+					component: slash(path.resolve('./src/templates/caseStudy.js')),
 					context: {
 						id: edge.node.id
 					}
@@ -355,6 +328,10 @@ function getPageTemplate(template) {
 
 	if (template === 'template-photobooth-pro.php') {
 		return path.resolve('./src/templates/pbp.js');
+	}
+
+	if (template === 'template-array13-v2.php') {
+		return path.resolve('./src/templates/array13.js');
 	}
 
 	return path.resolve(`./src/templates/page.js`);

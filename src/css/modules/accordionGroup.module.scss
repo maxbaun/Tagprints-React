@@ -138,4 +138,19 @@
 			}
 		}
 	}
+
+	.a13Accordion {
+		.badger-accordion {
+			&__trigger {
+				color: $color_46;
+
+				&-icon {
+					&::before,
+					&::after {
+						background-color: $color_49;
+					}
+				}
+			}
+		}
+	}
 }

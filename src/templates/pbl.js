@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 import Link from 'gatsby-link';
 
-import {
-	innerHtml,
-	replaceLinks,
-	getLightboxImageObject
-} from '../utils/wordpressHelpers';
+import {innerHtml, replaceLinks, getLightboxImageObject} from '../utils/wordpressHelpers';
 import {setDataTheme} from '../utils/documentHelpers';
 import CSS from '../css/modules/pbl.module.scss';
 import Fragment from '../components/fragment';
@@ -55,16 +51,10 @@ export default class PblPageTemplate extends Component {
 
 		return (
 			<Fragment>
-				<Seo
-					currentPage={currentPage}
-					site={this.props.site}
-					location={this.props.location}
-				/>
+				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<main className="main" role="main">
 					<Hero
-						backgroundImage={
-							currentPage.image.localFile.childImageSharp.sizes
-						}
+						backgroundImage={currentPage.image.localFile.childImageSharp.sizes}
 						heroClass="heroPbl"
 						buttons={data.heroButtons}
 						scrollTo="#pblSectionSlider"
@@ -83,20 +73,13 @@ export default class PblPageTemplate extends Component {
 						<div className={CSS.sliderTitle}>
 							<h1
 								// eslint-disable-next-line react/no-danger
-								dangerouslySetInnerHTML={innerHtml(
-									data.sliderTitle
-								)}
+								dangerouslySetInnerHTML={innerHtml(data.sliderTitle)}
 							/>
 							<span className={CSS.tag}>{data.sliderTag}</span>
 						</div>
 					</SectionSlider>
 					{this.renderCta(data.cta.url, data.cta.title)}
-					<SectionGallery
-						title={data.galleryTitle}
-						subtitle={data.gallerySubtitle}
-						images={galleryImages}
-						link={data.galleryLink}
-					>
+					<SectionGallery images={galleryImages} link={data.galleryLink}>
 						<div className={CSS.gallerySectionTitle}>
 							<div className="container">
 								<h3>{data.galleryTitle}</h3>
@@ -109,31 +92,21 @@ export default class PblPageTemplate extends Component {
 							<h3>{data.perkTitle}</h3>
 							<h5>{data.perkSubtitle}</h5>
 						</div>
-						<IconBlocks
-							classname="pblPerks"
-							blocks={data.perkBlocks}
-						/>
+						<IconBlocks classname="pblPerks" blocks={data.perkBlocks}/>
 					</div>
 					{this.renderCta(data.cta.url, data.cta.title)}
 					<div className={CSS.factsSection}>
 						<div className={CSS.factsSectionTitle}>
 							<h3
 								// eslint-disable-next-line react/no-danger
-								dangerouslySetInnerHTML={innerHtml(
-									data.factsTitle
-								)}
+								dangerouslySetInnerHTML={innerHtml(data.factsTitle)}
 							/>
 							<h5
 								// eslint-disable-next-line react/no-danger
-								dangerouslySetInnerHTML={innerHtml(
-									data.factsSubtitle
-								)}
+								dangerouslySetInnerHTML={innerHtml(data.factsSubtitle)}
 							/>
 						</div>
-						<IconBlocks
-							classname="pblFacts"
-							blocks={data.factsBlocks}
-						/>
+						<IconBlocks classname="pblFacts" blocks={data.factsBlocks}/>
 					</div>
 					<SectionRental
 						classname="pblRental"
@@ -142,13 +115,7 @@ export default class PblPageTemplate extends Component {
 						cta={data.rentalCta}
 						options={data.rentalBlocks}
 					/>
-					<SectionFaq
-						id="pblFaqs"
-						title={data.faqTitle}
-						faqs={data.faqFaqs}
-						classname="pblFaq"
-						accordionClass="pblAccordion"
-					/>
+					<SectionFaq id="pblFaqs" title={data.faqTitle} faqs={data.faqFaqs} classname="pblFaq" accordionClass="pblAccordion"/>
 				</main>
 				{/* <main
 					dangerouslySetInnerHTML={innerHtml(currentPage.content)} // eslint-disable-line react/no-danger

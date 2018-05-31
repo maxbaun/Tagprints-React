@@ -28,7 +28,9 @@ export default class Modal extends Component {
 		size: PropTypes.string,
 		showClose: PropTypes.bool,
 		classname: PropTypes.string,
-		fogOpacity: PropTypes.number
+		fogOpacity: PropTypes.number,
+		height: PropTypes.number,
+		width: PropTypes.number
 	};
 
 	static defaultProps = {
@@ -39,7 +41,9 @@ export default class Modal extends Component {
 		size: null,
 		showClose: false,
 		classname: '',
-		fogOpacity: 0.5
+		fogOpacity: 0.5,
+		height: 0,
+		width: 0
 	};
 
 	componentDidMount() {
@@ -100,7 +104,7 @@ export default class Modal extends Component {
 	}
 
 	render() {
-		const {children, size, showClose, classname, fogOpacity} = this.props;
+		const {children, size, showClose, classname, fogOpacity, height, width} = this.props;
 		const {visibility, windowHeight, display, active} = this.state;
 
 		const wrapClass = [CSS.wrap, classname && classname !== '' ? CSS[classname] : ''];
@@ -129,21 +133,30 @@ export default class Modal extends Component {
 					onRest={this.handleRest}
 				>
 					{styles => {
-						const height = windowHeight - windowHeight / 5;
+						const fullHeight = windowHeight - windowHeight / 5;
+
+						const modalStyle = {
+							height: size === 'full' ? fullHeight : 'auto',
+							visibility: visibility,
+							display: display,
+							opacity: styles.opacity,
+							top: `${styles.top}%`,
+							zIndex: active ? 1003 : 1000,
+							transform: `scaleX(${styles.x}) scaleY(${styles.y})`
+						};
+
+						if (height > 0) {
+							modalStyle.height = height;
+							modalStyle.overflowY = 'hidden';
+						}
+
+						if (width > 0) {
+							modalStyle.width = width;
+							modalStyle.overflowX = 'hidden';
+						}
 
 						return (
-							<div
-								className={modalClass.join(' ')}
-								style={{
-									height: size === 'full' ? height : 'auto',
-									visibility: visibility,
-									display: display,
-									opacity: styles.opacity,
-									top: `${styles.top}%`,
-									zIndex: active ? 1003 : 1000,
-									transform: `scaleX(${styles.x}) scaleY(${styles.y})`
-								}}
-							>
+							<div className={modalClass.join(' ')} style={modalStyle}>
 								{children}
 							</div>
 						);

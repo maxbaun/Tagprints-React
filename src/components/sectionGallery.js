@@ -74,7 +74,14 @@ export default class SectionGallery extends Component {
 	static propTypes = {
 		images: PropTypes.array.isRequired,
 		link: PropTypes.object.isRequired,
-		children: PropTypes.element.isRequired
+		children: PropTypes.element.isRequired,
+		classname: PropTypes.string,
+		btnClass: PropTypes.string
+	};
+
+	static defaultProps = {
+		classname: '',
+		btnClass: 'btn btn-cta'
 	};
 
 	componentDidMount() {
@@ -88,9 +95,7 @@ export default class SectionGallery extends Component {
 	}
 
 	handleImageClick(image) {
-		const index = this.props.images.findIndex(
-			i => image.id === i.id
-		);
+		const index = this.props.images.findIndex(i => image.id === i.id);
 
 		this.handleModalOpen(index + 1);
 	}
@@ -113,22 +118,16 @@ export default class SectionGallery extends Component {
 	}
 
 	render() {
-		const {images, link, children} = this.props;
+		const {images, link, children, classname, btnClass} = this.props;
 		const {width} = this.state;
 
 		const isMobile = width < 1000;
-		const filteredImages =
-			width > 0 && isMobile ? fromJS(images).take(8) : fromJS(images);
+		const filteredImages = width > 0 && isMobile ? fromJS(images).take(8) : fromJS(images);
 
 		return (
 			<Fragment>
-				<Lightbox
-					images={filteredImages.toJS()}
-					open={this.state.modalOpen}
-					start={this.state.modalStart}
-					onClose={this.handleModalClose}
-				/>
-				<section className={CSS.sectionGallery}>
+				<Lightbox images={filteredImages.toJS()} open={this.state.modalOpen} start={this.state.modalStart} onClose={this.handleModalClose}/>
+				<section className={[CSS.sectionGallery, CSS[classname]].join(' ')}>
 					{children}
 					<div className={CSS.gallery}>
 						<ImageGrid
@@ -147,10 +146,7 @@ export default class SectionGallery extends Component {
 								marginTop: 15
 							}}
 						>
-							<Link
-								className="btn btn-cta"
-								to={replaceLinks(link.url)}
-							>
+							<Link className={btnClass} to={replaceLinks(link.url)}>
 								{link.title}
 							</Link>
 						</div>

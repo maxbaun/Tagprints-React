@@ -55,6 +55,7 @@
 		"react-svg-inline": "^2.1.0",
 		"react-url-query": "^1.4.0",
 		"react-visibility-sensor": "^3.11.0",
+		"react-youtube": "^7.6.0",
 		"swiper": "^4.2.6",
 		"uuid": "^3.2.1"
 	},

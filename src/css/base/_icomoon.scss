@@ -1,10 +1,8 @@
 @font-face {
 	font-family: 'icomoon';
 	src: url('../fonts/icomoon.eot?1q28k3');
-	src: url('../fonts/icomoon.eot?1q28k3#iefix') format('embedded-opentype'),
-		url('../fonts/icomoon.ttf?1q28k3') format('truetype'),
-		url('../fonts/icomoon.woff?1q28k3') format('woff'),
-		url('../fonts/icomoon.svg?1q28k3#icomoon') format('svg');
+	src: url('../fonts/icomoon.eot?1q28k3#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?1q28k3') format('truetype'),
+		url('../fonts/icomoon.woff?1q28k3') format('woff'), url('../fonts/icomoon.svg?1q28k3#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -25,51 +23,70 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.icomoon-design:before {
+	content: '\e910';
+}
+
 .icomoon-branded-prints:before {
 	content: '\e902';
 }
+
 .icomoon-enclosure-branding:before {
 	content: '\e903';
 }
+
 .icomoon-lease:before {
 	content: '\e905';
 }
+
 .icomoon-remote-support:before {
 	content: '\e90d';
 }
+
 .icomoon-roi-analytics:before {
 	content: '\e90e';
 }
+
 .icomoon-turnkey:before {
 	content: '\e90f';
 }
+
 .icomoon-disclaimers:before {
 	content: '\e901';
 }
+
 .icomoon-analytics:before {
 	content: '\e900';
 }
+
 .icomoon-data:before {
 	content: '\e904';
 }
+
 .icomoon-gallery:before {
 	content: '\e906';
 }
+
 .icomoon-lead:before {
 	content: '\e907';
 }
+
 .icomoon-opt-in:before {
 	content: '\e908';
 }
+
 .icomoon-quick:before {
 	content: '\e909';
 }
+
 .icomoon-setup:before {
 	content: '\e90a';
 }
+
 .icomoon-shipping:before {
 	content: '\e90b';
 }
+
 .icomoon-support:before {
 	content: '\e90c';
 }
