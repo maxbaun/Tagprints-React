@@ -79,18 +79,12 @@ export default class CaseStudiesTemplate extends Component {
 
 		return (
 			<div>
-				<Seo
-					currentPage={currentPage}
-					site={this.props.site}
-					location={this.props.location}
-				/>
+				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<main className="main" role="main">
 					<div className="our-work-cases featured-case-studies">
 						<div className="container">
 							<WorkCategories
-								activeCategory={
-									activeCategory ? activeCategory.slug : null
-								}
+								activeCategory={activeCategory ? activeCategory.slug : null}
 								categories={fromJS(categories)}
 								allLink="/our-work/case-studies"
 							/>
@@ -98,12 +92,8 @@ export default class CaseStudiesTemplate extends Component {
 						<div className="container">
 							{caseStudies.length > 0 ?
 								caseStudies.map(c => {
-									console.log(c.image);
 									return (
-										<div
-											key={c.id}
-											className="col-lg-4 col-md-4 col-sm-4 col-xs-12"
-										>
+										<div key={c.id} className="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 											<div className={CSS.caseStudy}>
 												<CaseStudyItem
 													id={c.id}
@@ -130,9 +120,7 @@ import {CaseStudy} from '../utils/fragments'; //eslint-disable-line
 
 export const pageQuery = graphql`
 	query caseStudiesQuery($caseStudyCategoryId: Int) {
-		caseStudies: allWordpressWpCaseStudy(
-			filter: {case_study_category: {eq: $caseStudyCategoryId}}
-		) {
+		caseStudies: allWordpressWpCaseStudy(filter: {case_study_category: {eq: $caseStudyCategoryId}}) {
 			edges {
 				node {
 					...CaseStudy
