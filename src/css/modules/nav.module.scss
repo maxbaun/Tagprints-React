@@ -274,6 +274,8 @@
 	}
 
 	.dropdownLink {
+		color: white;
+
 		@include largeAndUp {
 			background-color: white;
 			color: $color_43;
