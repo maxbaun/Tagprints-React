@@ -11,50 +11,33 @@ const SectionRental = ({title, cta, options, classname, btnClass}) => {
 			<div className={CSS.inner}>
 				<div className={CSS.left}/>
 				<div className={CSS.right}>
-					<div className="container">
-						<h3>{title}</h3>
-						<div>
-							<ul className={CSS.options}>
-								{options.map(option => {
-									const compileCss = option.accent ?
-										[CSS.optionAccent] :
-										[CSS.option];
+					<h3>{title}</h3>
+					<div>
+						<ul className={CSS.options}>
+							{options.map(option => {
+								const compileCss = option.accent ? [CSS.optionAccent] : [CSS.option];
 
-									return (
-										<li
-											key={option.title}
-											className={compileCss.join(' ')}
-										>
-											<Link to={replaceLinks(cta.url)}>
-												<div
-													className={CSS.optionInner}
-												>
-													<div
-														className={
-															CSS.optionIcon
-														}
-													>
-														<span/>
-													</div>
-													<div
-														className={
-															CSS.optionContent
-														}
-													>
-														<h5>{option.title}</h5>
-														<p>{option.text}</p>
-													</div>
+								return (
+									<li key={option.title} className={compileCss.join(' ')}>
+										<Link to={replaceLinks(cta.url)}>
+											<div className={CSS.optionInner}>
+												<div className={CSS.optionIcon}>
+													<span/>
 												</div>
-											</Link>
-										</li>
-									);
-								})}
-							</ul>
-						</div>
-						<Link to={replaceLinks(cta.url)} className={btnClass}>
-							{cta.title}
-						</Link>
+												<div className={CSS.optionContent}>
+													<h5>{option.title}</h5>
+													<p>{option.text}</p>
+												</div>
+											</div>
+										</Link>
+									</li>
+								);
+							})}
+						</ul>
 					</div>
+					<Link to={replaceLinks(cta.url)} className={btnClass}>
+						{cta.title}
+					</Link>
 				</div>
 			</div>
 		</section>

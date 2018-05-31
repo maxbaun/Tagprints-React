@@ -46,18 +46,18 @@ $optionBreakpoint: $screen-sm-min;
 }
 
 .right {
-	padding: 40px 0;
+	padding: 40px 15px;
 
 	@media (min-width: $rentalBreakpoint) {
 		display: table-cell;
 		width: 70%;
-		padding: 80px 100px;
+		padding: 80px 60px;
 	}
 }
 
 .options {
 	@include noList();
-	margin-bottom: 20px;
+	margin-bottom: 40px;
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
 
@@ -72,7 +72,7 @@ $optionBreakpoint: $screen-sm-min;
 
 .option {
 	white-space: normal;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 	vertical-align: top;
 
 	@media (min-width: $optionBreakpoint) {

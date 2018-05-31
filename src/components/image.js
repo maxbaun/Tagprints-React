@@ -153,18 +153,9 @@ export default class Image extends Component {
 		const {inView} = this.state;
 		const {inViewToggle, onClick} = this.props;
 		const isLocal = this.props.sizes.src || this.props.resolutions.src;
-		const wrapCSS = [
-			CSS.imageWrap,
-			inViewToggle ? CSS.viewToggle : '',
-			inViewToggle && inView ? CSS.inView : ''
-		];
+		const wrapCSS = [CSS.imageWrap, inViewToggle ? CSS.viewToggle : '', inViewToggle && inView ? CSS.inView : ''];
 		return (
-			<div
-				className={wrapCSS.join(' ')}
-				data-layout={this.getImageLayout()}
-				style={this.props.style}
-				onClick={onClick}
-			>
+			<div className={wrapCSS.join(' ')} data-layout={this.getImageLayout()} style={this.props.style} onClick={onClick}>
 				<Visibility partialVisibility onChange={this.toggleView}>
 					{isLocal ? this.renderGatsbyImage() : this.renderImage()}
 				</Visibility>
@@ -178,20 +169,14 @@ export default class Image extends Component {
 		const loaded = Boolean(url);
 
 		return (
-			<Fragment>
+			<div style={{width: '100%', height: '100%'}}>
 				{placeholder && !loaded ? (
 					<div className={CSS.placeholder}>
 						<Placeholder style={{height: '100%', width: '100%'}}/>
 					</div>
 				) : null}
-				<figure
-					className={[CSS.inner, loaded ? CSS.innerActive : ''].join(
-						' '
-					)}
-				>
-					{loaded ? <img src={url} style={imgStyle}/> : null}
-				</figure>
-			</Fragment>
+				<figure className={[CSS.inner, loaded ? CSS.innerActive : ''].join(' ')}>{loaded ? <img src={url} style={imgStyle}/> : null}</figure>
+			</div>
 		);
 	}
 
@@ -231,25 +216,11 @@ export default class Image extends Component {
 		};
 
 		if (resolutions.src) {
-			return (
-				<Img
-					resolutions={resolutions}
-					onLoad={onLoad}
-					style={style}
-					imgStyle={imageStyle}
-				/>
-			);
+			return <Img resolutions={resolutions} onLoad={onLoad} style={style} imgStyle={imageStyle}/>;
 		}
 
 		if (sizes.src) {
-			return (
-				<Img
-					sizes={sizes}
-					onLoad={onLoad}
-					style={style}
-					imgStyle={imageStyle}
-				/>
-			);
+			return <Img sizes={sizes} onLoad={onLoad} style={style} imgStyle={imageStyle}/>;
 		}
 
 		return null;

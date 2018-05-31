@@ -5,7 +5,7 @@
 .section {
 	padding: 40px 0;
 
-	@media largeAndUp {
+	@include largeAndUp {
 		padding: 80px 0;
 	}
 }

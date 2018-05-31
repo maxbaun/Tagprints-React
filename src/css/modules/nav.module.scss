@@ -40,6 +40,11 @@
 	font-size: 13px;
 	text-transform: uppercase;
 	padding: 5px 0;
+	white-space: nowrap;
+
+	@include largeAndUp {
+		padding: 2.5px 7.5px;
+	}
 
 	@media screen and (min-width: 1072px) {
 		padding: 2.5px 15px;

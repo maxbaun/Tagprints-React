@@ -44,7 +44,9 @@ export default class SectionSlider extends Component {
 	};
 
 	componentDidMount() {
-		this.updateSlider();
+		setTimeout(() => {
+			this.updateSlider();
+		}, 300);
 	}
 
 	componentWillUpdate(nextProps) {

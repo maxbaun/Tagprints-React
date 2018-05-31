@@ -65,6 +65,8 @@ export const getLightboxImageObject = image => {
 		sizes,
 		resolutions,
 		height: image.mediaDetails ? image.mediaDetails.height : 0,
-		width: image.mediaDetails ? image.mediaDetails.width : 0
+		width: image.mediaDetails ? image.mediaDetails.width : 0,
+		naturalHeight: image.mediaDetails ? image.mediaDetails.height : 0,
+		naturalWidth: image.mediaDetails ? image.mediaDetails.width : 0
 	};
 };

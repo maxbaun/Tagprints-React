@@ -10,7 +10,9 @@ export default class Modal extends Component {
 
 		this.state = {
 			visibility: 'hidden',
-			windowHeight: 0
+			display: 'none',
+			windowHeight: 0,
+			active: props.active
 		};
 
 		this.handleRest = this.handleRest.bind(this);
@@ -24,7 +26,9 @@ export default class Modal extends Component {
 		onShow: PropTypes.func,
 		children: PropTypes.node,
 		size: PropTypes.string,
-		showClose: PropTypes.bool
+		showClose: PropTypes.bool,
+		classname: PropTypes.string,
+		fogOpacity: PropTypes.number
 	};
 
 	static defaultProps = {
@@ -33,7 +37,9 @@ export default class Modal extends Component {
 		onShow: () => {},
 		children: null,
 		size: null,
-		showClose: false
+		showClose: false,
+		classname: '',
+		fogOpacity: 0.5
 	};
 
 	componentDidMount() {
@@ -48,21 +54,34 @@ export default class Modal extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.active) {
 			this.setState({
-				visibility: 'visible'
+				visibility: 'visible',
+				display: 'block',
+				active: true
 			});
 
 			this.handleResize();
 
 			document.querySelector('body').style.overflow = 'hidden';
 		}
+
+		if (nextProps.active === false) {
+			this.setState({
+				active: false
+			});
+
+			this.handleResize();
+
+			document.querySelector('body').style.overflow = null;
+		}
 	}
 
 	handleRest() {
-		const {active} = this.props;
+		const {active} = this.state;
 
 		if (!active) {
 			return this.setState({
-				visibility: 'hidden'
+				visibility: 'hidden',
+				display: 'none'
 			});
 		}
 
@@ -81,13 +100,14 @@ export default class Modal extends Component {
 	}
 
 	render() {
-		const {active, children, size, showClose} = this.props;
-		const {visibility, windowHeight} = this.state;
+		const {children, size, showClose, classname, fogOpacity} = this.props;
+		const {visibility, windowHeight, display, active} = this.state;
 
+		const wrapClass = [CSS.wrap, classname && classname !== '' ? CSS[classname] : ''];
 		const modalClass = [CSS.modal, size ? CSS[size] : ''];
 
 		return (
-			<div className={CSS.wrap} style={{visibility}}>
+			<div className={wrapClass.join(' ')} style={{visibility}}>
 				{showClose ? (
 					<span onClick={this.handleClose} className={CSS.close}>
 						<span className="fa fa-close"/>
@@ -101,18 +121,10 @@ export default class Modal extends Component {
 						top: 4
 					}}
 					style={{
-						opacity: active ?
-							spring(1, presets.stiff) :
-							spring(0, presets.stiff),
-						x: active ?
-							spring(1, presets.stiff) :
-							spring(0.8, presets.stiff),
-						y: active ?
-							spring(1, presets.stiff) :
-							spring(0.8, presets.stiff),
-						top: active ?
-							spring(10, presets.stiff) :
-							spring(4, presets.stiff)
+						opacity: active ? spring(1, presets.stiff) : spring(0, presets.stiff),
+						x: active ? spring(1, presets.stiff) : spring(0.8, presets.stiff),
+						y: active ? spring(1, presets.stiff) : spring(0.8, presets.stiff),
+						top: active ? spring(10, presets.stiff) : spring(4, presets.stiff)
 					}}
 					onRest={this.handleRest}
 				>
@@ -125,12 +137,11 @@ export default class Modal extends Component {
 								style={{
 									height: size === 'full' ? height : 'auto',
 									visibility: visibility,
+									display: display,
 									opacity: styles.opacity,
 									top: `${styles.top}%`,
 									zIndex: active ? 1003 : 1000,
-									transform: `scaleX(${styles.x}) scaleY(${
-										styles.y
-									})`
+									transform: `scaleX(${styles.x}) scaleY(${styles.y})`
 								}}
 							>
 								{children}
@@ -143,9 +154,7 @@ export default class Modal extends Component {
 						opacity: 0
 					}}
 					style={{
-						opacity: active ?
-							spring(0.5, presets.stiff) :
-							spring(0, presets.stiff)
+						opacity: active ? spring(fogOpacity, presets.stiff) : spring(0, presets.stiff)
 					}}
 				>
 					{styles => {
