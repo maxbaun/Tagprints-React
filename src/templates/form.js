@@ -23,11 +23,7 @@ export default class FormTemplate extends Component {
 
 		return (
 			<Fragment>
-				<Seo
-					currentPage={currentPage}
-					site={this.props.site}
-					location={this.props.location}
-				/>
+				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<main className="main" role="main">
 					<div className={CSS.wrap}>
 						<div className="container">
@@ -39,29 +35,22 @@ export default class FormTemplate extends Component {
 												width: 222,
 												margin: '0 auto'
 											}}
-											sizes={
-												content.image.localFile
-													.childImageSharp.sizes
-											}
+											sizes={content.image.localFile.childImageSharp.sizes}
 										/>
 									</div>
 								) : (
 									<div
 										// eslint-disable-next-line react/no-danger
-										dangerouslySetInnerHTML={innerHtml(
-											content.content
-										)}
+										dangerouslySetInnerHTML={innerHtml(content.content)}
 										className={CSS.text}
 									/>
 								)}
 							</div>
-							<div className={CSS.form}>
-								<Form
-									location={this.props.location}
-									formId={form.form}
-									labelPlacement={form.labelPlacement}
-								/>
-							</div>
+							{form.form && form.form !== '' ? (
+								<div className={CSS.form}>
+									<Form location={this.props.location} formId={form.form} labelPlacement={form.labelPlacement}/>
+								</div>
+							) : null}
 						</div>
 					</div>
 				</main>

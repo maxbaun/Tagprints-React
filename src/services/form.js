@@ -10,7 +10,6 @@ export default class Form {
 		this.formId = formId;
 		this.fields = [];
 		this.values = {};
-		this.hasCaptcha = false;
 	}
 
 	getForm() {
@@ -40,19 +39,10 @@ export default class Form {
 				const {fields} = response;
 
 				this.fields = fields;
-				this.hasCaptcha = Boolean(this.getCaptchaFields(fields).length);
 
 				return resolve(response);
 			});
 		});
-	}
-
-	getCaptchaFields(fields) {
-		if (!fields) {
-			return [];
-		}
-
-		return fields.filter(f => f.type === 'captcha').map(f => f.id);
 	}
 
 	setField(field, value) {
@@ -60,9 +50,7 @@ export default class Form {
 		let newValue = value;
 
 		if (input.type === 'checkbox') {
-			const currentValue = this.values[field] ?
-				this.values[field].split(', ') :
-				[];
+			const currentValue = this.values[field] ? this.values[field].split(', ') : [];
 			const index = currentValue.indexOf(value);
 
 			if (index > -1) {
@@ -81,7 +69,7 @@ export default class Form {
 	}
 
 	isValid() {
-		const {fields, values, hasCaptcha} = this;
+		const {fields, values} = this;
 
 		let valid = true;
 
@@ -90,16 +78,6 @@ export default class Form {
 				valid = false;
 			}
 		});
-
-		const captchaFields = this.getCaptchaFields(fields);
-
-		if (hasCaptcha && captchaFields) {
-			captchaFields.forEach(id => {
-				if (!values[id]) {
-					valid = false;
-				}
-			});
-		}
 
 		return valid;
 	}
@@ -184,9 +162,7 @@ export default class Form {
 				}
 
 				if (response.confirmation_redirect) {
-					window.location.href = replaceLinks(
-						response.confirmation_redirect
-					);
+					window.location.href = replaceLinks(response.confirmation_redirect);
 					return;
 				}
 

@@ -83,13 +83,16 @@ class Form extends Component {
 			button: {},
 			confirmation: null,
 			errors: {},
-			success: false
+			success: false,
+			recaptcha: null,
+			recaptchaError: null
 		};
 
 		this.form = null;
 
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+		this.handleRecaptcha = this.handleRecaptcha.bind(this);
 		this.renderInput = this.renderInput.bind(this);
 		this.renderForm = this.renderForm.bind(this);
 		this.renderLoader = this.renderLoader.bind(this);
@@ -119,9 +122,7 @@ class Form extends Component {
 				});
 			})
 			.catch(err => {
-				console.error(
-					`Error getting form ${this.props.formId}: ${err}`
-				);
+				console.error(`Error getting form ${this.props.formId}: ${err}`);
 			});
 	}
 
@@ -180,9 +181,17 @@ class Form extends Component {
 	}
 
 	handleSubmit() {
+		if (!this.state.recaptcha) {
+			this.setState({
+				recaptchaError: 'Please select the recaptchs'
+			});
+			return false;
+		}
+
 		this.setState({
 			sending: true,
-			confirmation: null
+			confirmation: null,
+			recaptchaError: null
 		});
 
 		this.form
@@ -215,13 +224,15 @@ class Form extends Component {
 		};
 	}
 
+	handleRecaptcha(recaptcha) {
+		this.setState({
+			recaptcha,
+			recaptchaError: null
+		});
+	}
+
 	inputVisible(input) {
-		if (
-			!input ||
-			!input.conditionalLogic ||
-			!input.conditionalLogic.rules ||
-			!input.conditionalLogic.rules.length
-		) {
+		if (!input || !input.conditionalLogic || !input.conditionalLogic.rules || !input.conditionalLogic.rules.length) {
 			return true;
 		}
 
@@ -247,11 +258,7 @@ class Form extends Component {
 
 		return (
 			<div className={loading ? CSS.loading : CSS.wrap}>
-				{loading ?
-					this.renderLoader() :
-					success ?
-						this.renderConfirmation() :
-						this.renderForm()}
+				{loading ? this.renderLoader() : success ? this.renderConfirmation() : this.renderForm()}
 			</div>
 		);
 	}
@@ -265,14 +272,11 @@ class Form extends Component {
 	}
 
 	renderForm() {
-		const {inputs, button, sending} = this.state;
+		const {inputs, button, sending, recaptchaError} = this.state;
 		let count = 0;
 
 		return (
-			<form
-				className={CSS.form}
-				onSubmit={clickPrevent(this.handleSubmit)}
-			>
+			<form className={CSS.form} onSubmit={clickPrevent(this.handleSubmit)}>
 				<ul>
 					{inputs.map(input => {
 						if (count !== 0) {
@@ -288,9 +292,7 @@ class Form extends Component {
 								<li
 									key={input.id}
 									// eslint-disable-next-line react/no-danger
-									dangerouslySetInnerHTML={innerHtml(
-										input.content
-									)}
+									dangerouslySetInnerHTML={innerHtml(input.content)}
 									className={CSS.full}
 								/>
 							);
@@ -315,14 +317,11 @@ class Form extends Component {
 							</li>
 						);
 					})}
+					<li className={CSS.captcha}>
+						<Recaptcha onChange={this.handleRecaptcha} error={recaptchaError}/>
+					</li>
 					<li className={CSS.submit}>
-						<Button
-							setSize
-							type="submit"
-							classes="btn btn-cta btn-cta-transparent-inverse"
-							text={button.text}
-							loading={sending}
-						/>
+						<Button setSize type="submit" classes="btn btn-cta btn-cta-transparent-inverse" text={button.text} loading={sending}/>
 					</li>
 				</ul>
 			</form>
@@ -330,16 +329,7 @@ class Form extends Component {
 	}
 
 	renderInput(input, index) {
-		const {
-			id,
-			type,
-			placeholder,
-			label,
-			required,
-			inputName: name,
-			choices,
-			description
-		} = input;
+		const {id, type, placeholder, label, required, inputName: name, choices, description} = input;
 		const value = this.state.values[id];
 		const error = this.state.errors[id];
 
@@ -355,10 +345,7 @@ class Form extends Component {
 			error,
 			choices,
 			description,
-			label:
-				label && label !== '' && input.labelPlacement !== 'hidden_label' ?
-					label :
-					null
+			label: label && label !== '' && input.labelPlacement !== 'hidden_label' ? label : null
 		};
 
 		if (type === 'text' || type === 'email') {
@@ -374,24 +361,11 @@ class Form extends Component {
 		}
 
 		if (type === 'captcha') {
-			return (
-				<Recaptcha
-					tabIndex={index}
-					onChange={this.handleChange(id)}
-					error={error}
-				/>
-			);
+			return <Recaptcha tabIndex={index} onChange={this.handleChange(id)} error={error}/>;
 		}
 
 		if (type === 'hidden' && value) {
-			return (
-				<input
-					type="hidden"
-					name={input.inputName}
-					id={id}
-					value={value}
-				/>
-			);
+			return <input type="hidden" name={input.inputName} id={id} value={value}/>;
 		}
 
 		if (type === 'radio' || type === 'checkbox') {

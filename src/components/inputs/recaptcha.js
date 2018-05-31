@@ -4,23 +4,14 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import {HmacSHA1} from 'crypto-js';
 
 import {noop} from '../../utils/componentHelpers';
-import {recaptchaKey, recaptchaSecret} from '../../constants';
+import {recaptchaKey} from '../../constants';
 import CSS from '../../css/modules/forms.module.scss';
 
 const RecaptchaInput = ({classname, styles, onChange, tabIndex, error}) => {
 	return (
-		<div
-			className={[CSS.inputGroup, CSS[classname]].join(' ')}
-			style={styles}
-		>
-			<ReCAPTCHA
-				sitekey={recaptchaKey}
-				onChange={onChange}
-				tabindex={tabIndex}
-			/>
-			{error && error !== '' ? (
-				<small className={CSS.error}>{error}</small>
-			) : null}
+		<div className={[CSS.inputGroup, CSS[classname]].join(' ')} style={styles}>
+			<ReCAPTCHA sitekey={recaptchaKey} onChange={onChange} tabindex={tabIndex}/>
+			{error && error !== '' ? <small className={CSS.error}>{error}</small> : null}
 		</div>
 	);
 };
