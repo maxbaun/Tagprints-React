@@ -68,7 +68,7 @@ export default class Header extends Component {
 					<div className={CSS.navMain}>
 						<div className={CSS.main}>
 							<Link to="/">
-								<Logo classname="header" width={223} height={43}/>
+								<Logo classname="header" width={164} height={32}/>
 							</Link>
 							<button
 								ref={ref.call(this, 'toggle')}

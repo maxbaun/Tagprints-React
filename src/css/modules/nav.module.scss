@@ -21,10 +21,24 @@
 	@include largeAndUp {
 		justify-content: flex-end;
 	}
+
+	.link {
+		font-family: $fontRoboto;
+		font-weight: 300;
+		font-size: 14px;
+	}
+
+	.cta {
+		font-family: $fontRoboto;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 14px;
+	}
 }
 
 .menuFooter {
 	.link {
+		font-weight: 700;
 		padding: 4px 0;
 
 		@include largeAndUp {
@@ -73,14 +87,13 @@
 	font-weight: 500;
 	font-size: 13px;
 	line-height: 1;
-	padding: 12px 18px 10px;
+	padding: 10px 20px;
 	border: 1px solid transparent;
 	transition: all 0.3s ease-in-out;
 	white-space: nowrap;
 	text-transform: uppercase;
 
 	@include largeAndUp {
-		padding: 14px 20px 12px;
 		display: block;
 	}
 }
@@ -97,7 +110,7 @@
 }
 
 .dropdown {
-	margin: -5px 0 10px 10px;
+	margin: -5px 0 0 10px;
 	transition: none;
 
 	li {
@@ -113,7 +126,7 @@
 	}
 
 	@include largeAndUp {
-		padding-top: 15px;
+		padding-top: 10px;
 		position: absolute;
 		top: 100%;
 		z-index: 1;
@@ -189,10 +202,14 @@
 			}
 		}
 
+		.linkBordered {
+			border-color: $color_6;
+		}
+
 		.cta {
-			color: white;
-			background-color: $color_5;
-			border-color: $color_5;
+			color: $color_4;
+			background-color: transparent;
+			border-color: $color_4;
 		}
 	}
 
@@ -222,8 +239,6 @@
 
 .menu[data-theme='photobooth-lite'] {
 	.link {
-		font-weight: 700;
-
 		&:hover {
 			color: $color_42;
 		}
@@ -291,7 +306,8 @@
 }
 
 [data-theme='array13'] {
-	.menuHeader {
+	.menuHeader,
+	.menuFooter {
 		.link {
 			color: white;
 

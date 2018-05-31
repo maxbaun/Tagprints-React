@@ -3,11 +3,11 @@
 
 .header {
 	height: 72px;
-	overflow: hidden;
 	transition: all 0.3s ease-in-out;
 
 	@include largeAndUp {
 		height: 157px;
+		overflow: hidden;
 	}
 }
 
