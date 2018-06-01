@@ -48,6 +48,12 @@ module.exports = {
 		`gatsby-plugin-sharp`,
 		'gatsby-plugin-react-helmet',
 		{
+			resolve: `gatsby-plugin-intercom`,
+			options: {
+				appId: 'j6yjy1ql'
+			}
+		},
+		{
 			resolve: `gatsby-plugin-google-analytics`,
 			options: {
 				trackingId: `UA-43034131-1`
