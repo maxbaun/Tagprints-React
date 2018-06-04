@@ -41,11 +41,7 @@ export default class TeamTemplate extends Component {
 
 		return (
 			<Fragment>
-				<Seo
-					currentPage={currentPage}
-					site={this.props.site}
-					location={this.props.location}
-				/>
+				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<main className="main" role="main">
 					{this.renderHero()}
 					{this.renderContent()}
@@ -72,18 +68,10 @@ export default class TeamTemplate extends Component {
 			<div className={heroLoaded ? CSS.heroLoaded : CSS.hero}>
 				<div className={CSS.heroInner}>
 					<div className={CSS.heroImage}>
-						<Img
-							sizes={hero.image.localFile.childImageSharp.sizes}
-							onLoad={this.handleHeroLoad}
-						/>
+						<Img sizes={hero.image.localFile.childImageSharp.sizes} onLoad={this.handleHeroLoad}/>
 					</div>
 					<div className={CSS.heroContent}>
-						<div
-							className={[
-								CSS.heroContentInner,
-								heroLoaded ? CSS.loaded : ''
-							].join(' ')}
-						>
+						<div className={[CSS.heroContentInner, heroLoaded ? CSS.loaded : ''].join(' ')}>
 							<h1>{hero.title}</h1>
 						</div>
 					</div>
@@ -116,30 +104,26 @@ export default class TeamTemplate extends Component {
 						{teamMembers &&
 							teamMembers.map(member => {
 								return (
-									<div
-										key={member.name}
-										className="col-xs-6 col-sm-4"
-									>
+									<div key={member.name} className="col-sm-4 col-xs-6">
 										<div className={CSS.member}>
 											<div className={CSS.memberImage}>
 												<Img
 													style={{
-														width: 149,
-														margin: '0 auto'
+														height: 216,
+														width: 'auto'
 													}}
-													sizes={
-														member.image.localFile
-															.childImageSharp
-															.sizes
-													}
+													imgStyle={{
+														height: '100%',
+														width: 'auto',
+														margin: '0 auto',
+														left: 0,
+														right: 0
+													}}
+													sizes={member.image.localFile.childImageSharp.sizes}
 												/>
 											</div>
-											<span className={CSS.memberName}>
-												{member.name}
-											</span>
-											<span className={CSS.memberJob}>
-												{member.job}
-											</span>
+											<span className={CSS.memberName}>{member.name}</span>
+											<span className={CSS.memberJob}>{member.job}</span>
 										</div>
 									</div>
 								);
@@ -158,10 +142,7 @@ export default class TeamTemplate extends Component {
 				<div className="container">
 					<h1>
 						{cta.title}
-						<Link
-							to={replaceLinks(cta.link.url)}
-							className="btn btn-cta-transparent btn-cta-transparent-inverse"
-						>
+						<Link to={replaceLinks(cta.link.url)} className="btn btn-cta-transparent btn-cta-transparent-inverse">
 							{cta.link.title}
 						</Link>
 					</h1>
