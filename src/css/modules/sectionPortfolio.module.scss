@@ -70,14 +70,6 @@
 		.cardImage {
 			transform: scale(1.05);
 		}
-
-		.cardOverlay {
-			opacity: 1;
-
-			span {
-				transform: scaleX(1) scaleY(1);
-			}
-		}
 	}
 }
 
@@ -102,11 +94,6 @@
 	top: 0;
 	width: 100%;
 	z-index: 1;
-
-	@include largeAndUp {
-		opacity: 0;
-		transition: all 0.29s ease-in-out;
-	}
 
 	span {
 		display: block;
