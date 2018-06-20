@@ -153,27 +153,14 @@ export default class Lightbox extends Component {
 		const {height, width} = this.state;
 
 		return (
-			<Modal
-				showClose
-				size="full"
-				active={open}
-				onClose={this.handleModalClose}
-				onShow={this.handleModalShow}
-			>
+			<Modal showClose size="full" active={open} onClose={this.handleModalClose} onShow={this.handleModalShow}>
 				<div ref={ref.call(this, 'wrapper')} className={CSS.wrapper}>
 					<div className="swiper-container" style={{height: '100%'}}>
-						<div
-							className="swiper-wrapper"
-							style={{height: '100%'}}
-						>
+						<div className="swiper-wrapper" style={{height: '100%'}}>
 							{images.map(image => {
 								let imgStyle = {
-									maxHeight: image.height ?
-										image.height :
-										'100%',
-									maxWidth: image.width ?
-										image.width :
-										'100%',
+									maxHeight: image.height ? image.height : '100%',
+									maxWidth: image.width ? image.width : '100%',
 									right: 0,
 									left: 0,
 									margin: '0 auto'
@@ -199,7 +186,7 @@ export default class Lightbox extends Component {
 
 								return (
 									<div
-										key={image.url}
+										key={image.id}
 										className="swiper-slide"
 										style={{
 											textAlign: 'center',
@@ -210,16 +197,9 @@ export default class Lightbox extends Component {
 										}}
 									>
 										{image.sizes && image.sizes.src ? (
-											<Img
-												sizes={image.sizes}
-												style={{height: '100%'}}
-												imgStyle={imgStyle}
-											/>
+											<Img sizes={image.sizes} style={{height: '100%'}} imgStyle={imgStyle}/>
 										) : (
-											<img
-												src={image.url}
-												style={imgStyle}
-											/>
+											<img src={image.url} style={imgStyle}/>
 										)}
 									</div>
 								);

@@ -168,6 +168,7 @@ export const ImageResolutions = graphql`
 
 export const BaseImage = graphql`
 	fragment BaseImage on wordpress__wp_media {
+		id: wordpress_id
 		url: source_url
 		mediaDetails: media_details {
 			width
@@ -189,13 +190,30 @@ export const LargeImage = graphql`
 	}
 `;
 
+export const SmallMediumImage = graphql`
+	fragment SmallMediumImage on wordpress__wp_media {
+		...BaseImage
+		localFile {
+			childImageSharp {
+				sizes(maxWidth: 350) {
+					...ImageSizes
+				}
+			}
+		}
+	}
+`;
+
 export const CaseStudy = graphql`
 	fragment CaseStudy on wordpress__wp_case_study {
 		id: wordpress_id
 		title
 		slug
+		menu_order
 		image: featured_media {
 			...LargeImage
+		}
+		thumbnail: featured_media {
+			...SmallMediumImage
 		}
 		acf {
 			logo

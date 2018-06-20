@@ -26,17 +26,22 @@ export default class CaseStudiesTemplate extends Component {
 	};
 
 	transformCases(caseStudyData) {
-		return caseStudyData.edges.map(c => {
-			const caseStudy = c.node;
-			return {
-				id: caseStudy.id,
-				title: caseStudy.title,
-				subtitle: caseStudy.acf.subtitle,
-				logo: caseStudy.acf.logo,
-				image: caseStudy.image,
-				slug: caseStudy.slug
-			};
-		});
+		return caseStudyData.edges
+			.map(c => {
+				const caseStudy = c.node;
+				return {
+					id: caseStudy.id,
+					title: caseStudy.title,
+					subtitle: caseStudy.acf.subtitle,
+					logo: caseStudy.acf.logo,
+					image: caseStudy.thumbnail,
+					slug: caseStudy.slug,
+					order: caseStudy.menu_order
+				};
+			})
+			.sort((a, b) => {
+				return a.order - b.order;
+			});
 	}
 
 	transformCategories(categoryData) {

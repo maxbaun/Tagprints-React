@@ -36,7 +36,7 @@ export default class CaseStudyTemplate extends Component {
 	getLightboxImages() {
 		const {caseStudy} = this.props.data;
 
-		return caseStudy.acf.images.map(getLightboxImageObject);
+		return caseStudy.acf.images.map(i => i.image).map(getLightboxImageObject);
 	}
 
 	handleModalOpen(index) {
@@ -57,11 +57,7 @@ export default class CaseStudyTemplate extends Component {
 
 		return (
 			<div>
-				<Seo
-					currentPage={caseStudy}
-					site={this.props.site}
-					location={this.props.location}
-				/>
+				<Seo currentPage={caseStudy} site={this.props.site} location={this.props.location}/>
 				<Lightbox
 					images={this.getLightboxImages()}
 					open={this.state.modalOpen}
@@ -72,15 +68,8 @@ export default class CaseStudyTemplate extends Component {
 					<div className={CSS.caseStudy}>
 						<div className={CSS.hero}>
 							<div className={CSS.heroImage}>
-								{caseStudy.acf.heroOverlay ? (
-									<div className={CSS.overlay}/>
-								) : null}
-								<Img
-									sizes={
-										caseStudy.acf.hero.localFile
-											.childImageSharp.sizes
-									}
-								/>
+								{caseStudy.acf.heroOverlay ? <div className={CSS.overlay}/> : null}
+								<Img sizes={caseStudy.acf.hero.localFile.childImageSharp.sizes}/>
 							</div>
 							<div className={CSS.heroInner}>
 								<div className={CSS.scrollWrap}>
@@ -98,24 +87,17 @@ export default class CaseStudyTemplate extends Component {
 									<div className="col-sm-4">
 										<div
 											// eslint-disable-next-line react/no-danger
-											dangerouslySetInnerHTML={innerHtml(
-												caseStudy.content
-											)}
+											dangerouslySetInnerHTML={innerHtml(caseStudy.content)}
 											className={CSS.content}
 										/>
 									</div>
 									<div className="col-sm-8">
-										<div className={CSS.images}>
-											{this.renderImages()}
-										</div>
+										<div className={CSS.images}>{this.renderImages()}</div>
 									</div>
 								</div>
 							</div>
 							<div className={CSS.cta}>
-								<Link
-									to="/free-quote"
-									className="btn btn btn-cta-transparent readmore"
-								>
+								<Link to="/free-quote" className="btn btn btn-cta-transparent readmore">
 									Free Quote
 								</Link>
 							</div>
@@ -140,9 +122,7 @@ export default class CaseStudyTemplate extends Component {
 
 					const mediaDetails = image.mediaDetails;
 
-					const sizes = image.localFile.childImageSharp ?
-						image.localFile.childImageSharp.sizes :
-						{};
+					const sizes = image.localFile.childImageSharp ? image.localFile.childImageSharp.sizes : {};
 
 					const props = {
 						preload: true,
@@ -157,11 +137,7 @@ export default class CaseStudyTemplate extends Component {
 					};
 
 					return (
-						<li
-							key={image.url}
-							style={style}
-							onClick={click(this.handleModalOpen, index)}
-						>
+						<li key={image.id} style={style} onClick={click(this.handleModalOpen, index)}>
 							<Image {...props}/>
 						</li>
 					);
