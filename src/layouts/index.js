@@ -36,9 +36,7 @@ export default class DefaultLayout extends Component {
 
 export const layoutQuery = graphql`
 	query mainLayoutQuery {
-		mainMenu: wordpressWpApiMenusMenusItems(
-			name: {eq: "Primary Navigation"}
-		) {
+		mainMenu: wordpressWpApiMenusMenusItems(name: {eq: "Primary Navigation"}) {
 			...MenuItems
 		}
 		site {

@@ -20,6 +20,10 @@ export default class Html extends React.Component {
 		postBodyComponents: PropTypes.node.isRequired
 	};
 
+	componentDidMount() {
+		window.vs_account_id = 'fwABAVssGPNPYgDM'; // eslint-disable-line camelcase
+	}
+
 	render() {
 		let css;
 		if (process.env.NODE_ENV === `production`) {
@@ -49,6 +53,15 @@ export default class Html extends React.Component {
 					/>
 					{this.props.postBodyComponents}
 					<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAZyFJjtN1lLLz3UoVF_mDelyTQOSZ0-rY" async/>
+					<script
+						// eslint-disable-next-line react/no-danger
+						dangerouslySetInnerHTML={{
+							__html: `
+								window.vs_account_id = 'fwABAVssGPNPYgDM';
+							`
+						}}
+					/>
+					<script type="text/javascript" src="https://rw1.calls.net/euinc/number-changer.js"/>
 				</body>
 			</html>
 		);
