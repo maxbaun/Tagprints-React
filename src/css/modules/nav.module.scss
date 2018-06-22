@@ -25,7 +25,11 @@
 	.link {
 		font-family: $fontRoboto;
 		font-weight: 300;
-		font-size: 14px;
+		font-size: 18px;
+
+		@include largeAndUp {
+			font-size: 14px;
+		}
 	}
 
 	.cta {
@@ -85,7 +89,7 @@
 	display: inline-block;
 	font-family: $fontGotham;
 	font-weight: 500;
-	font-size: 13px;
+	font-size: 17px;
 	line-height: 1;
 	padding: 10px 20px;
 	border: 1px solid transparent;
@@ -95,6 +99,7 @@
 
 	@include largeAndUp {
 		display: block;
+		font-size: 13px;
 	}
 }
 
@@ -103,8 +108,10 @@
 
 	&:hover {
 		.dropdown {
-			opacity: 1;
-			transform: translateX(-50%) scale(1);
+			@include largeAndUp {
+				opacity: 1;
+				transform: translateX(-50%) scale(1);
+			}
 		}
 	}
 }
@@ -150,13 +157,14 @@
 
 .dropdownLink {
 	font-weight: 700;
-	font-size: 13px;
+	font-size: 17px;
 	text-transform: uppercase;
 	line-height: 1.2;
 	transition: all 0.3s ease-in-out;
 
 	@include largeAndUp {
 		padding: 13px 29px;
+		font-size: 13px;
 	}
 }
 
