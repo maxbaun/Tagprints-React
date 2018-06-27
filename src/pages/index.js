@@ -4,6 +4,7 @@ import graphql from 'graphql';
 
 import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
 import {setDataTheme} from '../utils/documentHelpers';
+import {ref} from '../utils/componentHelpers';
 import HeroVid from '../images/homeHeroVid.mp4';
 import Divider from '../images/brand-divider.png';
 import Letters1 from '../images/letters.png';
@@ -16,6 +17,18 @@ import Image from '../components/image';
 import NewsletterSignup from '../components/newsletterSignup';
 
 export default class Index extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			heroLoaded: false
+		};
+
+		this.heroVideo = null;
+
+		this.handleVideoLoad = this.handleVideoLoad.bind(this);
+	}
+
 	static propTypes = {
 		data: PropTypes.object.isRequired,
 		location: PropTypes.object.isRequired,
@@ -24,27 +37,46 @@ export default class Index extends Component {
 
 	componentDidMount() {
 		setDataTheme('home');
+
+		if (this.heroVideo) {
+			this.heroVideo.addEventListener('loadedmetadata', this.handleVideoLoad);
+		}
 	}
 
 	componentWillUnmount() {
 		setDataTheme('default');
+
+		if (this.heroVideo) {
+			this.heroVideo.removeEventListener('loadedmetadata', this.handleVideoLoad);
+		}
+	}
+
+	handleVideoLoad() {
+		this.setState({
+			heroLoaded: true
+		});
 	}
 
 	render() {
 		const {currentPage} = this.props.data;
-
-		console.log(currentPage);
+		const {heroLoaded} = this.state;
 
 		const {hero, caseStudiesSection: csSection, clients, cta, differenceSection, serviceSection, tagSection, teamSection} = currentPage.acf;
+
+		const heroCss = [CSS.hero];
+
+		if (heroLoaded) {
+			heroCss.push(CSS.heroLoaded);
+		}
 
 		return (
 			<Fragment>
 				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<main className="main" role="main">
 					<div className={CSS.home}>
-						<div className={CSS.hero}>
+						<div className={heroCss.join(' ')}>
 							<div className={CSS.heroVideo}>
-								<video src={HeroVid} autoPlay loop/>
+								<video ref={ref.call(this, 'heroVideo')} src={HeroVid} autoPlay loop/>
 							</div>
 							<div className={CSS.heroOverlay}>
 								<div className={CSS.heroOverlayInner}>
