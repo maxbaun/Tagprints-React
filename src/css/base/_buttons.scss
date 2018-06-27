@@ -368,3 +368,56 @@ input[type='submit'].arrow:hover:after {
 		border-color: white;
 	}
 }
+
+.btn-brand-cta {
+	color: $color_50;
+	background-color: white;
+	border-color: white;
+	font-family: $fontGotham;
+	font-weight: 500;
+	text-transform: uppercase;
+	padding: 20px 30px;
+	outline: none !important;
+
+	&:hover,
+	&:active,
+	&:focus {
+		color: $color_white;
+		background-color: transparent;
+		border-color: white;
+	}
+}
+
+.btn-brand {
+	background-color: $color_50;
+	border-color: $color_50;
+	color: $color_white;
+	font-family: $fontGotham;
+	font-weight: 500;
+	text-transform: uppercase;
+	outline: none !important;
+
+	&:hover,
+	&:active,
+	&:focus {
+		color: $color_white;
+		background-color: darken($color_50, 10%);
+		border-color: darken($color_50, 10%);
+	}
+}
+
+.btn-brand-trans {
+	border: 2px solid white;
+	background-color: rgba(white, 0.1);
+	color: white;
+	font-family: $fontGotham;
+	font-weight: 500;
+	outline: none !important;
+
+	&:hover,
+	&:active,
+	&:focus {
+		color: white;
+		background: transparent;
+	}
+}

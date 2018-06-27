@@ -25,7 +25,7 @@ const Link = ({children, to, ...other}) => {
 };
 
 Link.propTypes = {
-	children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
+	children: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.node]).isRequired,
 	to: PropTypes.string.isRequired
 };
 

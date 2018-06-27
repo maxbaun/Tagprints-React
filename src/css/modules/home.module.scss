@@ -1,0 +1,784 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.hero {
+	position: relative;
+	width: 100%;
+}
+
+.heroVideo {
+	width: 100%;
+
+	video {
+		height: auto;
+		width: 100%;
+	}
+}
+
+.heroOverlay {
+	@include absoluteFull();
+	background-color: rgba(black, 0.5);
+}
+
+.heroOverlayInner {
+	align-items: center;
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	padding: 0 15px;
+	width: 100%;
+
+	div {
+		text-align: center;
+
+		h1 {
+			color: $color_white;
+			font-family: $fontUltra;
+			font-size: 32px;
+			line-height: 1.155;
+			margin: 0;
+
+			@include mediumAndUp {
+				font-size: 42px;
+			}
+
+			@include largeAndUp {
+				font-size: 63px;
+			}
+		}
+	}
+}
+
+.cta {
+	@include brandGradient();
+}
+
+.ctaInner {
+	padding: 40px 0 30px;
+	text-align: center;
+}
+
+.ctaTag {
+	color: $color_white;
+	display: block;
+	font-family: $fontGotham;
+	font-size: 12px;
+	margin: 13px 0 0;
+}
+
+.clients {
+	position: relative;
+}
+
+.clientsBg {
+	@include absoluteFull;
+	z-index: 0;
+}
+
+.clientsImage {
+	align-items: center;
+	display: flex;
+	max-width: 1140px;
+	margin: 0 auto;
+	padding: 50px 15px;
+	z-index: 2;
+
+	@include mediumAndUp {
+		padding: 110px 0;
+	}
+
+	@include largeAndUp {
+		padding: 210px 0;
+	}
+}
+
+.tagSection {
+	padding: 40px 0;
+
+	@include mediumAndUp {
+		padding: 60px 0;
+	}
+}
+
+.tagSectionInner {
+	max-width: 537px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.tagSectionHeader {
+	color: rgb(60, 60, 59);
+	font-family: $fontUltra;
+	font-size: 35px;
+	line-height: 1.076;
+	margin: 0;
+
+	@include mediumAndUp {
+		font-size: 60px;
+	}
+}
+
+.tagSectionBody {
+	color: rgb(128, 128, 128);
+	font-family: $fontGotham;
+	font-size: 18px;
+	line-height: 1.556;
+
+	p {
+		margin: 0;
+	}
+}
+
+.diffSection {
+	@include brandGradient();
+	padding: 50px 0;
+
+	@include mediumAndUp {
+		padding: 75px 0;
+	}
+
+	@include largeAndUp {
+		padding: 110px 0;
+	}
+}
+
+.diffSectionInner {
+	display: flex;
+	flex-wrap: wrap;
+
+	@include largeAndUp {
+		flex-wrap: nowrap;
+	}
+}
+
+.diffSectionImage {
+	display: none;
+	position: relative;
+
+	@include largeAndUp {
+		display: block;
+		width: 30%;
+	}
+}
+
+.diffSectionImageInner {
+	> div,
+	> div > div {
+		height: 100%;
+		width: auto;
+	}
+
+	> div,
+	> div > div,
+	> div > div > div {
+		overflow: visible !important;
+	}
+
+	@include largeAndUp {
+		display: block;
+		position: absolute;
+		right: 0;
+		top: 0;
+		height: 100%;
+		width: 100%;
+	}
+}
+
+.diffSectionContent {
+	width: 100%;
+
+	@include largeAndUp {
+		padding-left: 70px;
+		width: 70%;
+	}
+}
+
+.diffSectionHeader {
+	margin: 0 0 40px;
+
+	@include largeAndUp {
+		margin: 0 0 60px;
+	}
+
+	h3 {
+		color: rgba($color_white, 0.7);
+		font-family: $fontUltra;
+		font-size: 40px;
+		line-height: 1.067;
+		margin: 0;
+		text-transform: uppercase;
+
+		strong {
+			color: $color_white;
+		}
+
+		@include largeAndUp {
+			font-size: 61px;
+		}
+	}
+}
+
+.diffs {
+	@include noList();
+}
+
+.diff {
+	align-items: flex-start;
+	color: $color_white;
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 30px;
+
+	@include mediumAndUp {
+		flex-wrap: nowrap;
+		margin-bottom: 50px;
+	}
+}
+
+.diffIcon {
+	align-items: center;
+	background-color: rgba($color_white, 0.7);
+	border-radius: 4px;
+	box-shadow: -10px 10px 10px rgba(0, 0, 0, 0.1);
+	display: flex;
+	justify-content: center;
+	height: 44px;
+	margin-bottom: 10px;
+	width: 44px;
+
+	@include mediumAndUp {
+		height: 84px;
+		margin-bottom: 0;
+		width: 84px;
+	}
+
+	span {
+		color: $color_50;
+		font-size: 30px;
+		line-height: 30px;
+
+		@include mediumAndUp {
+			font-size: 50px;
+			line-height: 50px;
+		}
+	}
+}
+
+.diffContent {
+	width: 100%;
+
+	@include mediumAndUp {
+		padding-left: 35px;
+		width: calc(100% - 84px);
+	}
+
+	h5 {
+		color: $color_white;
+		font-family: $fontGotham;
+		font-size: 27px;
+		line-height: 1.001;
+		margin: 0 0 10px;
+		text-transform: uppercase;
+	}
+
+	p {
+		color: rgba($color_white, 0.7);
+		font-family: $fontGotham;
+		font-size: 18px;
+		line-height: 1.5;
+		margin: 0;
+	}
+}
+
+.serviceSection {
+	background-color: $color_white;
+	padding: 50px 0;
+
+	@include mediumAndUp {
+		padding: 75px 0;
+	}
+
+	@include largeAndUp {
+		padding: 110px 0;
+	}
+}
+
+.serviceSecitonHeader {
+	margin: 0 0 40px;
+	text-align: center;
+
+	@include largeAndUp {
+		margin: 0 0 60px;
+	}
+
+	h3 {
+		color: rgb(60, 60, 59);
+		font-family: $fontUltra;
+		font-size: 35px;
+		line-height: 1.076;
+		margin: 0;
+
+		@include mediumAndUp {
+			font-size: 60px;
+		}
+	}
+}
+
+.featuredService {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 30px;
+
+	@include mediumAndUp {
+		flex-wrap: nowrap;
+		margin-bottom: 80px;
+	}
+}
+
+.featuredServiceImage {
+	@include brandGradient();
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	width: 100%;
+
+	> div {
+		height: 80%;
+		width: 100%;
+	}
+
+	> div > div,
+	> div > div > div {
+		height: 100%;
+		width: auto;
+	}
+
+	> div,
+	> div > div,
+	> div > div > div {
+		overflow: visible !important;
+	}
+
+	@include mediumAndUp {
+		width: 50%;
+	}
+}
+
+.featuredServiceContent {
+	align-items: center;
+	background-color: #D7D9DB;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+
+	> div {
+		padding: 50px;
+
+		@include mediumAndUp {
+			padding: 75px;
+		}
+
+		@include largeAndUp {
+			padding: 100px;
+		}
+	}
+
+	@include mediumAndUp {
+		width: 50%;
+	}
+}
+
+.featuredServiceLogo {
+	max-width: 228px;
+}
+
+.featuredServiceBody {
+	color: rgb(128, 128, 128);
+	font-family: $fontGotham;
+	font-size: 18px;
+	line-height: 1.556;
+	margin: 20px 0;
+
+	@include largeAndUp {
+		margin: 20px 0 50px;
+	}
+
+	p {
+		margin: 0;
+	}
+}
+
+.serviceLink {
+	a {
+		color: $color_50;
+		font-family: $fontGotham;
+		font-size: 16px;
+		font-weight: 500;
+		line-height: 1.2;
+		text-transform: uppercase;
+
+		&:hover {
+			color: darken($color_50, 10%);
+		}
+	}
+}
+
+.services {
+	ul {
+		@include noList();
+
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+
+		@include largeAndUp {
+			flex-wrap: nowrap;
+		}
+
+		li {
+			margin-bottom: 30px;
+
+			@include largeAndUp {
+				margin-bottom: 0;
+				width: 47%;
+			}
+		}
+	}
+}
+
+.service {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.serviceImage {
+	width: 142px;
+}
+
+.serviceContent {
+	padding-left: 40px;
+	width: calc(100% - 42px);
+}
+
+.serviceBody {
+	padding-top: 25px;
+
+	@include largeAndUp {
+		padding-top: 50px;
+	}
+
+	h5 {
+		color: rgb(29, 29, 27);
+		font-family: $fontUltra;
+		font-size: 30px;
+		line-height: 1.067;
+		margin: 0 0 10px;
+	}
+
+	p {
+		color: rgb(128, 128, 128);
+		font-family: $fontGotham;
+		font-size: 18px;
+		line-height: 1.556;
+		margin: 0 0 10px;
+	}
+}
+
+.sectionCs {
+	background-color: #D7D9DB;
+	padding: 40px 0 0;
+
+	@include mediumAndUp {
+		padding: 60px 0 0;
+	}
+
+	@include largeAndUp {
+		padding: 80px 0 0;
+	}
+}
+
+.featuredCs {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 452px;
+	margin: 0 auto 60px;
+
+	@include largeAndUp {
+		align-items: center;
+		flex-wrap: nowrap;
+		justify-content: center;
+		max-width: none;
+		margin: 0 auto 250px;
+	}
+}
+
+.featuredCsImage,
+.featuredCsContent {
+	max-width: 472px;
+	width: 100%;
+
+	@include largeAndUp {
+		max-width: none;
+		width: 50%;
+	}
+}
+
+.featuredCsImage {
+	height: auto;
+	margin-bottom: 20px;
+	width: 100%;
+
+	@include largeAndUp {
+		height: 472px;
+		margin-bottom: 0;
+		width: 472px;
+	}
+}
+
+.featuredCsImageInner {
+	background-color: $color_white;
+	border-radius: 4px;
+	box-shadow: -30px 30px 40px rgba(0, 0, 0, 0.2);
+	height: 100%;
+	padding: 5px;
+	width: 100%;
+}
+
+.featuredCsContent {
+	padding-left: 0;
+	width: 100%;
+
+	@include largeAndUp {
+		padding-left: 70px;
+		max-width: 452px;
+		width: calc(100% - 472px);
+	}
+
+	span {
+		color: $color_50;
+		display: block;
+		font-family: $fontGotham;
+		font-size: 14px;
+		font-weight: 500;
+		margin-bottom: 15px;
+		text-transform: uppercase;
+	}
+
+	h5 {
+		color: rgb(60, 60, 59);
+		font-family: $fontUltra;
+		font-size: 42px;
+		line-height: 1.067;
+		margin: 0 0 20px;
+	}
+
+	p {
+		color: rgb(128, 128, 128);
+		font-family: $fontGotham;
+		font-size: 16px;
+		line-height: 1.556;
+		margin: 0 0 30px;
+		text-align: justify;
+	}
+}
+
+.otherCs {
+	background-color: $color_51;
+	padding: 50px 0;
+
+	@include largeAndUp {
+		padding: 0 0 80px;
+	}
+}
+
+.otherCsInner {
+	@include largeAndUp {
+		margin-top: -141px;
+	}
+}
+
+.otherCsFooter {
+	margin-top: 35px;
+	text-align: center;
+
+	a {
+		display: block;
+		margin: 40px auto 0;
+		max-width: 420px;
+	}
+}
+
+.caseStudies {
+	ul {
+		@include noList();
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+
+		@include largeAndUp {
+			flex-wrap: nowrap;
+			flex-direction: row;
+			justify-content: space-between;
+		}
+
+		li {
+			max-width: 324px;
+			margin: 0 auto 40px;
+			width: 100%;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			@include largeAndUp {
+				margin: 0;
+				max-width: none;
+				width: 30%;
+			}
+		}
+	}
+}
+
+.caseStudy {
+	display: block;
+}
+
+.caseStudyImage {
+	position: relative;
+	margin-bottom: 20px;
+	width: 100%;
+
+	&::before {
+		content: '';
+		display: block;
+		padding-top: 100%;
+	}
+}
+
+.caseStudyImageInner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: white;
+	padding: 5px;
+	border-radius: 4px;
+	box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.caseStudyContent {
+	text-align: center;
+
+	h5 {
+		color: $color_white;
+		font-family: $fontUltra;
+		font-size: 30px;
+		margin: 0;
+
+		span {
+			color: rgb(180, 43, 94);
+			font-family: $fontGotham;
+			margin-left: 10px;
+		}
+	}
+}
+
+.sectionMail {
+	padding: 40px 0;
+	position: relative;
+
+	@include largeAndUp {
+		padding: 80px 0;
+	}
+}
+
+.sectionMailForm {
+	z-index: 1;
+
+	@include largeAndUp {
+		max-width: 960px;
+		margin: 0 auto;
+	}
+}
+
+.sectionMailImage1,
+.sectionMailImage2 {
+	display: none;
+	position: absolute;
+	top: -40px;
+	z-index: -1;
+
+	@include largeAndUp {
+		display: block;
+	}
+}
+
+.sectionMailImage1 {
+	@include largeAndUp {
+		left: 0;
+	}
+
+	img {
+		height: 299px;
+		width: 374px;
+	}
+}
+
+.sectionMailImage2 {
+	right: -6%;
+
+	@include largeAndUp {
+		right: 0;
+	}
+
+	img {
+		height: 314px;
+		width: 412px;
+	}
+}
+
+.sectionTeam {
+	position: relative;
+}
+
+.sectionTeamImages {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.sectionTeamImageLeft,
+.sectionTeamImageRight {
+	width: 50%;
+	position: relative;
+
+	&::before {
+		content: '';
+		display: block;
+		padding-top: 100%;
+	}
+}
+
+.sectionTeamImageInner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+.sectionTeamGradient {
+	@include brandGradient();
+	align-items: center;
+	display: flex;
+	height: 100%;
+	width: 100%;
+}
+
+.sectionTeamContent {
+	@include absoluteFull();
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
