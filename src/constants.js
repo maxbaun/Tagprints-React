@@ -4,5 +4,6 @@ export default {
 	gfPublicKey: GRAVITY_FORMS_PUBLIC_KEY, // eslint-disable-line no-undef
 	gfPrivateKey: GRAVITY_FORMS_PRIVATE_KEY, // eslint-disable-line no-undef
 	recaptchaKey: RECAPTCHA_KEY, // eslint-disable-line no-undef
-	recaptchaSecret: RECAPTCHA_SECRET // eslint-disable-line no-undef
+	mailchimpUrl: MAILCHIMP_URL, // eslint-disable-line no-undef
+	mailchimpApiKey: MAILCHIMP_API_KEY // eslint-disable-line no-undef
 };

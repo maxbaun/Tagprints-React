@@ -41,6 +41,8 @@ export default class Index extends Component {
 		if (this.heroVideo) {
 			this.heroVideo.addEventListener('loadedmetadata', this.handleVideoLoad);
 		}
+
+		setTimeout(this.handleVideoLoad, 500);
 	}
 
 	componentWillUnmount() {
@@ -76,7 +78,7 @@ export default class Index extends Component {
 					<div className={CSS.home}>
 						<div className={heroCss.join(' ')}>
 							<div className={CSS.heroVideo}>
-								<video ref={ref.call(this, 'heroVideo')} src={HeroVid} autoPlay loop/>
+								<video autoPlay loop src={HeroVid}/>
 							</div>
 							<div className={CSS.heroOverlay}>
 								<div className={CSS.heroOverlayInner}>
