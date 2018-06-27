@@ -23,6 +23,7 @@ export default class Index extends Component {
 					site={this.props.site}
 					location={this.props.location}
 				/>
+				<h1>This is a test</h1>
 				<main
 					dangerouslySetInnerHTML={innerHtml(currentPage.content)} // eslint-disable-line react/no-danger
 					className="main"
