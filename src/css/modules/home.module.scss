@@ -44,23 +44,22 @@
 	transition: all 0.9s ease-in-out;
 	width: 100%;
 
-	div {
+	h1 {
+		color: $color_white;
+		font-family: $fontUltra;
+		font-size: 32px;
+		line-height: 1.155;
+		margin: 0 auto;
 		text-align: center;
 
-		h1 {
-			color: $color_white;
-			font-family: $fontUltra;
-			font-size: 32px;
-			line-height: 1.155;
-			margin: 0;
+		@include mediumAndUp {
+			font-size: 42px;
+			max-width: 662px;
+		}
 
-			@include mediumAndUp {
-				font-size: 42px;
-			}
-
-			@include largeAndUp {
-				font-size: 63px;
-			}
+		@include largeAndUp {
+			font-size: 63px;
+			max-width: 942px;
 		}
 	}
 }

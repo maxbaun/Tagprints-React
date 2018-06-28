@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import graphql from 'graphql';
+import Typist from 'react-typist';
 
 import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
 import {setDataTheme} from '../utils/documentHelpers';
@@ -83,8 +84,18 @@ export default class Index extends Component {
 							</div>
 							<div className={CSS.heroOverlay}>
 								<div className={CSS.heroOverlayInner}>
-									{/* eslint-disable-next-line react/no-danger */}
-									<div dangerouslySetInnerHTML={innerHtml(hero.title)}/>
+									<h1>
+										{heroLoaded ? (
+											<Typist
+												startDelay={300}
+												cursor={{
+													show: false
+												}}
+											>
+												{hero.title}
+											</Typist>
+										) : null}
+									</h1>
 								</div>
 							</div>
 						</div>
