@@ -4,7 +4,6 @@ import graphql from 'graphql';
 
 import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
 import {setDataTheme} from '../utils/documentHelpers';
-import {ref} from '../utils/componentHelpers';
 import HeroVid from '../images/homeHeroVid.mp4';
 import Divider from '../images/brand-divider.png';
 import Letters1 from '../images/letters.png';
@@ -42,7 +41,7 @@ export default class Index extends Component {
 			this.heroVideo.addEventListener('loadedmetadata', this.handleVideoLoad);
 		}
 
-		setTimeout(this.handleVideoLoad, 500);
+		// SetTimeout(this.handleVideoLoad, 500);
 	}
 
 	componentWillUnmount() {
@@ -78,7 +77,9 @@ export default class Index extends Component {
 					<div className={CSS.home}>
 						<div className={heroCss.join(' ')}>
 							<div className={CSS.heroVideo}>
-								<video autoPlay loop src={HeroVid}/>
+								<video autoPlay loop muted onLoadedMetadata={this.handleVideoLoad}>
+									<source src={HeroVid} type="video/mp4"/>
+								</video>
 							</div>
 							<div className={CSS.heroOverlay}>
 								<div className={CSS.heroOverlayInner}>
@@ -311,7 +312,8 @@ export default class Index extends Component {
 											style={{
 												fontSize: 20,
 												lineHeight: '24px',
-												padding: '20px 40px'
+												padding: '20px 40px',
+												whiteSpace: 'normal'
 											}}
 										>
 											{csSection.allLink.title}
@@ -367,7 +369,8 @@ export default class Index extends Component {
 										style={{
 											fontSize: 20,
 											lineHeight: '24px',
-											padding: '20px 40px'
+											padding: '20px 40px',
+											whiteSpace: 'normal'
 										}}
 									>
 										{teamSection.link.title}

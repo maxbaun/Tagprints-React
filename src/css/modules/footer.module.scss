@@ -94,3 +94,19 @@
 		}
 	}
 }
+
+.footer[data-theme='home'] {
+	background-color: $color_51;
+
+	.copy {
+		color: white;
+
+		a {
+			color: white;
+
+			&:hover {
+				color: $color_50;
+			}
+		}
+	}
+}

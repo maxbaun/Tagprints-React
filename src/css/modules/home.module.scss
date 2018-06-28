@@ -6,9 +6,11 @@
 	opacity: 0;
 	transition: all 0.3s ease-in-out;
 	width: 100%;
+	height: 100vh;
 }
 
 .heroLoaded {
+	height: auto;
 	opacity: 1;
 
 	.heroOverlayInner {
@@ -462,17 +464,28 @@
 }
 
 .service {
-	display: flex;
-	flex-wrap: nowrap;
+	@include mediumAndUp {
+		display: flex;
+		flex-wrap: nowrap;
+	}
 }
 
 .serviceImage {
-	width: 142px;
+	max-width: 142px;
+	margin: 0 auto 20px;
+
+	@include mediumAndUp {
+		margin-bottom: 20px;
+		max-width: none;
+		width: 142px;
+	}
 }
 
 .serviceContent {
-	padding-left: 40px;
-	width: calc(100% - 42px);
+	@include mediumAndUp {
+		padding-left: 40px;
+		width: calc(100% - 42px);
+	}
 }
 
 .serviceBody {

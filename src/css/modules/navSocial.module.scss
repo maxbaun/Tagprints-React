@@ -168,3 +168,23 @@
 		}
 	}
 }
+
+[data-theme='home'] {
+	.header,
+	.footer {
+		.number,
+		.icon {
+			a {
+				color: white;
+
+				&:hover {
+					color: $color_50;
+				}
+			}
+		}
+
+		.separator {
+			background-color: white;
+		}
+	}
+}
