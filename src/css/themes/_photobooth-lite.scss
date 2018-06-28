@@ -1,8 +1,21 @@
+@import '../utils/mixins';
+@import '../utils/variables';
+
 @mixin pblLink {
 	color: $color_white;
 
 	&:hover {
 		color: $color_42;
+	}
+}
+
+@mixin pblButton {
+	background-color: $color_42;
+	color: $color_white;
+	font-weight: 500;
+
+	&:hover {
+		background-color: darken($color_42, 10%);
 	}
 }
 
