@@ -5,21 +5,26 @@ const path = require('path');
 
 exports.modifyWebpackConfig = ({config}) => {
 	const isDev = process.env.NODE_ENV === 'development';
+
+	if (isDev) {
+		require('dotenv').config({
+			path: '.env'
+		});
+	}
+
 	config.merge({
 		plugins: [
 			new webpack.DefinePlugin({
-				API_URL: JSON.stringify(isDev ? 'https://admin.tagprints.com/wp-json' : 'https://admin.tagprints.com/wp-json'),
-				GRAVITY_FORMS_API: JSON.stringify(
-					isDev ? 'https://admin.tagprints.com/gravityformsapi' : 'https://admin.tagprints.com/gravityformsapi'
-				),
-				GRAVITY_FORMS_PUBLIC_KEY: JSON.stringify(isDev ? '4a60f91bc9' : '4a60f91bc9'),
-				GRAVITY_FORMS_PRIVATE_KEY: JSON.stringify(isDev ? 'f226e7f31e4acc7' : 'f226e7f31e4acc7'),
-				RECAPTCHA_KEY: JSON.stringify(isDev ? '6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf' : '6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf'),
-				RECAPTCHA_SECRET: JSON.stringify(isDev ? '6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5' : '6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5'),
-				MAILCHIMP_URL: JSON.stringify(isDev ? 'https://d3mailchimp.herokuapp.com' : 'https://d3mailchimp.herokuapp.com'),
-				MAILCHIMP_API_KEY: JSON.stringify(isDev ? 'b841e03eff2bc7224ff75ca8b4905302-us7' : '8ed70e49bbda3db6bf0cd4d9a815e9bc-us3'),
-				MAILCHIMP_REGION: JSON.stringify(isDev ? 'us7' : 'us3'),
-				MAILCHIMP_LIST: JSON.stringify(isDev ? '477fc0d8e2' : 'ebb89eef22')
+				API_URL: JSON.stringify(process.env.API_URL),
+				GRAVITY_FORMS_API: JSON.stringify(process.env.GRAVITY_FORMS_API),
+				GRAVITY_FORMS_PUBLIC_KEY: JSON.stringify(process.env.GRAVITY_FORMS_PUBLIC_KEY),
+				GRAVITY_FORMS_PRIVATE_KEY: JSON.stringify(process.env.GRAVITY_FORMS_PRIVATE_KEY),
+				RECAPTCHA_KEY: JSON.stringify(process.env.RECAPTCHA_KEY),
+				RECAPTCHA_SECRET: JSON.stringify(process.env.RECAPTCHA_SECRET),
+				MAILCHIMP_URL: JSON.stringify(process.env.MAILCHIMP_URL),
+				MAILCHIMP_API_KEY: JSON.stringify(process.env.MAILCHIMP_API_KEY),
+				MAILCHIMP_REGION: JSON.stringify(process.env.MAILCHIMP_REGION),
+				MAILCHIMP_LIST: JSON.stringify(process.env.MAILCHIMP_LIST)
 			})
 		]
 	});
