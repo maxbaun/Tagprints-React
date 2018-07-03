@@ -17,7 +17,9 @@ exports.modifyWebpackConfig = ({config}) => {
 				RECAPTCHA_KEY: JSON.stringify(isDev ? '6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf' : '6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf'),
 				RECAPTCHA_SECRET: JSON.stringify(isDev ? '6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5' : '6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5'),
 				MAILCHIMP_URL: JSON.stringify(isDev ? 'https://d3mailchimp.herokuapp.com' : 'https://d3mailchimp.herokuapp.com'),
-				MAILCHIMP_API_KEY: JSON.stringify(isDev ? 'b841e03eff2bc7224ff75ca8b4905302-us7' : 'b841e03eff2bc7224ff75ca8b4905302-us7')
+				MAILCHIMP_API_KEY: JSON.stringify(isDev ? 'b841e03eff2bc7224ff75ca8b4905302-us7' : '8ed70e49bbda3db6bf0cd4d9a815e9bc-us3'),
+				MAILCHIMP_REGION: JSON.stringify(isDev ? 'us7' : 'us3'),
+				MAILCHIMP_LIST: JSON.stringify(isDev ? '477fc0d8e2' : 'ebb89eef22')
 			})
 		]
 	});

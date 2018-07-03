@@ -33,7 +33,7 @@ export default class NewsletterSignup extends Component {
 		text: null,
 		btnClass: 'btn btn-primary',
 		loaderColor: '#f15a24',
-		list: '477fc0d8e2'
+		list: Constants.mailchimpList
 	};
 
 	handleSubmit(e) {
@@ -64,7 +64,7 @@ export default class NewsletterSignup extends Component {
 				email,
 				apiKey: Constants.mailchimpApiKey,
 				listId: this.props.list,
-				region: 'us7'
+				region: Constants.mailchimpRegion
 			}
 		}).then(() => {
 			this.setState({
