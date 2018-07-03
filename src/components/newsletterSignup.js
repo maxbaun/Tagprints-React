@@ -69,7 +69,8 @@ export default class NewsletterSignup extends Component {
 		}).then(() => {
 			this.setState({
 				loading: false,
-				message: 'Thank you for subscribing!'
+				message: 'Thank you for subscribing!',
+				email: ''
 			});
 		}).catch(err => {
 			this.setState({
