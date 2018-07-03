@@ -82,7 +82,7 @@ export default class Index extends Component {
 					<div className={CSS.home}>
 						<div className={heroCss.join(' ')}>
 							<div className={CSS.heroVideo}>
-								<video autoPlay loop muted onLoadedMetadata={this.handleVideoLoad}>
+								<video autoPlay loop muted playsinline onLoadedMetadata={this.handleVideoLoad}>
 									<source src={HeroVid} type="video/mp4"/>
 								</video>
 							</div>
