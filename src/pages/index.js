@@ -63,6 +63,10 @@ export default class Index extends Component {
 		const {currentPage} = this.props.data;
 		const {heroLoaded} = this.state;
 
+		if (!currentPage) {
+			return null;
+		}
+
 		const {hero, caseStudiesSection: csSection, clients, cta, differenceSection, serviceSection, tagSection, teamSection} = currentPage.acf;
 
 		const heroCss = [CSS.hero];

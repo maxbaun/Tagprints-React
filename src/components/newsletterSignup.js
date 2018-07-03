@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import CSS from '../css/modules/newsletterSignup.module.scss';
 import Text from './inputs/text';
 import Button from './button';
-// Import Constants from '../constants';
+import Constants from '../constants';
 
 export default class NewsletterSignup extends Component {
 	constructor(props) {
@@ -17,7 +18,7 @@ export default class NewsletterSignup extends Component {
 			message: null
 		};
 
-		// This.handleSubmit = this.handleSubmit.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 	}
 
@@ -35,37 +36,48 @@ export default class NewsletterSignup extends Component {
 		list: '477fc0d8e2'
 	};
 
-	// HandleSubmit(e) {
-	// 	e.preventDefault();
-	// 	const {email} = this.state;
+	handleSubmit(e) {
+		e.preventDefault();
+		const {email} = this.state;
 
-	// 	this.setState({
-	// 		message: null
-	// 	});
+		this.setState({
+			message: null
+		});
 
-	// 	if (!email) {
-	// 		this.setState({
-	// 			error: 'Please enter an email.'
-	// 		});
+		if (!email || email === '') {
+			this.setState({
+				message: 'Please enter an email.'
+			});
 
-	// 		return;
-	// 	}
+			return;
+		}
 
-	// 	this.setState({
-	// 		loading: true,
-	// 		error: null
-	// 	});
+		this.setState({
+			loading: true,
+			error: null
+		});
 
-	// 	const headers = {};
-	// 	headers.Authorization = `apikey ${Constants.mailchimpApiKey}`;
-	// 	headers['content-type'] = 'application/json';
-
-	// 	const params = toQuerystring({
-	// 		email_address: email, // eslint-disable-line camelcase
-	// 		status: 'subscribed',
-	// 		apikey: Constants.mailchimpApiKey
-	// 	});
-	// }
+		axios({
+			url: `${Constants.mailchimpUrl}/v1/list/user`,
+			method: 'post',
+			data: {
+				email,
+				apiKey: Constants.mailchimpApiKey,
+				listId: this.props.list,
+				region: 'us7'
+			}
+		}).then(() => {
+			this.setState({
+				loading: false,
+				message: 'Thank you for subscribing!'
+			});
+		}).catch(err => {
+			this.setState({
+				loading: false,
+				message: err.response.data.message
+			});
+		});
+	}
 
 	handleChange(email) {
 		this.setState({email});
@@ -78,7 +90,7 @@ export default class NewsletterSignup extends Component {
 		return (
 			<div className={CSS.wrap}>
 				<div className={CSS.text}>{text}</div>
-				<form action="https://d3applications.us7.list-manage.com/subscribe/post" className={CSS.form}>
+				<form onSubmit={this.handleSubmit} className={CSS.form}>
 					<input type="hidden" name="u" value="a32be5f488708e694aa6c18ae"/>
 					<input type="hidden" name="id" value="477fc0d8e2"/>
 					<Text
@@ -95,6 +107,7 @@ export default class NewsletterSignup extends Component {
 						text="Submit"
 						loading={this.state.loading}
 						loaderColor={loaderColor}
+						onClick={this.handleSubmit}
 					/>
 					{message ? <small className={CSS.message}>{this.state.message}</small> : null}
 				</form>

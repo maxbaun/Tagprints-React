@@ -14,7 +14,6 @@ export const YoastFragment = graphql`
 		redirect
 		ogTitle: opengraph_title
 		ogDescription: opengraph_description
-		ogImage: opengraph_image
 		twitterTitle: twitter_title
 		twitterDescription: twitter_description
 		twitterImage: twitter_image
