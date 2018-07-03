@@ -104,3 +104,28 @@
 		}
 	}
 }
+
+[data-theme='home'] {
+	.header {
+		.st0,
+		.st1,
+		.st3 {
+			fill: white;
+		}
+
+		.st2,
+		.st4 {
+			fill: white;
+		}
+	}
+
+	.footer {
+		.st0,
+		.st1,
+		.st2,
+		.st3,
+		.st4 {
+			fill: #D5CFD7;
+		}
+	}
+}

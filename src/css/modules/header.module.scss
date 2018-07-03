@@ -142,18 +142,18 @@
 }
 
 .header[data-theme='photobooth-lite'] {
-	background-color: transparent;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	z-index: 1;
+	background-color: $color_43;
 
 	.menu {
-		background-color: rgba($color_43, 0.5);
+		background-color: $color_43;
 
 		@include largeAndUp {
 			background-color: transparent;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			z-index: 1;
 		}
 	}
 
@@ -171,6 +171,35 @@
 
 	.menu {
 		background-color: black;
+
+		@include largeAndUp {
+			background-color: transparent;
+		}
+	}
+
+	.toggle {
+		border-color: white;
+
+		span {
+			background-color: white;
+		}
+	}
+}
+
+.header[data-theme='home'] {
+	background-color: $color_51;
+
+	@include largeAndUp {
+		background-color: transparent;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		z-index: 1;
+	}
+
+	.menu {
+		background-color: $color_51;
 
 		@include largeAndUp {
 			background-color: transparent;

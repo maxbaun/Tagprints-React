@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import graphql from 'graphql';
 
-import '../css/main.scss';
-import '../css/utils/animations.scss';
-import '../css/vendor/animate.css';
+import './styles';
 
 import Header from '../components/header';
 import Footer from '../components/footer';

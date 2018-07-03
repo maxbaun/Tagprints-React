@@ -15,7 +15,9 @@ exports.modifyWebpackConfig = ({config}) => {
 				GRAVITY_FORMS_PUBLIC_KEY: JSON.stringify(isDev ? '4a60f91bc9' : '4a60f91bc9'),
 				GRAVITY_FORMS_PRIVATE_KEY: JSON.stringify(isDev ? 'f226e7f31e4acc7' : 'f226e7f31e4acc7'),
 				RECAPTCHA_KEY: JSON.stringify(isDev ? '6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf' : '6Lc3bVkUAAAAAL4_17gRz37kERS4_AoWoDfhMLCf'),
-				RECAPTCHA_SECRET: JSON.stringify(isDev ? '6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5' : '6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5')
+				RECAPTCHA_SECRET: JSON.stringify(isDev ? '6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5' : '6Lc3bVkUAAAAAMvfWaEzXwm4xBs7VHuWh0MmuZW5'),
+				MAILCHIMP_URL: JSON.stringify(isDev ? 'https://us7.api.mailchimp.com' : ''),
+				MAILCHIMP_API_KEY: JSON.stringify(isDev ? 'b841e03eff2bc7224ff75ca8b4905302-us7' : '')
 			})
 		]
 	});

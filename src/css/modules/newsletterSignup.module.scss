@@ -1,0 +1,83 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.wrap {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+
+	@include largeAndUp {
+		align-items: center;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+	}
+}
+
+.text {
+	color: rgb(60, 60, 59);
+	font-family: $fontUltra;
+	font-size: 30px;
+	line-height: 1.067;
+	margin-top: 0;
+	margin-bottom: 19px;
+
+	@include largeAndUp {
+		margin-bottom: 0;
+		margin-right: 40px;
+	}
+}
+
+.form {
+	display: flex;
+	flex-wrap: wrap;
+
+	@include mediumAndUp {
+		flex-wrap: nowrap;
+		flex: 1;
+	}
+
+	> div {
+		margin-bottom: 19px;
+		width: 100%;
+
+		@include mediumAndUp {
+			margin-bottom: 0;
+			width: calc(100% - 200px);
+		}
+	}
+
+	input {
+		border-radius: 4px;
+		border: 2px solid $color_50;
+		color: rgb(128, 128, 128);
+		font-family: $fontGotham;
+		font-weight: 300;
+		font-size: 18px;
+		line-height: 18px;
+		padding: 20px 30px;
+	}
+}
+
+.button {
+	font-size: 20px;
+	line-height: 24px;
+	height: 60px;
+	width: 150px;
+
+	@include mediumAndUp {
+		height: auto;
+		margin-left: 19px;
+		width: 181px;
+	}
+}
+
+.Stay_in_the_know_ {
+	font-family: 'Gotham';
+	line-height: 1.067;
+	text-align: left;
+	position: absolute;
+	left: 513.505px;
+	top: 6350.952px;
+	z-index: 89;
+}

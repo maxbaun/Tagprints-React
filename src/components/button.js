@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import Loader from './loader';
-import {ref, unique} from '../utils/componentHelpers';
+import {ref, unique, noop} from '../utils/componentHelpers';
 
 export default class Button extends Component {
 	constructor(props) {
@@ -24,7 +24,9 @@ export default class Button extends Component {
 		loading: PropTypes.bool,
 		type: PropTypes.string,
 		text: PropTypes.string,
-		setSize: PropTypes.bool
+		setSize: PropTypes.bool,
+		onClick: PropTypes.func,
+		loaderColor: PropTypes.string
 	};
 
 	static defaultProps = {
@@ -32,7 +34,9 @@ export default class Button extends Component {
 		loading: false,
 		type: 'button',
 		text: 'Button',
-		setSize: false
+		setSize: false,
+		onClick: noop,
+		loaderColor: '#f15a24'
 	};
 
 	componentDidMount() {
@@ -100,7 +104,7 @@ export default class Button extends Component {
 	}
 
 	render() {
-		const {classes, loading, type, text, setSize} = this.props;
+		const {classes, loading, type, text, setSize, onClick, loaderColor} = this.props;
 		const {height, width} = this.state;
 
 		let style = {};
@@ -115,10 +119,9 @@ export default class Button extends Component {
 				type={type}
 				className={classes}
 				style={style}
+				onClick={onClick}
 			>
-				{loading ? (
-					<Loader wrapHeight={height} wrapWidth={width}/>
-				) : null}
+				{loading ? <Loader wrapHeight={height} wrapWidth={width} color={loaderColor}/> : null}
 				{loading ? null : text}
 			</button>
 		);
