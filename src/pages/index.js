@@ -6,6 +6,7 @@ import Typist from 'react-typist';
 import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
 import {setDataTheme} from '../utils/documentHelpers';
 import HeroVid from '../images/homeHeroVid.mp4';
+import HeroVidWebm from '../images/homeHeroVid.webm';
 import Divider from '../images/brand-divider.png';
 import Letters1 from '../images/letters.png';
 import Letters2 from '../images/letters2.png';
@@ -42,7 +43,7 @@ export default class Index extends Component {
 			this.heroVideo.addEventListener('loadedmetadata', this.handleVideoLoad);
 		}
 
-		// SetTimeout(this.handleVideoLoad, 500);
+		setTimeout(this.handleVideoLoad, 500);
 	}
 
 	componentWillUnmount() {
@@ -82,8 +83,9 @@ export default class Index extends Component {
 					<div className={CSS.home}>
 						<div className={heroCss.join(' ')}>
 							<div className={CSS.heroVideo}>
-								<video autoPlay loop muted playsinline onLoadedMetadata={this.handleVideoLoad}>
+								<video autoPlay loop muted playsInline onLoadedData={this.handleVideoLoad}>
 									<source src={HeroVid} type="video/mp4"/>
+									<source src={HeroVidWebm} type="video/webm"/>
 								</video>
 							</div>
 							<div className={CSS.heroOverlay}>

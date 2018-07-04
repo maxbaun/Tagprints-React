@@ -144,16 +144,20 @@
 .header[data-theme='photobooth-lite'] {
 	background-color: $color_43;
 
+	@include largeAndUp {
+		background-color: transparent;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		z-index: 1;
+	}
+
 	.menu {
 		background-color: $color_43;
 
 		@include largeAndUp {
 			background-color: transparent;
-			position: absolute;
-			left: 0;
-			top: 0;
-			width: 100%;
-			z-index: 1;
 		}
 	}
 
