@@ -94,6 +94,7 @@ export default class Index extends Component {
 										{heroLoaded ? (
 											<Typist
 												startDelay={300}
+												avgTypingDelay={42}
 												cursor={{
 													show: false
 												}}
