@@ -346,7 +346,7 @@ export default class Index extends Component {
 							</div>
 							<div className="container">
 								<div className={CSS.sectionMailForm}>
-									<NewsletterSignup text="Stay in the know." btnClass="btn btn-brand" loaderColor="#2f103a"/>
+									<NewsletterSignup text="Stay in the know." btnClass="btn btn-brand" loaderColor="#fff"/>
 								</div>
 							</div>
 							<div className={CSS.sectionMailImage2}>
