@@ -46,7 +46,7 @@ export default class Html extends React.Component {
 					{/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css"/> */}
 					{css}
 				</head>
-				<body data-theme="home" data-theme-toggle="true">
+				<body data-theme="default" data-theme-toggle="true">
 					<div
 						id="___gatsby"
 						dangerouslySetInnerHTML={{__html: this.props.body}} //eslint-disable-line
