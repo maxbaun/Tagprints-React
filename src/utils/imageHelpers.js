@@ -60,7 +60,7 @@ export class ImageLoader {
 
 	cancel() {
 		if (this.reject) {
-			this.img.src = null;
+			delete this.img;
 			this.reject();
 		}
 	}
