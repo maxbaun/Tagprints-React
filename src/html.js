@@ -53,8 +53,31 @@ export default class Html extends React.Component {
 					/>
 					{this.props.postBodyComponents}
 					<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAZyFJjtN1lLLz3UoVF_mDelyTQOSZ0-rY" async/>
+					{process.env.NODE_ENV === `production` ? this.renderScripts() : null}
 				</body>
 			</html>
+		);
+	}
+
+	renderScripts() {
+		const gTag = `window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'AW-997082626');`;
+
+		const numberScript = `window.vs_account_id = "fwABAVssGPNPYgDM";`;
+
+		return (
+			<div>
+				<script src="https://www.googletagmanager.com/gtag/js?id=AW-997082626" async/>
+				{/* eslint-disable-next-line react/no-danger */}
+				<script dangerouslySetInnerHTML={{__html: gTag}}/>
+				{/* START number */}
+				{/* eslint-disable-next-line react/no-danger */}
+				<script dangerouslySetInnerHTML={{__html: numberScript}}/>
+				<script type="text/javascript" src="https://rw1.calls.net/euinc/number-changer.js"/>
+				{/* END number */}
+			</div>
 		);
 	}
 }
