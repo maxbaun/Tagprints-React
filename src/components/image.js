@@ -8,7 +8,6 @@ import {noop} from '../utils/componentHelpers';
 
 import CSS from '../css/modules/image.module.scss';
 import Placeholder from './placeholder';
-import Fragment from './fragment';
 
 export default class Image extends Component {
 	constructor(props) {
@@ -155,7 +154,7 @@ export default class Image extends Component {
 		const isLocal = this.props.sizes.src || this.props.resolutions.src;
 		const wrapCSS = [CSS.imageWrap, inViewToggle ? CSS.viewToggle : '', inViewToggle && inView ? CSS.inView : ''];
 		return (
-			<div className={wrapCSS.join(' ')} data-layout={this.getImageLayout()} style={this.props.style} onClick={onClick}>
+			<div className={wrapCSS.join(' ')} style={this.props.style} onClick={onClick}>
 				<Visibility partialVisibility onChange={this.toggleView}>
 					{isLocal ? this.renderGatsbyImage() : this.renderImage()}
 				</Visibility>

@@ -90,7 +90,7 @@ export default class CaseStudiesTemplate extends Component {
 						<div className="container">
 							<WorkCategories
 								activeCategory={activeCategory ? activeCategory.slug : null}
-								categories={fromJS(categories)}
+								categories={categories}
 								allLink="/our-work/case-studies"
 							/>
 						</div>

@@ -75,6 +75,13 @@ module.exports = {
 				sitemap: 'https://tagprints.com/sitemap.xml',
 				policy: process.env.ENV === 'production' ? [{userAgent: '*', allow: '/'}] : [{userAgent: '*', disallow: ['/']}]
 			}
+		},
+		{
+			resolve: 'gatsby-plugin-webpack-bundle-analyzer',
+			options: {
+				analyzerPort: 3000,
+				production: false
+			}
 		}
 	]
 };

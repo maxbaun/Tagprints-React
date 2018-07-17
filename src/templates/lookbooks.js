@@ -23,9 +23,7 @@ export default class LookbooksTemplate extends Component {
 			modalOpen: false,
 			modalStart: 1,
 			windowWidth: 0,
-			lookbooks: interleaveGalleries(
-				this.getAllLookbooks(props.data.lookbooks)
-			)
+			lookbooks: interleaveGalleries(this.getAllLookbooks(props.data.lookbooks))
 		};
 
 		this.getAllLookbooks = this.getAllLookbooks.bind(this);
@@ -66,11 +64,9 @@ export default class LookbooksTemplate extends Component {
 
 		const {lookbooks} = this.props.data;
 
-		const activeCategory = lookbooks.edges.find(
-			l => l.node.slug === activeSlug
-		);
+		const activeCategory = lookbooks.edges.find(l => l.node.slug === activeSlug);
 
-		return fromJS(activeCategory.node);
+		return activeCategory.node;
 	}
 
 	getAllLookbooks(lookbooks) {
@@ -86,13 +82,11 @@ export default class LookbooksTemplate extends Component {
 	getActiveLookbooks(lookbooks = this.state.lookbooks) {
 		const activeCategory = this.getActiveCategory();
 
-		if (!activeCategory || !activeCategory.get) {
+		if (!activeCategory || !activeCategory.slug) {
 			return lookbooks;
 		}
 
-		const activeLookbooks = lookbooks.filter(
-			l => l.get('lookbook') === activeCategory.get('slug')
-		);
+		const activeLookbooks = lookbooks.filter(l => l.get('lookbook') === activeCategory.slug);
 
 		return activeLookbooks;
 	}
@@ -107,10 +101,9 @@ export default class LookbooksTemplate extends Component {
 		return lookbooks
 			.map(lookbook => {
 				return {
+					id: lookbook.get('url'),
 					url: lookbook.get('url'),
-					resolutions: lookbook.get('full') ?
-						lookbook.get('full').toJS() :
-						{},
+					resolutions: lookbook.get('full') ? lookbook.get('full').toJS() : {},
 					height: lookbook.get('height'),
 					width: lookbook.get('width')
 				};
@@ -121,7 +114,7 @@ export default class LookbooksTemplate extends Component {
 	getCategories() {
 		const {lookbooks} = this.props.data;
 
-		const lookbookMap = lookbooks.edges.map(b => {
+		return lookbooks.edges.map(b => {
 			const lookbook = b.node;
 
 			return {
@@ -131,16 +124,12 @@ export default class LookbooksTemplate extends Component {
 				slug: lookbook.slug
 			};
 		});
-
-		return fromJS(lookbookMap);
 	}
 
 	handleImageClick(image) {
 		const lookbooks = this.getPaginatedLookbooks();
 
-		const index = lookbooks.findIndex(
-			lookbook => lookbook.get('key') === image.key
-		);
+		const index = lookbooks.findIndex(lookbook => lookbook.get('key') === image.key);
 
 		this.handleModalOpen(index + 1);
 	}
@@ -185,18 +174,14 @@ export default class LookbooksTemplate extends Component {
 
 		if (activeCategory) {
 			currentPage = {
-				...activeCategory.toJS(),
-				title: activeCategory.get('title') + ' Case Studies'
+				...activeCategory,
+				title: activeCategory.title + ' Case Studies'
 			};
 		}
 
 		return (
 			<Fragment>
-				<Seo
-					currentPage={currentPage}
-					site={this.props.site}
-					location={this.props.location}
-				/>
+				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<Lightbox
 					images={this.getLightboxImages()}
 					open={this.state.modalOpen}
@@ -207,11 +192,7 @@ export default class LookbooksTemplate extends Component {
 					<div className="our-work-lookbooks">
 						<div className="container">
 							<WorkCategories
-								activeCategory={
-									activeCategory && activeCategory.get ?
-										activeCategory.get('slug') :
-										null
-								}
+								activeCategory={activeCategory && activeCategory.slug ? activeCategory.slug : null}
 								categories={this.getCategories()}
 								allLink="/our-work"
 							/>

@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import * as ImmutablePropTypes from 'react-immutable-proptypes';
 import {List, fromJS} from 'immutable';
 import InfiniteScroll from 'react-infinite-scroller';
-import {TransitionMotion, spring, presets} from 'react-motion';
 
-import {shuffle} from '../utils/immutableHelpers';
 import {noop, click} from '../utils/componentHelpers';
 import CSS from '../css/modules/imageGrid.module.scss';
 
@@ -19,23 +17,15 @@ export default class ImageGrid extends Component {
 
 		this.state = {
 			rows: List(),
-			items: List(),
-			shuffle: false
+			items: List()
 		};
 
-		this.shuffleBtn = null;
 		this.getRows = this.getRows.bind(this);
 		this.getItems = this.getItems.bind(this);
 		this.getGrid = this.getGrid.bind(this);
-		this.handleShuffleClick = this.handleShuffleClick.bind(this);
-		this.getTransitionDefaultStyles = this.getTransitionDefaultStyles.bind(
-			this
-		);
-		this.getTransitionStyles = this.getTransitionStyles.bind(this);
 	}
 
 	static propTypes = {
-		shuffleBtn: PropTypes.string,
 		items: ImmutablePropTypes.list.isRequired,
 		placeholders: PropTypes.array,
 		component: PropTypes.func.isRequired,
@@ -46,22 +36,11 @@ export default class ImageGrid extends Component {
 	};
 
 	static defaultProps = {
-		shuffleBtn: '',
 		placeholders: [],
 		onImageClick: noop
 	};
 
 	componentDidMount() {
-		const {shuffleBtn} = this.props;
-
-		if (shuffleBtn !== '' && document.querySelector(shuffleBtn)) {
-			this.shuffleBtn = document.querySelector(shuffleBtn);
-		}
-
-		if (this.shuffleBtn) {
-			this.shuffleBtn.addEventListener('click', this.handleShuffleClick);
-		}
-
 		this.setNewItems(this.props.items);
 	}
 
@@ -69,24 +48,12 @@ export default class ImageGrid extends Component {
 		const prevWidth = this.props.windowWidth;
 		const nextWidth = nextProps.windowWidth;
 
-		if (
-			!nextProps.items.equals(this.props.items) ||
-			prevWidth !== nextWidth
-		) {
+		if (!nextProps.items.equals(this.props.items) || prevWidth !== nextWidth) {
 			this.setNewItems(nextProps.items);
 		}
 	}
 
-	componentWillUnmount() {
-		if (this.shuffleBtn) {
-			this.shuffleBtn.removeEventListener(
-				'click',
-				this.handleShuffleClick
-			);
-		}
-	}
-
-	setNewItems(items, isShuffle = false) {
+	setNewItems(items) {
 		const newRows = this.getRows({
 			windowWidth: document.body.clientWidth,
 			items: items
@@ -96,17 +63,12 @@ export default class ImageGrid extends Component {
 			return {
 				...prevState,
 				rows: newRows,
-				shuffle: isShuffle,
 				items: this.getItems(newRows)
 			};
 		});
 	}
 
-	getColumnsPerRow(
-		windowWidth = typeof document === 'undefined' ?
-			0 :
-			document.body.clientWidth
-	) {
+	getColumnsPerRow(windowWidth = typeof document === 'undefined' ? 0 : document.body.clientWidth) {
 		if (windowWidth > LargeMax) {
 			return 6;
 		}
@@ -154,12 +116,7 @@ export default class ImageGrid extends Component {
 		return this.getColumnsPerRow() === 1;
 	}
 
-	getRows({
-		windowWidth = typeof document === 'undefined' ?
-			0 :
-			document.body.clientWidth,
-		items = this.props.items
-	}) {
+	getRows({windowWidth = typeof document === 'undefined' ? 0 : document.body.clientWidth, items = this.props.items}) {
 		const columnHeight = windowWidth / this.getColumnsPerRow();
 
 		items = items.map(item => {
@@ -196,10 +153,7 @@ export default class ImageGrid extends Component {
 			const newHeight = windowWidth / rowRatio;
 
 			// If it is the last row and the row is not full, then don't try to stretch it
-			if (
-				index + 1 === rows.count() &&
-				row.count() < this.getColumnsPerRow(windowWidth)
-			) {
+			if (index + 1 === rows.count() && row.count() < this.getColumnsPerRow(windowWidth)) {
 				return row;
 			}
 
@@ -264,8 +218,7 @@ export default class ImageGrid extends Component {
 	}
 
 	getGrid() {
-		const windowWidth =
-			typeof document === 'undefined' ? 0 : document.body.clientWidth;
+		const windowWidth = typeof document === 'undefined' ? 0 : document.body.clientWidth;
 		const {rows} = this.state;
 
 		let gridHeight = 0;
@@ -293,162 +246,42 @@ export default class ImageGrid extends Component {
 		};
 	}
 
-	handleShuffleClick() {
-		this.setNewItems(shuffle(this.state.items), true);
-	}
-
-	getTransitionDefaultStyles(items) {
-		return items
-			.map(item => {
-				const [transformX, transformY] = item.get('prevPosition') ?
-					item.get('prevPosition').toJS() :
-					item.get('position').toJS();
-
-				return {
-					key: item.get('key'),
-					data: item.toJS(),
-					style: {
-						opacity: 0,
-						width: item.get('width'),
-						height: item.get('height'),
-						transformX,
-						transformY
-					}
-				};
-			})
-			.toJS();
-	}
-
-	getTransitionStyles(items) {
-		return items
-			.map(item => {
-				const {shuffle} = this.state;
-				const [transformX, transformY] = item.get('position') ?
-					item.get('position').toJS() :
-					[0, 0];
-
-				return {
-					key: item.get('key'),
-					data: item.toJS(),
-					style: {
-						transformX: shuffle ?
-							spring(transformX, presets.noWobble) :
-							transformX,
-						transformY: shuffle ?
-							spring(transformY, presets.noWobble) :
-							transformY,
-						opacity: spring(1, presets.stiff)
-					}
-				};
-			})
-			.toJS();
-	}
-
-	willEnter() {
-		return {
-			opacity: 0,
-			transformX: 0,
-			transformY: 0
-		};
-	}
-
 	render() {
-		const {
-			component,
-			hasMore,
-			onLoadMore: handleLoadMore,
-			shuffleBtn
-		} = this.props;
+		const {component, hasMore, onLoadMore: handleLoadMore} = this.props;
 		let {items} = this.state;
 
 		const gridStyle = this.getGrid();
 		const isOneColumn = this.isOneColumn();
+		const ulStyle = {
+			height: isOneColumn ? 'auto' : gridStyle.gridHeight,
+			width: isOneColumn ? '100%' : gridStyle.gridWidth,
+			whiteSpace: isOneColumn ? 'normal' : 'nowrap'
+		};
 
 		return (
 			<div className={CSS.grid}>
-				{shuffleBtn && shuffleBtn !== '' ? (
-					<div className={CSS.buttons}>
-						<button
-							type="button"
-							className="btn btn-our-work-inverse"
-							onClick={this.handleShuffleClick}
-						>
-							<i className="fa fa-random"/>
-							Shuffle
-						</button>
-					</div>
-				) : null}
-				<InfiniteScroll
-					pageStart={1}
-					initialLoad={false}
-					loadMore={handleLoadMore}
-					threshold={200}
-					hasMore={hasMore}
-				>
-					<TransitionMotion
-						defaultStyles={this.getTransitionDefaultStyles(items)}
-						willEnter={this.willEnter}
-						styles={this.getTransitionStyles(items)}
-					>
-						{interpolated => {
-							const ulStyle = {
-								height: isOneColumn ?
-									'auto' :
-									gridStyle.gridHeight,
-								width: isOneColumn ?
-									'100%' :
-									gridStyle.gridWidth,
-								whiteSpace: isOneColumn ? 'normal' : 'nowrap'
+				<InfiniteScroll pageStart={1} initialLoad={false} loadMore={handleLoadMore} threshold={200} hasMore={hasMore}>
+					<ul className={CSS.list} style={ulStyle}>
+						{items.map(item => {
+							const [transformX, transformY] = item.get('position') ? item.get('position').toJS() : [0, 0];
+
+							const style = {
+								opacity: 1,
+								display: isOneColumn ? 'block' : 'inline-block',
+								transform: isOneColumn ? `translate3d(0, 0, 0)` : `translate3d(${transformX}px, ${transformY}px, 0)`,
+								width: isOneColumn ? '100%' : item.get('width'),
+								height: isOneColumn ? 'auto' : item.get('height'),
+								position: isOneColumn ? 'relative' : 'absolute',
+								overflow: 'hidden'
 							};
 
 							return (
-								<ul className={CSS.list} style={ulStyle}>
-									{interpolated.map(item => {
-										const style = {
-											opacity: item.style.opacity,
-											display: isOneColumn ?
-												'block' :
-												'inline-block',
-											transform: isOneColumn ?
-												`translate3d(0, 0, 0)` :
-												`translate3d(${
-													item.style.transformX
-												  }px, ${
-													item.style.transformY
-												  }px, 0)`,
-											width: isOneColumn ?
-												'100%' :
-												item.data.width,
-											height: isOneColumn ?
-												'auto' :
-												item.data.height,
-											position: isOneColumn ?
-												'relative' :
-												'absolute',
-											overflow: 'hidden'
-										};
-
-										return (
-											<li
-												key={item.key}
-												className={CSS.item}
-												style={style}
-												onClick={click(
-													this.props.onImageClick,
-													item.data
-												)}
-											>
-												{React.createElement(
-													component,
-													{...item.data}
-												)}
-											</li>
-										);
-									})}
-								</ul>
+								<li key={item.get('key')} className={CSS.item} style={style} onClick={click(this.props.onImageClick, item.data)}>
+									{React.createElement(component, {...item.toJS()})}
+								</li>
 							);
-						}}
-					</TransitionMotion>
+						})}
+					</ul>
 				</InfiniteScroll>
 			</div>
 		);

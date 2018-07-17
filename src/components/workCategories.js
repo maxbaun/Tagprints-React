@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {List} from 'immutable';
-import * as ImmutablePropTypes from 'react-immutable-proptypes';
 import Link from 'gatsby-link';
 
-import {unique, click} from '../utils/componentHelpers';
+import {unique} from '../utils/componentHelpers';
 
 export default class Categories extends Component {
 	constructor(props) {
@@ -14,24 +12,19 @@ export default class Categories extends Component {
 	}
 
 	static propTypes = {
-		categories: ImmutablePropTypes.list,
+		categories: PropTypes.array,
 		activeCategory: PropTypes.string,
 		allLink: PropTypes.string.isRequired
 	};
 
 	static defaultProps = {
-		categories: List(),
+		categories: [],
 		activeCategory: null
 	};
 
 	render() {
 		const {categories, activeCategory, allLink} = this.props;
-		const compileWrapCSS = [
-			'our-work-categories',
-			categories && categories.count() > 0 ?
-				'our-work-categories__active' :
-				''
-		];
+		const compileWrapCSS = ['our-work-categories', categories && categories.length > 0 ? 'our-work-categories__active' : ''];
 		const compileAllCSS = [activeCategory ? '' : 'active'];
 
 		return (
@@ -43,19 +36,12 @@ export default class Categories extends Component {
 						</Link>
 					</li>
 					{categories.map(category => {
-						let compileCSS = [
-							activeCategory === category.get('slug') ?
-								'active' :
-								''
-						];
+						let compileCSS = [activeCategory === category.slug ? 'active' : ''];
 
 						return (
-							<li
-								key={category.get('id')}
-								className={compileCSS.join(' ')}
-							>
-								<Link to={category.get('link')}>
-									<span>{category.get('name')}</span>
+							<li key={category.id} className={compileCSS.join(' ')}>
+								<Link to={category.link}>
+									<span>{category.name}</span>
 								</Link>
 							</li>
 						);

@@ -33,10 +33,7 @@ export function interleaveGalleries(lookbooks) {
 }
 
 export function combineGalleries(lookbooks) {
-	return lookbooks.reduce(
-		(list, lookbook) => list.concat(transformLookbookGallery(lookbook)),
-		List()
-	);
+	return lookbooks.reduce((list, lookbook) => list.concat(transformLookbookGallery(lookbook)), List());
 }
 
 function getTotalImages(lookbooks) {
@@ -100,12 +97,7 @@ function transformLookbookImage(image, lookbook) {
 		width,
 		height,
 		sizes: image.getIn(['localFile', 'childImageSharp', 'sizes']),
-		layout:
-			width === height ?
-				imageLayouts.square :
-				height > width ?
-					imageLayouts.portait :
-					imageLayouts.landscape,
+		layout: width === height ? imageLayouts.square : height > width ? imageLayouts.portait : imageLayouts.landscape,
 		lookbook: lookbook.get('slug'),
 		link: lookbook.getIn(['acf', 'link'])
 	});

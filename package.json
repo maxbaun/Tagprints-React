@@ -38,6 +38,7 @@
 		"gatsby-plugin-robots-txt": "^1.1.0",
 		"gatsby-plugin-sass": "^1.0.21",
 		"gatsby-plugin-sitemap": "^1.2.23",
+		"gatsby-plugin-webpack-bundle-analyzer": "^0.1.1",
 		"gatsby-source-wordpress": "^2.0.85",
 		"imagesloaded": "^4.1.4",
 		"immutable": "^3.8.2",
