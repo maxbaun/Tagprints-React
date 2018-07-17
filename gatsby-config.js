@@ -67,6 +67,14 @@ module.exports = {
 		},
 		{
 			resolve: `gatsby-plugin-sitemap`
+		},
+		{
+			resolve: 'gatsby-plugin-robots-txt',
+			options: {
+				host: 'https://tagprints.com',
+				sitemap: 'https://tagprints.com/sitemap.xml',
+				policy: process.env.ENV === 'production' ? [{userAgent: '*', allow: '/'}] : [{userAgent: '*', disallow: ['/']}]
+			}
 		}
 	]
 };
