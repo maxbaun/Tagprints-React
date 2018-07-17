@@ -12,6 +12,12 @@ $small-and-down: 'only screen and (max-width : #{$small})' !default;
 $medium-and-down: 'only screen and (max-width : #{$medium})' !default;
 $medium-only: 'only screen and (min-width : #{$smallUp}) and (max-width : #{$medium})' !default;
 
+@mixin mobile {
+	@media only screen and (max-width: $small) {
+		@content;
+	}
+}
+
 @mixin mediumAndUp {
 	@media only screen and (min-width: $smallUp) {
 		@content;

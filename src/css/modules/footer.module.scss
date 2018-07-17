@@ -95,7 +95,8 @@
 	}
 }
 
-.footer[data-theme='home'] {
+.footer[data-theme='home'],
+.footer[data-theme='contact'] {
 	background-color: $color_51;
 
 	.copy {

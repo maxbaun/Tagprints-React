@@ -328,7 +328,7 @@ function getPageTemplate(template) {
 	}
 
 	if (template === 'template-contact.php') {
-		return path.resolve('./src/templates/contact.js');
+		return path.resolve('./src/templates/contactv2.js');
 	}
 
 	if (template === 'template-photobooth-lite.php') {
@@ -341,6 +341,14 @@ function getPageTemplate(template) {
 
 	if (template === 'template-array13-v2.php') {
 		return path.resolve('./src/templates/array13.js');
+	}
+
+	if (template === 'template-free-quote-v2.php') {
+		return path.resolve('./src/templates/quotev2.js');
+	}
+
+	if (template === 'template-thanks.php') {
+		return path.resolve('./src/templates/thanks.js');
 	}
 
 	return path.resolve(`./src/templates/page.js`);

@@ -1,6 +1,33 @@
 @import '../utils/variables.scss';
 @import '../utils/mixins.scss';
 
+.banner {
+	@include brandGradient();
+	padding: 30px 0;
+}
+
+.bannerInner {
+	padding: 0 15px;
+
+	h1 {
+		color: $color_white;
+		font-family: $fontUltra;
+		font-size: 36px;
+		line-height: 1.427;
+		margin: 0;
+		text-align: center;
+
+		@include mediumAndUp {
+			font-size: 63px;
+		}
+	}
+}
+
+.formContainer {
+	max-width: 711px;
+	margin: 0 auto;
+}
+
 .header {
 	padding: 30px 0;
 }
@@ -40,7 +67,7 @@
 		}
 
 		span {
-			color: $color_5;
+			color: $color_50;
 			display: none;
 			margin-right: 10px;
 
@@ -73,12 +100,34 @@
 	}
 }
 
+.seperator {
+	height: 1px;
+	position: relative;
+
+	&::before,
+	&::after {
+		content: ' ';
+		position: absolute;
+		height: 1px;
+		top: 0;
+	}
+
+	&::before {
+		background-color: #E6E6E6;
+		left: 0;
+		width: 100%;
+	}
+
+	&::after {
+		background-color: #C82B5E;
+		left: 50%;
+		margin-left: -31px;
+		width: 62px;
+	}
+}
+
 .form {
-	background-image: url('../../images/brickwall.png');
-	background-size: 110px 69px;
-	@include image-2x('../..//images/brickwall@2x.png', 110px, 69px);
-	background-repeat: repeat;
-	padding: 60px 0;
+	padding: 30px 0 60px;
 }
 
 .formImage {

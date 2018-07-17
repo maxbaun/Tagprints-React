@@ -3,9 +3,11 @@
 
 .logo {
 	display: block;
+	max-width: 100%;
 
 	> svg {
 		display: block;
+		max-width: 100%;
 	}
 
 	.st0,
@@ -116,6 +118,31 @@
 		.st2,
 		.st4 {
 			fill: white;
+		}
+	}
+
+	.footer {
+		.st0,
+		.st1,
+		.st2,
+		.st3,
+		.st4 {
+			fill: #D5CFD7;
+		}
+	}
+}
+
+[data-theme='contact'] {
+	.header {
+		.st0,
+		.st1,
+		.st3 {
+			fill: $color_35;
+		}
+
+		.st2,
+		.st4 {
+			fill: $color_33;
 		}
 	}
 

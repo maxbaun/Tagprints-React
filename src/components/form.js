@@ -103,7 +103,12 @@ class Form extends Component {
 	static propTypes = {
 		formId: PropTypes.string.isRequired,
 		query: PropTypes.object.isRequired,
-		location: PropTypes.object.isRequired
+		location: PropTypes.object.isRequired,
+		classname: PropTypes.string
+	};
+
+	static defaultProps = {
+		classname: 'default'
 	};
 
 	componentDidMount() {
@@ -255,12 +260,15 @@ class Form extends Component {
 
 	render() {
 		const {loading, success} = this.state;
+		const {classname} = this.props;
 
-		return (
-			<div className={loading ? CSS.loading : CSS.wrap}>
-				{loading ? this.renderLoader() : success ? this.renderConfirmation() : this.renderForm()}
-			</div>
-		);
+		const wrapCss = [loading ? CSS.loading : CSS.wrap];
+
+		if (CSS[classname]) {
+			wrapCss.push(CSS[classname]);
+		}
+
+		return <div className={wrapCss.join(' ')}>{loading ? this.renderLoader() : success ? this.renderConfirmation() : this.renderForm()}</div>;
 	}
 
 	renderLoader() {
@@ -321,7 +329,7 @@ class Form extends Component {
 						<Recaptcha onChange={this.handleRecaptcha} error={recaptchaError}/>
 					</li>
 					<li className={CSS.submit}>
-						<Button setSize type="submit" classes="btn btn-cta btn-cta-transparent-inverse" text={button.text} loading={sending}/>
+						<Button type="submit" classes="btn btn-cta btn-cta-transparent-inverse" text={button.text} loading={sending}/>
 					</li>
 				</ul>
 			</form>

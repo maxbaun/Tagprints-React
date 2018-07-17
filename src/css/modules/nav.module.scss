@@ -156,7 +156,9 @@
 }
 
 .dropdownLink {
-	font-size: 15px;
+	font-family: $fontGotham;
+	font-size: 14px;
+	font-weight: 500;
 	text-transform: uppercase;
 	line-height: 1.2;
 	transition: all 0.3s ease-in-out;
@@ -169,7 +171,8 @@
 }
 
 .menu[data-theme='default'],
-.menu[data-theme='photobooth-pro'] {
+.menu[data-theme='photobooth-pro'],
+.menu[data-theme='contact'] {
 	.link {
 		&:hover {
 			color: $color_5;
@@ -390,6 +393,69 @@
 			&:hover {
 				color: white;
 				background-color: $color_50;
+			}
+		}
+	}
+}
+
+.menu[data-theme='contact'] {
+	&.menuHeader {
+		.link {
+			color: $color_46;
+
+			&:hover {
+				color: $color_50;
+			}
+		}
+
+		.cta {
+			color: white;
+			border-color: $color_50;
+			background-color: $color_50;
+		}
+	}
+
+	&.menuFooter {
+		.link {
+			color: white;
+
+			&:hover {
+				color: $color_50;
+			}
+		}
+	}
+
+	&.menuFooter {
+		color: white;
+
+		&:hover {
+			color: $color_50;
+		}
+	}
+
+	.menuHeader {
+		.dropdownLink {
+			color: $color_46;
+		}
+	}
+
+	.menuFooter {
+		.dropdownLink {
+			color: white;
+		}
+	}
+
+	&.menuHeader,
+	&.menuFooter {
+		.dropdownLink {
+			@include largeAndUp {
+				background-color: white;
+				color: $color_46;
+
+				&:hover {
+					color: white;
+					background-color: $color_50;
+				}
 			}
 		}
 	}
