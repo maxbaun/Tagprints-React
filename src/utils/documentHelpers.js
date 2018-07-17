@@ -23,9 +23,7 @@ export const setDataTheme = theme => {
 		theme = 'default';
 	}
 
-	const themeToggles = Array.from(
-		document.querySelectorAll('[data-theme-toggle]')
-	);
+	const themeToggles = Array.from(document.querySelectorAll('[data-theme-toggle]'));
 
 	themeToggles.forEach(t => t.setAttribute('data-theme', theme));
 };

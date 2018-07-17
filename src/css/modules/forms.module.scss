@@ -83,6 +83,53 @@
 	}
 }
 
+.contact {
+	input[type='text'],
+	input[type='email'],
+	input[type='password'],
+	textarea {
+		background-color: #F1F1F1;
+		border: 1px solid transparent;
+		color: #4D4D4D;
+		font-family: $fontGotham;
+		font-weight: 500;
+		font-size: 14px;
+
+		&:focus {
+			border-color: $color_50;
+		}
+	}
+
+	button[type='submit'] {
+		background-color: $color_50;
+		border-color: $color_50;
+		color: $color_white;
+		font-family: $fontGotham;
+		font-size: 16px;
+		font-weight: 500;
+		height: 54px;
+		letter-spacing: 0;
+		padding: 0 15px;
+		width: 100%;
+
+		&:hover {
+			background-color: $color_50;
+			border-color: $color_50;
+			color: $color_white;
+		}
+
+		svg {
+			fill: $color_white !important;
+		}
+	}
+
+	.loader {
+		svg {
+			fill: $color_50 !important;
+		}
+	}
+}
+
 :global {
 	.react-datepicker-wrapper {
 		display: block;

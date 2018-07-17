@@ -144,21 +144,21 @@ textarea {
 }
 
 *:focus::-webkit-input-placeholder {
-	color: $color_white;
+	color: transparent;
 }
 
 *:focus:-moz-placeholder {
 	/* Firefox 18- */
-	color: $color_white;
+	color: transparent;
 }
 
 *:focus::-moz-placeholder {
 	/* Firefox 19+ */
-	color: $color_white;
+	color: transparent;
 }
 
 *:focus:-ms-input-placeholder {
-	color: $color_white;
+	color: transparent;
 }
 
 .gform_validation_container {

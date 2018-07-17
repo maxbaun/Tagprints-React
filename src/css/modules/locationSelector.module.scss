@@ -1,0 +1,215 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.wrap {
+	height: 100%;
+	position: relative;
+	width: 100%;
+}
+
+.map {
+	height: 100%;
+	min-height: 100vh;
+	width: 100%;
+
+	@include mediumAndUp {
+		min-height: 610px;
+	}
+}
+
+.overlay {
+	@include absoluteFull();
+}
+
+.info {
+	@include absoluteFull();
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	z-index: 1;
+
+	@include mediumAndUp {
+		padding-top: 50px;
+	}
+}
+
+.infoInner {
+	width: 100%;
+
+	@include mobile {
+		@include brandGradient;
+		margin: 30px auto 0;
+		max-width: 320px;
+	}
+
+	@include mediumAndUp {
+		background-image: url('../../images/info-background.png');
+		background-size: 492px 264px;
+		background-repeat: no-repeat;
+		@include image-2x('../../images/info-background@2x.png', 492px, 264px);
+		height: 264px;
+		width: 492px;
+		margin-top: 50px;
+		margin-left: -20px;
+		padding: 20px 40px;
+	}
+}
+
+.infoMarker {
+	span {
+		color: $color_50;
+		font-size: 75px;
+		line-height: 75px;
+
+		@include mediumAndUp {
+			font-size: 100px;
+			line-height: 100px;
+		}
+	}
+}
+
+.infoContent {
+	color: $color_white;
+	padding: 30px 15px;
+	width: 100%;
+
+	@include mediumAndUp {
+		padding: 30px 25px;
+	}
+
+	h3,
+	p {
+		@include mediumAndUp {
+			white-space: nowrap;
+		}
+	}
+
+	h3 {
+		color: $color_white;
+		font-family: $fontUltra;
+		font-size: 36px;
+		line-height: 1;
+		margin: 0 0 10px;
+		text-transform: uppercase;
+	}
+
+	p {
+		font-family: $fontGotham;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 1.929;
+		margin: 0 0 30px;
+		opacity: 0.8;
+	}
+
+	a {
+		align-items: center;
+		color: $color_white;
+		display: flex;
+		border: 1px solid $color_white;
+		border-radius: 4px;
+		font-family: $fontGotham;
+		font-size: 14px;
+		font-weight: 500;
+		justify-content: center;
+		height: 44px;
+		text-transform: uppercase;
+		width: 194px;
+		text-align: center;
+
+		span {
+			font-size: 20px;
+			line-height: 20px;
+			margin-left: 10px;
+			transition: all 0.3s ease-in-out;
+		}
+
+		&:hover {
+			span {
+				margin-left: 15px;
+			}
+		}
+	}
+}
+
+.picker {
+	background-color: #2E1039;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	left: 0;
+	margin: 0 15px;
+	position: absolute;
+	padding: 15px;
+	right: 0;
+	top: 0;
+	z-index: 2;
+
+	@include mediumAndUp {
+		left: auto;
+		margin: 0;
+		padding: 25px 30px;
+		right: 5%;
+	}
+
+	ul {
+		@include noList();
+		align-items: middle;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		@include mediumAndUp {
+			flex-direction: row;
+		}
+
+		li {
+			font-size: 14px;
+			line-height: 16px;
+			position: relative;
+			white-space: nowrap;
+
+			@include mobile {
+				text-align: center;
+			}
+
+			&:not(:last-child) {
+				@include mobile {
+					&::after {
+						background-color: $color_white;
+						bottom: 0;
+						content: ' ';
+						height: 1px;
+						left: 50%;
+						margin-left: -10px;
+						position: absolute;
+						width: 20px;
+					}
+				}
+
+				@include mediumAndUp {
+					border-right: 1px solid $color_white;
+				}
+			}
+
+			a {
+				color: $color_white;
+				cursor: pointer;
+				display: block;
+				font-family: $fontGotham;
+				font-weight: 500;
+				padding: 10px 0;
+				position: relative;
+				text-transform: uppercase;
+
+				&[data-active='true'] {
+					color: $color_50;
+				}
+
+				@include mediumAndUp {
+					padding: 0 10px;
+				}
+			}
+		}
+	}
+}

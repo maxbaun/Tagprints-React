@@ -1,0 +1,49 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+@import './contactv2.module.scss';
+
+.form {
+	padding: 25px 0;
+	position: relative;
+	max-width: 950px;
+	margin: 0 auto;
+
+	@include mediumAndUp {
+		padding: 50px 0;
+	}
+
+	@include largeAndUp {
+		padding: 100px 0;
+	}
+}
+
+.quote {
+	display: none;
+	position: absolute;
+	z-index: -1;
+
+	span {
+		color: #F2F2F2;
+		font-size: 100px;
+		line-height: 100px;
+	}
+
+	@include largeAndUp {
+		display: block;
+	}
+}
+
+.quoteLeft,
+.quoteRight {
+	@extend .quote;
+}
+
+.quoteLeft {
+	left: -100px;
+	top: 50px;
+}
+
+.quoteRight {
+	right: -100px;
+	bottom: 50px;
+}
