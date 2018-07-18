@@ -5,7 +5,6 @@ import graphql from 'graphql';
 import Fragment from '../components/fragment';
 import Seo from '../components/seo';
 import CSS from '../css/modules/thanks.module.scss';
-import {setDataTheme} from '../utils/documentHelpers';
 import {innerHtml} from '../utils/wordpressHelpers';
 
 export default class ThanksTemplate extends Component {
@@ -16,13 +15,8 @@ export default class ThanksTemplate extends Component {
 	};
 
 	componentDidMount() {
-		setDataTheme('contact');
 		// eslint-disable-next-line camelcase
 		window.gtag('event', 'conversion', {send_to: 'AW-997082626/5imUCOOG6mAQgoy52wM'});
-	}
-
-	componentWillUnmount() {
-		setDataTheme('default');
 	}
 
 	render() {

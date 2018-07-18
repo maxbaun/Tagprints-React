@@ -4,7 +4,6 @@ import graphql from 'graphql';
 import Link from 'gatsby-link';
 
 import {innerHtml, replaceLinks, getLightboxImageObject} from '../utils/wordpressHelpers';
-import {setDataTheme} from '../utils/documentHelpers';
 import CSS from '../css/modules/array13.module.scss';
 import ArrayLogo from '../images/array13Logo.svg';
 import Fragment from '../components/fragment';
@@ -29,14 +28,6 @@ export default class PbpPageTemplate extends Component {
 		location: PropTypes.object.isRequired,
 		site: PropTypes.object.isRequired
 	};
-
-	componentDidMount() {
-		setDataTheme('array13');
-	}
-
-	componentWillUnmount() {
-		setDataTheme('default');
-	}
 
 	render() {
 		const {currentPage} = this.props.data;

@@ -114,3 +114,12 @@
 	background: linear-gradient(90deg, rgba(180, 43, 94, 1) 0%, rgba(117, 58, 128, 1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#B42B5E',endColorstr='#753A80' , GradientType=1);
 }
+
+@mixin heroSizing {
+	min-height: 450px;
+	max-height: calc(100vh - 72px);
+
+	@include largeAndUp {
+		max-height: 100vh;
+	}
+}

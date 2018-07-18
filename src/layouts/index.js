@@ -6,7 +6,7 @@ import './styles';
 
 import Header from '../components/header';
 import Footer from '../components/footer';
-import Fragment from '../components/fragment';
+import {getDataTheme} from '../utils/documentHelpers';
 
 export default class DefaultLayout extends Component {
 	static propTypes = {
@@ -20,14 +20,15 @@ export default class DefaultLayout extends Component {
 	};
 
 	render() {
+		const {location} = this.props;
 		const {mainMenu, site} = this.props.data;
 
 		return (
-			<Fragment>
-				<Header items={mainMenu.items}/>
+			<div id="site" data-theme={getDataTheme(location)} data-theme-toggle="true">
+				<Header items={mainMenu.items} location={location}/>
 				{this.props.children({...this.props, site})}
-				<Footer menu={mainMenu}/>
-			</Fragment>
+				<Footer menu={mainMenu} location={location}/>
+			</div>
 		);
 	}
 }

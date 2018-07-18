@@ -4,7 +4,6 @@ import graphql from 'graphql';
 import Typist from 'react-typist';
 
 import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
-import {setDataTheme} from '../utils/documentHelpers';
 import HeroVid from '../images/homeHeroVid.mp4';
 import HeroVidWebm from '../images/homeHeroVid.webm';
 import Divider from '../images/brand-divider.png';
@@ -16,8 +15,10 @@ import Seo from '../components/seo';
 import Link from '../components/link';
 import Image from '../components/image';
 import NewsletterSignup from '../components/newsletterSignup';
+import HeroImg from './homeHero';
+import WindowSize from '../components/windowSize';
 
-export default class Index extends Component {
+class Index extends Component {
 	constructor(props) {
 		super(props);
 
@@ -25,34 +26,15 @@ export default class Index extends Component {
 			heroLoaded: false
 		};
 
-		this.heroVideo = null;
-
 		this.handleVideoLoad = this.handleVideoLoad.bind(this);
 	}
 
 	static propTypes = {
 		data: PropTypes.object.isRequired,
 		location: PropTypes.object.isRequired,
-		site: PropTypes.object.isRequired
+		site: PropTypes.object.isRequired,
+		windowWidth: PropTypes.number.isRequired
 	};
-
-	componentDidMount() {
-		setDataTheme('home');
-
-		if (this.heroVideo) {
-			this.heroVideo.addEventListener('loadedmetadata', this.handleVideoLoad);
-		}
-
-		setTimeout(this.handleVideoLoad, 500);
-	}
-
-	componentWillUnmount() {
-		setDataTheme('default');
-
-		if (this.heroVideo) {
-			this.heroVideo.removeEventListener('loadedmetadata', this.handleVideoLoad);
-		}
-	}
 
 	handleVideoLoad() {
 		this.setState({
@@ -63,6 +45,7 @@ export default class Index extends Component {
 	render() {
 		const {currentPage} = this.props.data;
 		const {heroLoaded} = this.state;
+		const {windowWidth} = this.props;
 
 		if (!currentPage) {
 			return null;
@@ -72,7 +55,7 @@ export default class Index extends Component {
 
 		const heroCss = [CSS.hero];
 
-		if (heroLoaded) {
+		if (heroLoaded || (windowWidth !== 0 && windowWidth < 992)) {
 			heroCss.push(CSS.heroLoaded);
 		}
 
@@ -82,8 +65,11 @@ export default class Index extends Component {
 				<main className="main" role="main">
 					<div className={CSS.home}>
 						<div className={heroCss.join(' ')}>
+							<div className={CSS.heroImage}>
+								<img src={HeroImg}/>
+							</div>
 							<div className={CSS.heroVideo}>
-								<video autoPlay loop muted playsInline onLoadedData={this.handleVideoLoad}>
+								<video autoPlay loop muted playsInline onCanPlayThrough={this.handleVideoLoad}>
 									<source src={HeroVid} type="video/mp4"/>
 									<source src={HeroVidWebm} type="video/webm"/>
 								</video>
@@ -91,17 +77,15 @@ export default class Index extends Component {
 							<div className={CSS.heroOverlay}>
 								<div className={CSS.heroOverlayInner}>
 									<h1>
-										{heroLoaded ? (
-											<Typist
-												startDelay={300}
-												avgTypingDelay={42}
-												cursor={{
-													show: false
-												}}
-											>
-												{hero.title}
-											</Typist>
-										) : null}
+										<Typist
+											startDelay={300}
+											avgTypingDelay={42}
+											cursor={{
+												show: false
+											}}
+										>
+											{hero.title}
+										</Typist>
 									</h1>
 								</div>
 							</div>
@@ -113,12 +97,13 @@ export default class Index extends Component {
 										className="btn btn-brand-cta"
 										to={replaceLinks(cta.link.url)}
 										style={{
-											fontSize: 20,
+											fontSize: windowWidth > 768 ? 20 : 14,
 											lineHeight: '24px',
 											width: 350,
 											maxWidth: '100%',
 											margin: '0 auto',
-											whiteSpace: 'normal'
+											whiteSpace: 'normal',
+											padding: windowWidth > 768 ? '20px 30px' : '10px 15px'
 										}}
 									>
 										{cta.link.title}
@@ -527,3 +512,5 @@ export const pageQuery = graphql`
 		}
 	}
 `;
+
+export default WindowSize(Index);

@@ -7,7 +7,7 @@ import './styles';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import WorkHeader from '../components/workHeader';
-import Fragment from '../components/fragment';
+import {getDataTheme} from '../utils/documentHelpers';
 
 export default class WorkLayout extends Component {
 	static propTypes = {
@@ -22,14 +22,15 @@ export default class WorkLayout extends Component {
 
 	render() {
 		const {mainMenu, site} = this.props.data;
+		const {location} = this.props;
 
 		return (
-			<Fragment>
-				<Header items={mainMenu.items}/>
+			<div id="site" data-theme={getDataTheme(location)} data-theme-toggle="true">
+				<Header items={mainMenu.items} location={location}/>
 				<WorkHeader location={this.props.location}/>
 				{this.props.children({...this.props, site})}
-				<Footer menu={mainMenu}/>
-			</Fragment>
+				<Footer menu={mainMenu} location={location}/>
+			</div>
 		);
 	}
 }

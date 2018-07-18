@@ -4,23 +4,17 @@ import Link from 'gatsby-link';
 
 import {replaceLinks} from '../utils/wordpressHelpers';
 import {click} from '../utils/componentHelpers';
+import {getDataTheme} from '../utils/documentHelpers';
 import CSS from '../css/modules/nav.module.scss';
 
-const Nav = ({classes, items, id, onLinkClick: handleLinkClick, showCta}) => {
+const Nav = ({classes, items, id, onLinkClick: handleLinkClick, showCta, location}) => {
 	const wrapClass = [CSS.menu, CSS[classes]];
 
 	return (
-		<ul
-			id={id}
-			className={wrapClass.join(' ')}
-			data-theme="default"
-			data-theme-toggle="true"
-		>
+		<ul id={id} className={wrapClass.join(' ')} data-theme={getDataTheme(location)} data-theme-toggle="true">
 			{items &&
 				items.map((item, index) => {
-					const hasChildren = Boolean(
-						item.children && item.children.length
-					);
+					const hasChildren = Boolean(item.children && item.children.length);
 
 					const classes = hasChildren ? [CSS.dropdownWrap] : [];
 
@@ -33,11 +27,7 @@ const Nav = ({classes, items, id, onLinkClick: handleLinkClick, showCta}) => {
 					return (
 						<li key={item.url} className={classes.join(' ')}>
 							<Link
-								to={
-									hasChildren ?
-										replaceLinks(item.children[0].url) :
-										replaceLinks(item.url)
-								}
+								to={hasChildren ? replaceLinks(item.children[0].url) : replaceLinks(item.url)}
 								onClick={click(handleLinkClick, item)}
 								title={item.title}
 								className={linkClasses.join(' ')}
@@ -50,22 +40,12 @@ const Nav = ({classes, items, id, onLinkClick: handleLinkClick, showCta}) => {
 										{item.children &&
 											item.children.map(child => {
 												return (
-													<li
-														key={child.url}
-														className={classes}
-													>
+													<li key={child.url} className={classes}>
 														<Link
-															to={replaceLinks(
-																child.url
-															)}
-															onClick={click(
-																handleLinkClick,
-																child
-															)}
+															to={replaceLinks(child.url)}
+															onClick={click(handleLinkClick, child)}
 															title={child.title}
-															className={
-																CSS.dropdownLink
-															}
+															className={CSS.dropdownLink}
 														>
 															{child.title}
 														</Link>
@@ -94,7 +74,8 @@ Nav.propTypes = {
 	classes: PropTypes.string,
 	id: PropTypes.string,
 	onLinkClick: PropTypes.func,
-	showCta: PropTypes.bool
+	showCta: PropTypes.bool,
+	location: PropTypes.object.isRequired
 };
 
 Nav.defaultProps = {

@@ -6,6 +6,7 @@ import Logo from './logo';
 import Nav from './nav';
 import NavSocial from './navSocial';
 import {clickPrevent, ref, click} from '../utils/componentHelpers';
+import {getDataTheme} from '../utils/documentHelpers';
 import CSS from '../css/modules/header.module.scss';
 
 export default class Header extends Component {
@@ -23,7 +24,8 @@ export default class Header extends Component {
 	}
 
 	static propTypes = {
-		items: PropTypes.array
+		items: PropTypes.array,
+		location: PropTypes.object.isRequired
 	};
 
 	static defaultProps = {
@@ -60,7 +62,7 @@ export default class Header extends Component {
 		}
 
 		return (
-			<header className={CSS.header} data-theme="default" data-theme-toggle="true">
+			<header className={CSS.header} data-theme={getDataTheme(this.props.location)} data-theme-toggle="true">
 				<div className={CSS.inner}>
 					<div className={CSS.navTop} role="banner">
 						<NavSocial showPhone classname="header"/>
@@ -90,6 +92,7 @@ export default class Header extends Component {
 								id="menu-primary-navigation"
 								classes="menuHeader"
 								onLinkClick={click(this.handleToggle, false)}
+								location={this.props.location}
 							/>
 							<div className={CSS.socialMobile}>
 								<NavSocial showPhone classname="header"/>

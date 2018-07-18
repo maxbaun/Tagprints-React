@@ -1,12 +1,20 @@
 @import '../utils/variables.scss';
 @import '../utils/mixins.scss';
 
+@mixin heroMedia {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	@include heroSizing();
+}
+
 .hero {
 	position: relative;
 	opacity: 0;
 	transition: all 0.3s ease-in-out;
 	width: 100%;
-	height: 100vh;
+	overflow: hidden;
+	@include heroSizing();
 }
 
 .heroLoaded {
@@ -17,15 +25,39 @@
 		opacity: 1;
 		transform: scale(1);
 	}
+
+	// @include mediumAndUp {
+	.heroImage {
+		display: none;
+		opacity: 0;
+	}
+
+	.heroVideo {
+		display: block;
+		opacity: 1;
+	}
+	// }
 }
 
 .heroVideo {
+	display: none;
+	opacity: 0;
 	width: 100%;
+	@include heroSizing();
 
 	video {
-		display: block;
-		height: auto;
-		width: 100%;
+		@include heroMedia();
+	}
+}
+
+.heroImage {
+	display: block;
+	opacity: 1;
+	width: 100%;
+	@include heroSizing();
+
+	img {
+		@include heroMedia();
 	}
 }
 

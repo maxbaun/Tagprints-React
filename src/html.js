@@ -46,7 +46,7 @@ export default class Html extends React.Component {
 					{/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css"/> */}
 					{css}
 				</head>
-				<body data-theme="default" data-theme-toggle="true">
+				<body>
 					<div
 						id="___gatsby"
 						dangerouslySetInnerHTML={{__html: this.props.body}} //eslint-disable-line
@@ -75,7 +75,7 @@ export default class Html extends React.Component {
 				{/* START number */}
 				{/* eslint-disable-next-line react/no-danger */}
 				<script dangerouslySetInnerHTML={{__html: numberScript}}/>
-				<script type="text/javascript" src="https://rw1.calls.net/euinc/number-changer.js"/>
+				<script type="text/javascript" src="https://rw1.calls.net/euinc/number-changer.js" async/>
 				{/* END number */}
 			</div>
 		);

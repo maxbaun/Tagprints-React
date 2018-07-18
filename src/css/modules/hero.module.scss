@@ -2,9 +2,7 @@
 @import '../utils/mixins.scss';
 
 @mixin heroMinHeight {
-	@include mediumAndUp {
-		min-height: 650px;
-	}
+	@include heroSizing();
 }
 
 .hero {

@@ -185,10 +185,12 @@ export default class Image extends Component {
 		const loaded = Boolean(url);
 
 		return (
-			<div style={{width: '100%', height: '100%'}}>
+			<div style={{maxHeight: '100%', maxWidth: '100%', width: this.props.naturalWidth, height: this.props.naturalHeight}}>
 				{placeholder && !loaded ? (
 					<div className={CSS.placeholder}>
-						<Placeholder style={{height: '100%', width: '100%'}}/>
+						<Placeholder
+							style={{maxHeight: '100%', maxWidth: '100%', width: this.props.naturalWidth, height: this.props.naturalHeight}}
+						/>
 					</div>
 				) : null}
 				<figure className={[CSS.inner, loaded ? CSS.innerActive : ''].join(' ')}>{loaded ? <img src={url} style={imgStyle}/> : null}</figure>

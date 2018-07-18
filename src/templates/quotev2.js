@@ -6,7 +6,6 @@ import Fragment from '../components/fragment';
 import Form from '../components/form';
 import Seo from '../components/seo';
 import CSS from '../css/modules/quotev2.module.scss';
-import {setDataTheme} from '../utils/documentHelpers';
 
 export default class QuotePageV2Template extends Component {
 	static propTypes = {
@@ -14,14 +13,6 @@ export default class QuotePageV2Template extends Component {
 		location: PropTypes.object.isRequired,
 		site: PropTypes.object.isRequired
 	};
-
-	componentDidMount() {
-		setDataTheme('contact');
-	}
-
-	componentWillUnmount() {
-		setDataTheme('default');
-	}
 
 	render() {
 		const {currentPage} = this.props.data;

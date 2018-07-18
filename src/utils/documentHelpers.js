@@ -18,12 +18,28 @@
 // 	body.setAttribute('data-theme', dataTheme);
 // };
 
-export const setDataTheme = theme => {
-	if (!theme || theme === '') {
-		theme = 'default';
+export const getDataTheme = location => {
+	const part = location.pathname.split('/')[1];
+
+	if (!part || part === '') {
+		return 'home';
 	}
 
-	const themeToggles = Array.from(document.querySelectorAll('[data-theme-toggle]'));
+	if (part.includes('contact') || part.includes('free-quote') || part.includes('thanks')) {
+		return 'contact';
+	}
 
-	themeToggles.forEach(t => t.setAttribute('data-theme', theme));
+	if (part.includes('social-photo-booth-pro')) {
+		return 'photobooth-pro';
+	}
+
+	if (part.includes('social-photo-booth-lite')) {
+		return 'photobooth-lite';
+	}
+
+	if (part === 'array13') {
+		return 'array13';
+	}
+
+	return 'default';
 };

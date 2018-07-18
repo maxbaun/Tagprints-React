@@ -7,7 +7,6 @@ import LocationSelector from '../components/locationSelector';
 import Form from '../components/form';
 import Seo from '../components/seo';
 import CSS from '../css/modules/contactv2.module.scss';
-import {setDataTheme} from '../utils/documentHelpers';
 import {emailLink, phoneLink} from '../utils/componentHelpers';
 
 export default class ContactPageV2Template extends Component {
@@ -16,14 +15,6 @@ export default class ContactPageV2Template extends Component {
 		location: PropTypes.object.isRequired,
 		site: PropTypes.object.isRequired
 	};
-
-	componentDidMount() {
-		setDataTheme('contact');
-	}
-
-	componentWillUnmount() {
-		setDataTheme('default');
-	}
 
 	render() {
 		const {currentPage} = this.props.data;

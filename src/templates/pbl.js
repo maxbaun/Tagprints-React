@@ -4,7 +4,6 @@ import graphql from 'graphql';
 import Link from 'gatsby-link';
 
 import {innerHtml, replaceLinks, getLightboxImageObject} from '../utils/wordpressHelpers';
-import {setDataTheme} from '../utils/documentHelpers';
 import CSS from '../css/modules/pbl.module.scss';
 import Fragment from '../components/fragment';
 import Seo from '../components/seo';
@@ -27,14 +26,6 @@ export default class PblPageTemplate extends Component {
 		location: PropTypes.object.isRequired,
 		site: PropTypes.object.isRequired
 	};
-
-	componentDidMount() {
-		setDataTheme('photobooth-lite');
-	}
-
-	componentWillUnmount() {
-		setDataTheme('default');
-	}
 
 	render() {
 		const {currentPage} = this.props.data;
