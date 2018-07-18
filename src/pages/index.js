@@ -69,7 +69,7 @@ class Index extends Component {
 								<img src={HeroImg}/>
 							</div>
 							<div className={CSS.heroVideo}>
-								<video autoPlay loop muted playsInline onCanPlayThrough={this.handleVideoLoad}>
+								<video autoPlay loop muted playsInline onCanPlay={this.handleVideoLoad}>
 									<source src={HeroVid} type="video/mp4"/>
 									<source src={HeroVidWebm} type="video/webm"/>
 								</video>
