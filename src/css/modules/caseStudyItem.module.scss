@@ -3,10 +3,12 @@
 
 .case-study {
 	margin-bottom: 30px;
+
 	.btn {
 		padding-left: 20px;
 		padding-right: 20px;
 	}
+
 	.content {
 		.text {
 			font-size: 14px;
@@ -22,12 +24,14 @@
 	margin-bottom: 30px;
 	position: relative;
 
-	&:hover {
-		.overlay {
-			opacity: 1;
+	@include mediumAndUp {
+		&:hover {
+			.overlay {
+				opacity: 1;
 
-			a {
-				transform: rotateY(0deg);
+				span {
+					transform: rotateY(0deg);
+				}
 			}
 		}
 	}
@@ -83,16 +87,12 @@
 	position: absolute;
 	top: 0;
 	width: 100%;
-	opacity: 1;
+	opacity: 0;
 	background-color: rgba($color_5, 0.8);
 	transition: all 0.3s ease-in-out;
 	z-index: 2;
 
-	@include mediumAndUp {
-		opacity: 0;
-	}
-
-	a {
+	span {
 		display: block;
 		padding-left: 20px;
 		padding-right: 20px;

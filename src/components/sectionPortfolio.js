@@ -62,7 +62,9 @@ export default class sectionPortfolio extends Component {
 				<Modal size="full" active={modalOpen} onClose={this.handleModalClose} classname={modalClass} fogOpacity={0.9}>
 					<div className={CSS.modalWrap}>
 						<div className={CSS.modalInner}>
-							<PortfolioSlider categories={categories} activeCategory={activeCategory} onCloseClicked={this.handleModalClose}/>
+							{modalOpen ? (
+								<PortfolioSlider categories={categories} activeCategory={activeCategory} onCloseClicked={this.handleModalClose}/>
+							) : null}
 						</div>
 					</div>
 				</Modal>

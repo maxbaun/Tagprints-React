@@ -12,10 +12,7 @@ const Placeholder = ({style, color}) => {
 
 	return (
 		<div className={CSS.placeholder} style={style}>
-			<div
-				className={[CSS.inner, 'placeholder'].join(' ')}
-				style={innerStyle}
-			/>
+			<div className={[CSS.inner].join(' ')} style={innerStyle}/>
 		</div>
 	);
 };

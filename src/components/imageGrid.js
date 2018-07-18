@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import * as ImmutablePropTypes from 'react-immutable-proptypes';
-import {List, fromJS} from 'immutable';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import {noop, click} from '../utils/componentHelpers';
@@ -16,8 +14,8 @@ export default class ImageGrid extends Component {
 		super(props);
 
 		this.state = {
-			rows: List(),
-			items: List()
+			rows: [],
+			items: []
 		};
 
 		this.getRows = this.getRows.bind(this);
@@ -26,7 +24,7 @@ export default class ImageGrid extends Component {
 	}
 
 	static propTypes = {
-		items: ImmutablePropTypes.list.isRequired,
+		items: PropTypes.array.isRequired,
 		placeholders: PropTypes.array,
 		component: PropTypes.func.isRequired,
 		hasMore: PropTypes.bool.isRequired,
@@ -48,7 +46,7 @@ export default class ImageGrid extends Component {
 		const prevWidth = this.props.windowWidth;
 		const nextWidth = nextProps.windowWidth;
 
-		if (!nextProps.items.equals(this.props.items) || prevWidth !== nextWidth) {
+		if (nextProps.items !== this.props.items || prevWidth !== nextWidth) {
 			this.setNewItems(nextProps.items);
 		}
 	}
@@ -88,11 +86,11 @@ export default class ImageGrid extends Component {
 		const columnsPerRow = this.getColumnsPerRow(windowWidth);
 
 		const index = rows.findIndex(r => {
-			if (r && r.count() < columnsPerRow) {
+			if (r && r.length < columnsPerRow) {
 				const rowWidth = this.getRowWidth(r);
 				const availableSpace = windowWidth - rowWidth;
 
-				if (availableSpace > 0 && availableSpace >= item.get('width')) {
+				if (availableSpace > 0 && availableSpace >= item.width) {
 					return r;
 				}
 
@@ -107,7 +105,7 @@ export default class ImageGrid extends Component {
 
 	getRowWidth(row) {
 		return row.reduce((width, i) => {
-			width += i.get('width');
+			width += i.width;
 			return width;
 		}, 0);
 	}
@@ -120,9 +118,10 @@ export default class ImageGrid extends Component {
 		const columnHeight = windowWidth / this.getColumnsPerRow();
 
 		items = items.map(item => {
-			const ratio = item.get('height') / item.get('width');
+			const ratio = item.height / item.width;
 			const newWidth = columnHeight / ratio;
-			item = item.set('width', newWidth).set('height', columnHeight);
+			item.width = newWidth;
+			item.height = columnHeight;
 
 			return item;
 		});
@@ -133,27 +132,28 @@ export default class ImageGrid extends Component {
 			let currentRow;
 
 			if (rowIndex === -1) {
-				currentRow = List();
-				list = list.push(currentRow);
-				rowIndex = list.count() - 1;
+				currentRow = [];
+				list.push(currentRow);
+				rowIndex = list.length - 1;
 			} else {
-				currentRow = list.get(rowIndex);
+				currentRow = list[rowIndex];
 			}
 
-			currentRow = currentRow.push(item);
+			currentRow.push(item);
 
-			return list.set(rowIndex, currentRow);
-		}, List());
+			list[rowIndex] = currentRow;
+			return list;
+		}, []);
 
 		// Stretch the rows so that they render 100% of the window
 		rows = rows.map((row, index) => {
 			const rowWidth = this.getRowWidth(row);
-			const rowHeight = row.first().get('height');
+			const rowHeight = row[0].height;
 			const rowRatio = rowWidth / rowHeight;
 			const newHeight = windowWidth / rowRatio;
 
 			// If it is the last row and the row is not full, then don't try to stretch it
-			if (index + 1 === rows.count() && row.count() < this.getColumnsPerRow(windowWidth)) {
+			if (index + 1 === rows.length && row.length < this.getColumnsPerRow(windowWidth)) {
 				return row;
 			}
 
@@ -178,15 +178,15 @@ export default class ImageGrid extends Component {
 
 	resizeItems(row, height) {
 		return row.map(i => {
-			const ratio = i.get('height') / i.get('width');
+			const ratio = i.height / i.width;
 			const newHeight = height;
 			const newWidth = newHeight / ratio;
 
-			return fromJS({
-				...i.toJS(),
+			return {
+				...i,
 				height: newHeight,
 				width: newWidth
-			});
+			};
 		});
 	}
 
@@ -194,27 +194,25 @@ export default class ImageGrid extends Component {
 		let gridHeight = 0;
 
 		return rows.reduce((list, r) => {
-			const rowHeight = r.first().get('height');
+			const rowHeight = r[0].height;
 			let currentLeft = 0;
 			let rowTop = gridHeight;
 
 			r.forEach(i => {
-				const prevPosition = i.get('position');
+				const prevPosition = i.position;
 
-				list = list.push(
-					fromJS({
-						...i.toJS(),
-						prevPosition,
-						position: [currentLeft, rowTop]
-					})
-				);
-				currentLeft += i.get('width');
+				list.push({
+					...i,
+					prevPosition,
+					position: [currentLeft, rowTop]
+				});
+				currentLeft += i.width;
 			});
 
 			gridHeight += rowHeight;
 
 			return list;
-		}, List());
+		}, []);
 	}
 
 	getGrid() {
@@ -225,22 +223,22 @@ export default class ImageGrid extends Component {
 		let gridWidth = windowWidth;
 
 		const positions = rows.reduce((list, r) => {
-			const rowHeight = r.first().get('height');
+			const rowHeight = r[0].height;
 			let currentLeft = 0;
 			let rowTop = gridHeight;
 
 			r.forEach(i => {
-				list = list.push(fromJS([currentLeft, rowTop]));
-				currentLeft += i.get('width');
+				list.push([currentLeft, rowTop]);
+				currentLeft += i.width;
 			});
 
 			gridHeight += rowHeight;
 
 			return list;
-		}, List());
+		}, []);
 
 		return {
-			positions: positions.toJS(),
+			positions: positions,
 			gridHeight,
 			gridWidth
 		};
@@ -260,24 +258,24 @@ export default class ImageGrid extends Component {
 
 		return (
 			<div className={CSS.grid}>
-				<InfiniteScroll pageStart={1} initialLoad={false} loadMore={handleLoadMore} threshold={200} hasMore={hasMore}>
+				<InfiniteScroll useCapture pageStart={1} initialLoad={false} loadMore={handleLoadMore} threshold={200} hasMore={hasMore}>
 					<ul className={CSS.list} style={ulStyle}>
 						{items.map(item => {
-							const [transformX, transformY] = item.get('position') ? item.get('position').toJS() : [0, 0];
+							const [transformX, transformY] = item.position ? item.position : [0, 0];
 
 							const style = {
 								opacity: 1,
 								display: isOneColumn ? 'block' : 'inline-block',
 								transform: isOneColumn ? `translate3d(0, 0, 0)` : `translate3d(${transformX}px, ${transformY}px, 0)`,
-								width: isOneColumn ? '100%' : item.get('width'),
-								height: isOneColumn ? 'auto' : item.get('height'),
+								width: isOneColumn ? '100%' : item.width,
+								height: isOneColumn ? 'auto' : item.height,
 								position: isOneColumn ? 'relative' : 'absolute',
 								overflow: 'hidden'
 							};
 
 							return (
-								<li key={item.get('key')} className={CSS.item} style={style} onClick={click(this.props.onImageClick, item.data)}>
-									{React.createElement(component, {...item.toJS()})}
+								<li key={item.key} className={CSS.item} style={style} onClick={click(this.props.onImageClick, item)}>
+									{React.createElement(component, {...item})}
 								</li>
 							);
 						})}

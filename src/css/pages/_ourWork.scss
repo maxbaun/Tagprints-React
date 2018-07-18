@@ -244,8 +244,7 @@
 	width: 100%;
 
 	&__inner {
-		@include placeholder();
-		background-color: $color_11, 10%;
+		background-color: rgba($color_11, 10%);
 		height: 100%;
 		width: 100%;
 	}

@@ -3,6 +3,7 @@
 
 .hero {
 	max-height: 60vh;
+	min-height: 400px;
 }
 
 .heroInner {
@@ -11,6 +12,7 @@
 
 .heroImage {
 	height: 40vh;
+	min-height: 400px;
 
 	@include largeAndUp {
 		height: 60vh;

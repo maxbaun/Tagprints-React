@@ -13,7 +13,8 @@ export default class Lightbox extends Component {
 
 		this.state = {
 			height: 0,
-			width: 0
+			width: 0,
+			initialized: false
 		};
 
 		this.swiper = null;
@@ -46,7 +47,7 @@ export default class Lightbox extends Component {
 	};
 
 	componentDidMount() {
-		this.init();
+		// This.init();
 		this.handleResize();
 		window.addEventListener('resize', this.handleResize);
 	}
@@ -84,7 +85,7 @@ export default class Lightbox extends Component {
 			slidesPerView: 1,
 			spaceBetween: 0,
 			grabCursor: true,
-			initialSlide: 0,
+			initialSlide: this.props.start,
 			navigation: {
 				nextEl,
 				prevEl
@@ -93,6 +94,10 @@ export default class Lightbox extends Component {
 
 		this.swiper = new Swiper(container, defaultOptions);
 		this.swiper.update();
+
+		this.setState({
+			initialized: true
+		});
 	}
 
 	destroy() {
@@ -101,6 +106,8 @@ export default class Lightbox extends Component {
 		}
 
 		this.swiper.destroy();
+		this.swiper = null;
+		this.slider = null;
 	}
 
 	goToSlide(index) {
@@ -141,16 +148,14 @@ export default class Lightbox extends Component {
 	handleModalShow() {
 		// If the display is none on the modal, the swiper will not fully initialize
 		// This.init();
-		if (this.swiper) {
-			this.swiper.update();
-		}
+		this.init();
 
 		this.props.onShow();
 	}
 
 	render() {
-		const {open, images} = this.props;
-		const {height, width} = this.state;
+		const {images, open} = this.props;
+		const {height, width, initialized} = this.state;
 
 		return (
 			<Modal showClose size="full" active={open} onClose={this.handleModalClose} onShow={this.handleModalShow}>
@@ -193,7 +198,10 @@ export default class Lightbox extends Component {
 											display: 'flex',
 											alignItems: 'center',
 											justifyContent: 'center',
-											position: 'relative'
+											position: 'relative',
+											opacity: initialized ? 1 : 0,
+											transform: initialized ? 'scale(1)' : 'scale(0.95)',
+											transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out'
 										}}
 									>
 										{image.sizes && image.sizes.src ? (

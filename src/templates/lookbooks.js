@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import graphql from 'graphql';
-import {fromJS} from 'immutable';
 
 import {interleaveGalleries} from '../utils/lookbookHelpers';
 import Fragment from '../components/fragment';
@@ -70,13 +69,11 @@ export default class LookbooksTemplate extends Component {
 	}
 
 	getAllLookbooks(lookbooks) {
-		const l = lookbooks.edges.map(lookbook => {
+		return lookbooks.edges.map(lookbook => {
 			return {
 				...lookbook.node
 			};
 		});
-
-		return fromJS(l);
 	}
 
 	getActiveLookbooks(lookbooks = this.state.lookbooks) {
@@ -86,29 +83,27 @@ export default class LookbooksTemplate extends Component {
 			return lookbooks;
 		}
 
-		const activeLookbooks = lookbooks.filter(l => l.get('lookbook') === activeCategory.slug);
+		const activeLookbooks = lookbooks.filter(l => l.lookbook === activeCategory.slug);
 
 		return activeLookbooks;
 	}
 
 	getPaginatedLookbooks() {
-		return this.getActiveLookbooks().take(PerPage * this.state.page);
+		return this.getActiveLookbooks().slice(0, PerPage * this.state.page);
 	}
 
 	getLightboxImages() {
 		const lookbooks = this.getPaginatedLookbooks();
 
-		return lookbooks
-			.map(lookbook => {
-				return {
-					id: lookbook.get('url'),
-					url: lookbook.get('url'),
-					resolutions: lookbook.get('full') ? lookbook.get('full').toJS() : {},
-					height: lookbook.get('height'),
-					width: lookbook.get('width')
-				};
-			})
-			.toJS();
+		return lookbooks.map(lookbook => {
+			return {
+				id: lookbook.url,
+				url: lookbook.url,
+				sizes: lookbook.sizes ? lookbook.sizes : {},
+				height: lookbook.fullHeight,
+				width: lookbook.fullWidth
+			};
+		});
 	}
 
 	getCategories() {
@@ -129,15 +124,15 @@ export default class LookbooksTemplate extends Component {
 	handleImageClick(image) {
 		const lookbooks = this.getPaginatedLookbooks();
 
-		const index = lookbooks.findIndex(lookbook => lookbook.get('key') === image.key);
+		const index = lookbooks.findIndex(lookbook => lookbook.key === image.key);
 
-		this.handleModalOpen(index + 1);
+		this.handleModalOpen(index);
 	}
 
 	handleModalOpen(modalStart) {
 		this.setState({
-			modalOpen: true,
-			modalStart
+			modalStart,
+			modalOpen: true
 		});
 	}
 
@@ -148,7 +143,7 @@ export default class LookbooksTemplate extends Component {
 	handleLoadMore(page) {
 		this.setState(prevState => {
 			const lookbooks = this.getActiveLookbooks(prevState.lookbooks);
-			const hasMore = page * PerPage < lookbooks.count();
+			const hasMore = page * PerPage < lookbooks.length;
 
 			return {
 				...prevState,
@@ -182,12 +177,14 @@ export default class LookbooksTemplate extends Component {
 		return (
 			<Fragment>
 				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
-				<Lightbox
-					images={this.getLightboxImages()}
-					open={this.state.modalOpen}
-					start={this.state.modalStart}
-					onClose={this.handleModalClose}
-				/>
+				{this.state.modalOpen ? (
+					<Lightbox
+						images={this.getLightboxImages()}
+						open={this.state.modalOpen}
+						start={this.state.modalStart}
+						onClose={this.handleModalClose}
+					/>
+				) : null}
 				<main className="main" role="main">
 					<div className="our-work-lookbooks">
 						<div className="container">

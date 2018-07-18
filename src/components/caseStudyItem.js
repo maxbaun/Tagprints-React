@@ -9,7 +9,7 @@ import CSS from '../css/modules/caseStudyItem.module.scss';
 
 const CaseStudyItem = ({image, logo, title, subtitle, slug}) => {
 	return (
-		<div className={CSS.caseStudy}>
+		<Link to={`/case-study/${slug}`} className={CSS.caseStudy}>
 			<div className={CSS.header}>
 				<div className={CSS.image}>
 					<Image
@@ -23,30 +23,20 @@ const CaseStudyItem = ({image, logo, title, subtitle, slug}) => {
 				</div>
 				<div className={CSS.logo}>
 					<div className={CSS.logoWrap}>
-						<div style={{maxWidth: 150, margin: '0 auto'}}>
-							{logo && logo !== '' ? <Svg svg={logo}/> : null}
-						</div>
+						<div style={{maxWidth: 150, margin: '0 auto'}}>{logo && logo !== '' ? <Svg svg={logo}/> : null}</div>
 					</div>
 				</div>
 				<div className={CSS.overlay}>
-					<Link
-						to={`/case-study/${slug}`}
-						className="btn btn-cta-white"
-					>
-						Learn More
-					</Link>
+					<span className="btn btn-cta-white">Learn More</span>
 				</div>
 			</div>
 			<div className={CSS.content}>
 				{/* eslint-disable react/no-danger */}
-				<p
-					className={CSS.title}
-					dangerouslySetInnerHTML={innerHtml(title)}
-				/>
+				<p className={CSS.title} dangerouslySetInnerHTML={innerHtml(title)}/>
 				{/* eslint-enable react/no-danger */}
 				<p className={CSS.subtitle}>{subtitle}</p>
 			</div>
-		</div>
+		</Link>
 	);
 };
 

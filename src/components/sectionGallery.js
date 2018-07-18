@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {fromJS} from 'immutable';
 import Link from 'gatsby-link';
 
 import {noop} from '../utils/componentHelpers';
@@ -97,7 +96,7 @@ export default class SectionGallery extends Component {
 	handleImageClick(image) {
 		const index = this.props.images.findIndex(i => image.id === i.id);
 
-		this.handleModalOpen(index + 1);
+		this.handleModalOpen(index);
 	}
 
 	handleWindowResize() {
@@ -122,11 +121,13 @@ export default class SectionGallery extends Component {
 		const {width} = this.state;
 
 		const isMobile = width < 1000;
-		const filteredImages = width > 0 && isMobile ? fromJS(images).take(8) : fromJS(images);
+		const filteredImages = width > 0 && isMobile ? images.slice(0, 8) : images;
 
 		return (
 			<Fragment>
-				<Lightbox images={filteredImages.toJS()} open={this.state.modalOpen} start={this.state.modalStart} onClose={this.handleModalClose}/>
+				{this.state.modalOpen ? (
+					<Lightbox images={filteredImages} open={this.state.modalOpen} start={this.state.modalStart} onClose={this.handleModalClose}/>
+				) : null}
 				<section className={[CSS.sectionGallery, CSS[classname]].join(' ')}>
 					{children}
 					<div className={CSS.gallery}>

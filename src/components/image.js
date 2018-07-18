@@ -17,7 +17,8 @@ export default class Image extends Component {
 			height: 0,
 			width: 0,
 			url: null,
-			inView: false
+			inView: false,
+			loading: false
 		};
 
 		this.imgLoader = null;
@@ -25,6 +26,7 @@ export default class Image extends Component {
 
 		this.mounted = false;
 
+		this.inView = this.inView.bind(this);
 		this.getImageLayout = this.getImageLayout.bind(this);
 		this.renderGatsbyImage = this.renderGatsbyImage.bind(this);
 		this.renderImage = this.renderImage.bind(this);
@@ -73,9 +75,9 @@ export default class Image extends Component {
 
 		const preloadUrl = !thumbnail || thumbnail === '' ? url : thumbnail;
 
-		if (this.shouldPreload()) {
+		if (this.shouldPreload() && this.inView()) {
 			this.preloadImage(preloadUrl);
-		} else {
+		} else if (this.inView()) {
 			this.setState({
 				height: naturalHeight,
 				width: naturalWidth,
@@ -98,6 +100,17 @@ export default class Image extends Component {
 		}
 	}
 
+	inView() {
+		const {inViewToggle} = this.props;
+		const {inView} = this.state;
+
+		if (!inViewToggle) {
+			return true;
+		}
+
+		return inView;
+	}
+
 	shouldPreload() {
 		const {preload, resolutions, sizes} = this.props;
 
@@ -105,6 +118,9 @@ export default class Image extends Component {
 	}
 
 	preloadImage(url) {
+		this.setState({
+			loading: true
+		});
 		this.imgLoader = new ImageLoader(url);
 		this.imgLoader
 			.getImage()
@@ -113,7 +129,7 @@ export default class Image extends Component {
 					return;
 				}
 
-				this.setState(prevState => ({...prevState, ...img}));
+				this.setState(prevState => ({...prevState, ...img, loading: false}));
 			})
 			.catch(() => {});
 	}
@@ -137,10 +153,11 @@ export default class Image extends Component {
 	}
 
 	toggleView(inView) {
+		const {loading} = this.state;
 		this.setState({inView});
 
-		if (!inView) {
-			this.cancelLoad();
+		if (!inView && loading) {
+			return this.cancelLoad();
 		}
 
 		if (inView && !this.state.url && this.shouldPreload()) {
@@ -151,12 +168,12 @@ export default class Image extends Component {
 	render() {
 		const {inView} = this.state;
 		const {inViewToggle, onClick} = this.props;
-		const isLocal = this.props.sizes.src || this.props.resolutions.src;
+		const isGatsbyImg = this.props.sizes.src || this.props.resolutions.src;
 		const wrapCSS = [CSS.imageWrap, inViewToggle ? CSS.viewToggle : '', inViewToggle && inView ? CSS.inView : ''];
 		return (
 			<div className={wrapCSS.join(' ')} style={this.props.style} onClick={onClick}>
 				<Visibility partialVisibility onChange={this.toggleView}>
-					{isLocal ? this.renderGatsbyImage() : this.renderImage()}
+					{isGatsbyImg ? this.renderGatsbyImage() : this.renderImage()}
 				</Visibility>
 			</div>
 		);

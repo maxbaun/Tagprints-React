@@ -42,7 +42,7 @@ export default class CaseStudyTemplate extends Component {
 	handleModalOpen(index) {
 		this.setState({
 			modalOpen: true,
-			modalStart: index + 1
+			modalStart: index
 		});
 	}
 
@@ -58,12 +58,14 @@ export default class CaseStudyTemplate extends Component {
 		return (
 			<div>
 				<Seo currentPage={caseStudy} site={this.props.site} location={this.props.location}/>
-				<Lightbox
-					images={this.getLightboxImages()}
-					open={this.state.modalOpen}
-					start={this.state.modalStart}
-					onClose={this.handleModalClose}
-				/>
+				{this.state.modalOpen ? (
+					<Lightbox
+						images={this.getLightboxImages()}
+						open={this.state.modalOpen}
+						start={this.state.modalStart}
+						onClose={this.handleModalClose}
+					/>
+				) : null}
 				<main className="main" role="main">
 					<div className={CSS.caseStudy}>
 						<div className={CSS.hero}>

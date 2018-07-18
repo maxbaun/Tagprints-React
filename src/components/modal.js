@@ -4,6 +4,11 @@ import {Motion, spring, presets} from 'react-motion';
 
 import CSS from '../css/modules/modal.module.scss';
 
+const MotionPreset = {
+	stiffness: 360,
+	dampening: 40
+};
+
 export default class Modal extends Component {
 	constructor(props) {
 		super(props);
@@ -125,10 +130,10 @@ export default class Modal extends Component {
 						top: 4
 					}}
 					style={{
-						opacity: active ? spring(1, presets.stiff) : spring(0, presets.stiff),
-						x: active ? spring(1, presets.stiff) : spring(0.8, presets.stiff),
-						y: active ? spring(1, presets.stiff) : spring(0.8, presets.stiff),
-						top: active ? spring(10, presets.stiff) : spring(4, presets.stiff)
+						opacity: active ? spring(1, MotionPreset) : spring(0, MotionPreset),
+						x: active ? spring(1, MotionPreset) : spring(0.8, MotionPreset),
+						y: active ? spring(1, MotionPreset) : spring(0.8, MotionPreset),
+						top: active ? spring(10, MotionPreset) : spring(4, MotionPreset)
 					}}
 					onRest={this.handleRest}
 				>
@@ -167,7 +172,7 @@ export default class Modal extends Component {
 						opacity: 0
 					}}
 					style={{
-						opacity: active ? spring(fogOpacity, presets.stiff) : spring(0, presets.stiff)
+						opacity: active ? spring(fogOpacity, MotionPreset) : spring(0, MotionPreset)
 					}}
 				>
 					{styles => {

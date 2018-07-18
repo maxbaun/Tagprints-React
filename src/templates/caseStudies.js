@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import graphql from 'graphql';
-import {fromJS} from 'immutable';
 
 import Seo from '../components/seo';
 import WorkCategories from '../components/workCategories';

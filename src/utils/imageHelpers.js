@@ -60,6 +60,7 @@ export class ImageLoader {
 
 	cancel() {
 		if (this.reject) {
+			this.img.removeAttribute('src');
 			delete this.img;
 			this.reject();
 		}
@@ -72,13 +73,6 @@ export class ImageLoader {
 	preloadImage(image) {
 		return new Promise((resolve, reject) => {
 			this.reject = reject;
-
-			// If (isRetina() && !isGif(image)) {
-			// 	const retinaFile = retinaUrl(image);
-			// 	this.loadImage(retinaFile).then(retinaImage =>
-			// 		resolve(retinaImage)
-			// 	);
-			// }
 
 			return this.loadImage(image)
 				.then(resolve)

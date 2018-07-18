@@ -1,28 +1,26 @@
-import {List, fromJS} from 'immutable';
-
-import {imageLayouts, isGif} from './imageHelpers';
+import {imageLayouts} from './imageHelpers';
 
 export function interleaveGalleries(lookbooks) {
-	if (!lookbooks || !lookbooks.count || !lookbooks.count()) {
-		return List();
+	if (!lookbooks || !lookbooks.length) {
+		return [];
 	}
 
 	const totalImages = getTotalImages(lookbooks);
 	lookbooks = lookbooks.map(transformLookbookGallery);
 	let lookbookIndex = 0;
-	let images = List();
+	let images = [];
 	let lookbookCount = lookbooks.map(() => 0);
 
 	for (let i = 0; i < totalImages; i++) {
 		const index = getNextIndex(lookbooks, lookbookIndex, lookbookCount);
-		const lookbook = lookbooks.get(index);
-		const skip = lookbookCount.get(index);
+		const lookbook = lookbooks[index];
+		const skip = lookbookCount[index];
 		const image = getNextImageFromLookbook(lookbook, skip);
 
-		lookbookCount = lookbookCount.set(index, skip + 1);
-		images = images.push(image);
+		lookbookCount[index] = skip + 1;
+		images.push(image);
 
-		if (index + 1 === lookbooks.count()) {
+		if (index + 1 === lookbooks.length) {
 			lookbookIndex = 0;
 		} else {
 			lookbookIndex = index + 1;
@@ -33,28 +31,28 @@ export function interleaveGalleries(lookbooks) {
 }
 
 export function combineGalleries(lookbooks) {
-	return lookbooks.reduce((list, lookbook) => list.concat(transformLookbookGallery(lookbook)), List());
+	return lookbooks.reduce((list, lookbook) => list.concat(transformLookbookGallery(lookbook)), []);
 }
 
 function getTotalImages(lookbooks) {
 	return lookbooks.reduce((count, lookbook) => {
-		const gallery = lookbook.getIn(['acf', 'gallery']);
+		const gallery = lookbook.acf.gallery;
 
-		if (!gallery || !gallery.count || !gallery.count()) {
+		if (!gallery || !gallery.length) {
 			return count;
 		}
 
-		return count + gallery.count();
+		return count + gallery.length;
 	}, 0);
 }
 
 function getNextIndex(lookbooks, currentIndex, lookbookCount) {
-	if (currentIndex >= lookbooks.count()) {
+	if (currentIndex >= lookbooks.length) {
 		currentIndex = 0;
 	}
 
-	const lookbook = lookbooks.get(currentIndex);
-	const skip = lookbookCount.get(currentIndex);
+	const lookbook = lookbooks[currentIndex];
+	const skip = lookbookCount[currentIndex];
 	const nextImage = getNextImageFromLookbook(lookbook, skip);
 
 	if (!lookbook || !nextImage) {
@@ -69,36 +67,41 @@ function getNextImageFromLookbook(lookbook, skip) {
 		return;
 	}
 
-	return lookbook.skip(skip).first();
+	const skipped = lookbook.slice(skip);
+
+	return skipped[0];
 }
 
 function transformLookbookGallery(lookbook) {
-	const gallery = lookbook.getIn(['acf', 'gallery']);
+	const gallery = lookbook.acf.gallery;
 
 	if (!gallery) {
-		return List();
+		return [];
 	}
 
 	return gallery.reduce((list, image) => {
-		return list.push(transformLookbookImage(image, lookbook));
-	}, List());
+		list.push(transformLookbookImage(image, lookbook));
+		return list;
+	}, []);
 }
 
 function transformLookbookImage(image, lookbook) {
-	const fullUrl = image.get('url');
-	const fullWidth = image.getIn(['mediaDetails', 'width']);
-	const fullHeight = image.getIn(['mediaDetails', 'height']);
+	const fullUrl = image.url;
+	const fullWidth = image.mediaDetails.width;
+	const fullHeight = image.mediaDetails.height;
 	const width = fullWidth;
 	const height = fullHeight;
 
-	return fromJS({
+	return {
 		key: fullUrl,
 		url: fullUrl,
+		fullWidth: fullWidth,
+		fullHeight: fullHeight,
 		width,
 		height,
-		sizes: image.getIn(['localFile', 'childImageSharp', 'sizes']),
+		sizes: image && image.localFile && image.localFile.childImageSharp ? image.localFile.childImageSharp.sizes : {},
 		layout: width === height ? imageLayouts.square : height > width ? imageLayouts.portait : imageLayouts.landscape,
-		lookbook: lookbook.get('slug'),
-		link: lookbook.getIn(['acf', 'link'])
-	});
+		lookbook: lookbook.slug,
+		link: lookbook.acf.link
+	};
 }

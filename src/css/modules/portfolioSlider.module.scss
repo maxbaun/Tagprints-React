@@ -10,8 +10,13 @@
 }
 
 .previewWrap {
+	display: none;
 	overflow: hidden;
 	width: 100%;
+
+	@include mediumAndUp {
+		display: block;
+	}
 }
 
 .previewList {

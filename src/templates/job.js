@@ -41,6 +41,8 @@ export default class JobTemplate extends Component {
 	}
 
 	handleModalOpen(modalStart) {
+		console.log(modalStart);
+
 		this.setState({
 			modalOpen: true,
 			modalStart
@@ -58,11 +60,7 @@ export default class JobTemplate extends Component {
 
 		return (
 			<Fragment>
-				<Seo
-					currentPage={currentPage}
-					site={this.props.site}
-					location={this.props.location}
-				/>
+				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<main className="main" role="main">
 					<div className={CSS.wrap}>
 						<div className="row">
@@ -70,52 +68,23 @@ export default class JobTemplate extends Component {
 								<div className={CSS.content}>
 									<h1>{currentPage.title}</h1>
 									<div // eslint-disable-next-line react/no-danger
-										dangerouslySetInnerHTML={innerHtml(
-											content.content
-										)}
+										dangerouslySetInnerHTML={innerHtml(content.content)}
 									/>
 								</div>
 							</div>
 							<div className="col-sm-6">
-								<div
-									className={CSS.featuredImage}
-									onClick={click(this.handleModalOpen, 1)}
-								>
-									<Image
-										sizes={
-											images.featuredImage.localFile
-												.childImageSharp.sizes
-										}
-									/>
+								<div className={CSS.featuredImage} onClick={click(this.handleModalOpen, 0)}>
+									<Image sizes={images.featuredImage.localFile.childImageSharp.sizes}/>
 								</div>
 								<div className={CSS.gallery}>
 									<ul>
 										{images.gallery.map((image, index) => {
 											const resolutions =
-												image.thumbnail &&
-												image.thumbnail.childImageSharp ?
-													image.thumbnail
-														.childImageSharp
-														.resolutions :
-													{};
+												image.thumbnail && image.thumbnail.childImageSharp ? image.thumbnail.childImageSharp.resolutions : {};
 
 											return (
-												<li
-													key={
-														resolutions.src ||
-														image.url
-													}
-													onClick={click(
-														this.handleModalOpen,
-														index + 2
-													)}
-												>
-													<Image
-														url={image.url}
-														resolutions={
-															resolutions
-														}
-													/>
+												<li key={resolutions.src || image.url} onClick={click(this.handleModalOpen, index + 1)}>
+													<Image url={image.url} resolutions={resolutions}/>
 												</li>
 											);
 										})}
@@ -127,24 +96,18 @@ export default class JobTemplate extends Component {
 					<div className={CSS.form}>
 						<div className="container">
 							<h1>{form.title}</h1>
-							<Form
-								location={this.props.location}
-								formId={form.form}
-							/>
+							<Form location={this.props.location} formId={form.form}/>
 						</div>
 					</div>
 				</main>
-				<Lightbox
-					images={this.getLightboxImages()}
-					open={this.state.modalOpen}
-					start={this.state.modalStart}
-					onClose={this.handleModalClose}
-				/>
-				{/* <main
-					dangerouslySetInnerHTML={innerHtml(currentPage.content)} // eslint-disable-line react/no-danger
-					className="main"
-					role="main"
-				/> */}
+				{this.state.modalOpen ? (
+					<Lightbox
+						images={this.getLightboxImages()}
+						open={this.state.modalOpen}
+						start={this.state.modalStart}
+						onClose={this.handleModalClose}
+					/>
+				) : null}
 			</Fragment>
 		);
 	}

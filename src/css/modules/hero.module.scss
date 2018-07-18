@@ -1,11 +1,18 @@
 @import '../utils/variables.scss';
 @import '../utils/mixins.scss';
 
+@mixin heroMinHeight {
+	@include mediumAndUp {
+		min-height: 650px;
+	}
+}
+
 .hero {
 	height: 100vh;
 	width: 100%;
 	max-height: 100%;
 	position: relative;
+	@include heroMinHeight;
 }
 
 .image {
@@ -15,11 +22,13 @@
 	top: 0;
 	width: 100%;
 	overflow: hidden;
+	@include heroMinHeight;
 
 	> div,
 	> div > div {
 		height: 100vh;
 		width: 100%;
+		@include heroMinHeight;
 	}
 }
 
@@ -35,6 +44,7 @@
 	position: relative;
 	width: 100%;
 	height: 100vh;
+	@include heroMinHeight;
 }
 
 .content {
