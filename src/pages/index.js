@@ -6,6 +6,7 @@ import Typist from 'react-typist';
 import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
 import HeroVid from '../images/homeHeroVid.mp4';
 import HeroVidWebm from '../images/homeHeroVid.webm';
+import HeroImg from '../images/homeHeroImg.jpg';
 import Divider from '../images/brand-divider.png';
 import Letters1 from '../images/letters.png';
 import Letters2 from '../images/letters2.png';
@@ -15,7 +16,6 @@ import Seo from '../components/seo';
 import Link from '../components/link';
 import Image from '../components/image';
 import NewsletterSignup from '../components/newsletterSignup';
-import HeroImg from './homeHero';
 import WindowSize from '../components/windowSize';
 
 class Index extends Component {

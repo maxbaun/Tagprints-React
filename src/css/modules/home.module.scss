@@ -10,7 +10,7 @@
 
 .hero {
 	position: relative;
-	opacity: 0;
+	opacity: 1;
 	transition: all 0.3s ease-in-out;
 	width: 100%;
 	overflow: hidden;
@@ -19,7 +19,6 @@
 
 .heroLoaded {
 	height: auto;
-	opacity: 1;
 
 	.heroOverlayInner {
 		opacity: 1;
