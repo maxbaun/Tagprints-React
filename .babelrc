@@ -1,6 +1,8 @@
 {
   "presets": ["react", "env", "stage-1"],
   "plugins": [
+	  "transform-object-rest-spread",
+	  "transform-object-assign",
 	  "add-module-exports",
 	  "transform-decorators-legacy"
   ]
