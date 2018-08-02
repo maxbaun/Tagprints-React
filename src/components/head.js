@@ -9,6 +9,7 @@ import Favicon32 from '../images/favicon-32x32.png';
 import AppleTouchIcon from '../images/apple-touch-icon.png';
 import DefaultImage from '../images/updated-logos-x3.png';
 
+// eslint-disable-next-line complexity
 const Head = ({
 	title,
 	defaultTitle,
@@ -49,10 +50,7 @@ const Head = ({
 		{property: 'og:title', content: ogTitle},
 		{
 			property: 'og:description',
-			content:
-				ogDescription && ogDescription !== '' ?
-					ogDescription :
-					metaDescription
+			content: ogDescription && ogDescription !== '' ? ogDescription : metaDescription
 		},
 		{
 			property: 'og:image',
@@ -66,18 +64,19 @@ const Head = ({
 		{property: 'twitter:title', content: twitterTitle},
 		{
 			property: 'twitter:description',
-			content:
-				twitterDescription && twitterDescription === '' ?
-					metaDescription :
-					twitterDescription
+			content: twitterDescription && twitterDescription === '' ? metaDescription : twitterDescription
 		},
 		{
 			property: 'twitter:image',
 			content: twitterImage && twitterImage !== '' ? twitterImage : image
 		},
-		{property: 'robots', content: noIndex},
-		{property: 'robots', content: noFollow}
+		{property: 'robots'}
 	];
+
+	if (noIndex) {
+		meta.push({name: 'robots', content: 'noindex' + noFollow ? ', nofollow' : ''});
+		meta.push({name: 'googlebot', content: 'noindex'});
+	}
 
 	const links = [
 		{rel: 'canonical', href: canonical},
@@ -91,18 +90,10 @@ const Head = ({
 		<Helmet
 			htmlAttributes={{lang: 'en', amp: undefined}}
 			titleAttributes={{itemprop: 'name', lang: 'en'}}
-			meta={meta.map(
-				data => (data.content && data.content !== '' ? data : {})
-			)}
-			link={links.map(
-				link => (link.href && link.href !== '' ? link : {})
-			)}
+			meta={meta.map(data => (data.content && data.content !== '' ? data : {}))}
+			link={links.map(link => (link.href && link.href !== '' ? link : {}))}
 		>
-			<title>
-				{title && title !== '' ?
-					`${title} - ${site.siteMeta.title}` :
-					`${defaultTitle} - ${site.siteMeta.title}`}
-			</title>
+			<title>{title && title !== '' ? `${title} - ${site.siteMeta.title}` : `${defaultTitle} - ${site.siteMeta.title}`}</title>
 		</Helmet>
 	);
 };

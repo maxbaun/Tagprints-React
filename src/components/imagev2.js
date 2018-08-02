@@ -43,6 +43,8 @@ export default class ImageV2 extends Component {
 		if (!sizes && !resolutions) {
 			this.loader = cancellable(this.preloadImage(this.props.image.url));
 			this.loader.then(this.handleImageLoad);
+
+			setTimeout(this.handleImageLoad, 1000);
 		}
 	}
 
@@ -54,18 +56,18 @@ export default class ImageV2 extends Component {
 
 	preloadImage(src) {
 		return new Promise((resolve, reject) => {
-			this.img = new window.Image();
-			this.img.onload = () => {
+			const img = new window.Image();
+			img.onload = () => {
 				if (!this.img) {
 					return reject();
 				}
 
 				resolve();
 			};
-			this.img.onerror = () => resolve();
-			this.img.src = src;
+			img.onerror = () => resolve();
+			img.src = src;
 
-			if (this.img.complete) {
+			if (img.complete) {
 				return resolve();
 			}
 		});
@@ -95,12 +97,6 @@ export default class ImageV2 extends Component {
 
 		// if (resolutions) {
 		// 	return <Img {...props} resolutions={resolutions}/>;
-		// }
-
-		console.log(this.props.style);
-
-		// If (!image.mediaDetails) {
-		// 	return null;
 		// }
 
 		const ratio = (image.mediaDetails.height * 100) / image.mediaDetails.width;
