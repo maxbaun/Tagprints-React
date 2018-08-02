@@ -59,8 +59,6 @@ class Index extends Component {
 			heroCss.push(CSS.heroLoaded);
 		}
 
-		console.log(clients.image);
-
 		return (
 			<Fragment>
 				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>

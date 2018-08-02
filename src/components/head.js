@@ -74,7 +74,7 @@ const Head = ({
 	];
 
 	if (noIndex) {
-		meta.push({name: 'robots', content: 'noindex' + noFollow ? ', nofollow' : ''});
+		meta.push({name: 'robots', content: `noindex`});
 		meta.push({name: 'googlebot', content: 'noindex'});
 	}
 
