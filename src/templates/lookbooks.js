@@ -101,7 +101,8 @@ export default class LookbooksTemplate extends Component {
 				url: lookbook.url,
 				sizes: lookbook.sizes ? lookbook.sizes : {},
 				height: lookbook.fullHeight,
-				width: lookbook.fullWidth
+				width: lookbook.fullWidth,
+				mediaDetails: lookbook.mediaDetails
 			};
 		});
 	}

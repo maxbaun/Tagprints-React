@@ -194,3 +194,64 @@ $iconBreakpoint: $blockWidth * 2 + 30;
 		}
 	}
 }
+
+.landingBlocks {
+	&--pbl,
+	&--a13,
+	&--htp {
+		ul {
+			li {
+				border-color: transparent;
+			}
+		}
+
+		.block {
+			span {
+				font-size: 60px;
+			}
+		}
+	}
+
+	&--pbl {
+		.block {
+			span {
+				color: $color_45;
+			}
+
+			h5,
+			p {
+				color: $color_white;
+			}
+		}
+	}
+
+	&--a13 {
+		.block {
+			span {
+				color: $color_49;
+			}
+
+			h5 {
+				color: $color_white;
+			}
+
+			p {
+				color: $color_white;
+			}
+		}
+	}
+
+	&--htp {
+		span {
+			color: $color_55;
+		}
+
+		h5 {
+			color: $color_white;
+		}
+
+		p {
+			color: $color_white;
+		}
+	}
+}

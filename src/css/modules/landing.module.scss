@@ -2,7 +2,15 @@
 @import '../utils/mixins.scss';
 
 .hero {
-	padding: 20px 15px;
+	background-size: cover;
+	background-position: top center;
+	display: block;
+	overflow: hidden;
+	position: relative;
+
+	@include largeAndUp {
+		height: 1010px;
+	}
 }
 
 .headerLogo {
@@ -54,6 +62,30 @@
 	}
 }
 
+.heroBackgroungImage {
+	@include absoluteFull();
+	display: none;
+	z-index: 0;
+
+	@include largeAndUp {
+		display: block;
+	}
+}
+
+.heroInner {
+	height: 100%;
+	padding: 20px 15px;
+	z-index: 1;
+
+	> * {
+		z-index: 100;
+	}
+
+	@include largeAndUp {
+		@include absoluteFull();
+	}
+}
+
 .heroContent {
 	display: flex;
 	flex-wrap: wrap;
@@ -84,7 +116,6 @@
 
 .heroForm {
 	border-radius: 10px;
-	background: red;
 	padding: 20px 30px;
 	margin: 0 auto;
 	max-width: 350px;
@@ -109,7 +140,6 @@
 }
 
 .description {
-	background: black;
 	padding: 30px 0;
 	text-align: center;
 
@@ -154,7 +184,7 @@
 }
 
 .features {
-	background: red;
+	background-color: #F6F6F6;
 	padding: 45px 0;
 
 	@include mediumAndUp {
@@ -228,6 +258,7 @@
 }
 
 .clients {
+	background-color: $color_white;
 	padding: 30px 0;
 
 	@include mediumAndUp {
@@ -287,7 +318,8 @@
 }
 
 .ctaBtn {
-	background: yellowgreen;
+	background-color: transparent;
+	border: 1px solid transparent;
 	border-radius: 4px;
 	display: block;
 	font-family: $fontGotham;
@@ -297,6 +329,7 @@
 	line-height: 52px;
 	margin: 0 auto;
 	text-transform: uppercase;
+	transition: all 0.15s ease-in-out;
 	width: 276px;
 	white-space: nowrap;
 }
@@ -318,4 +351,274 @@
 	max-width: 100%;
 	margin: 0 auto;
 	width: 375px;
+}
+
+.pbl {
+	&.light {
+		.hero {
+			background-color: $color_white;
+		}
+
+		.heroHeader {
+			h1 {
+				color: $color_42;
+			}
+
+			h3 {
+				color: $color_52;
+			}
+		}
+	}
+
+	&.dark {
+		.hero {
+			background-color: $color_52;
+		}
+
+		.heroHeader {
+			h1 {
+				color: $color_42;
+			}
+
+			h3 {
+				color: $color_white;
+			}
+		}
+	}
+
+	.heroForm {
+		background-color: $color_42;
+	}
+
+	.description,
+	.cta {
+		@include pblGradient();
+	}
+
+	.ctaBtn {
+		color: $color_43;
+		background-color: $color_white;
+		border-color: $color_white;
+
+		&:hover {
+			color: $color_white;
+			background-color: transparent;
+			border-color: $color_white;
+		}
+	}
+
+	.sectionHeader {
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			color: $color_44;
+		}
+	}
+
+	.clientsHeader {
+		h2 {
+			span {
+				color: $color_42;
+			}
+		}
+	}
+
+	.feature {
+		span {
+			color: $color_42;
+		}
+
+		p {
+			color: $color_44;
+		}
+	}
+
+	.facts {
+		background-color: $color_43;
+	}
+
+	.factsHeader {
+		h2 {
+			color: $color_white;
+		}
+	}
+}
+
+.a13 {
+	&.light {
+		.hero {
+			background-color: $color_white;
+		}
+
+		.heroHeader {
+			h3 {
+				color: $color_54;
+			}
+		}
+	}
+
+	&.dark {
+		.hero {
+			background-color: transparent;
+		}
+
+		.heroHeader {
+			h3 {
+				color: $color_white;
+			}
+		}
+	}
+
+	.heroHeader {
+		h1 {
+			color: $color_53;
+		}
+	}
+
+	.heroForm {
+		background-color: $color_53;
+	}
+
+	.description,
+	.cta {
+		background-color: $color_53;
+	}
+
+	.ctaBtn {
+		color: $color_44;
+		background-color: $color_white;
+		border-color: $color_white;
+
+		&:hover {
+			color: $color_white;
+			background-color: transparent;
+			border-color: $color_white;
+		}
+	}
+
+	.sectionHeader {
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			color: $color_54;
+		}
+	}
+
+	.clientsHeader {
+		h2 {
+			span {
+				color: $color_53;
+			}
+		}
+	}
+
+	.feature {
+		span {
+			color: $color_53;
+		}
+
+		p {
+			color: $color_54;
+		}
+	}
+
+	.facts {
+		background-color: $color_46;
+	}
+
+	.factsHeader {
+		h2 {
+			color: $color_white;
+		}
+	}
+}
+
+.htp {
+	&.light {
+		.hero {
+			background-color: $color_white;
+		}
+	}
+
+	&.dark {
+		.hero {
+			background-color: transparent;
+		}
+	}
+
+	.heroHeader {
+		h1 {
+			color: $color_55;
+		}
+
+		h3 {
+			color: $color_46;
+		}
+	}
+
+	.heroForm {
+		@include htpGradient();
+	}
+
+	.description,
+	.cta {
+		@include htpGradient();
+	}
+
+	.ctaBtn {
+		color: $color_55;
+		background-color: $color_white;
+		border-color: $color_white;
+
+		&:hover {
+			color: $color_white;
+			background-color: transparent;
+			border-color: $color_white;
+		}
+	}
+
+	.sectionHeader {
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			color: $color_46;
+		}
+	}
+
+	.clientsHeader {
+		h2 {
+			span {
+				color: $color_55;
+			}
+		}
+	}
+
+	.feature {
+		span {
+			color: $color_55;
+		}
+
+		p {
+			color: $color_46;
+		}
+	}
+
+	.facts {
+		background-color: $color_46;
+	}
+
+	.factsHeader {
+		h2 {
+			color: $color_white;
+		}
+	}
 }

@@ -115,6 +115,10 @@
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#B42B5E',endColorstr='#753A80' , GradientType=1);
 }
 
+@mixin htpGradient() {
+	@include brandGradient();
+}
+
 @mixin heroSizing {
 	min-height: 450px;
 	max-height: calc(100vh - 72px);

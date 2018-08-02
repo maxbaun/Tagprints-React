@@ -56,6 +56,7 @@ export const getLightboxImageObject = image => {
 		id: image.id,
 		sizes,
 		resolutions,
+		mediaDetails: image.mediaDetails,
 		height: image.mediaDetails ? image.mediaDetails.height : 0,
 		width: image.mediaDetails ? image.mediaDetails.width : 0,
 		naturalHeight: image.mediaDetails ? image.mediaDetails.height : 0,

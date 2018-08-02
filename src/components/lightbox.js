@@ -4,6 +4,7 @@ import Swiper from 'swiper';
 import Img from 'gatsby-image';
 
 import {ref, click} from '../utils/componentHelpers';
+import Image from './imagev2';
 import Modal from './modal';
 import CSS from '../css/modules/lightbox.module.scss';
 
@@ -175,6 +176,7 @@ export default class Lightbox extends Component {
 										...imgStyle,
 										margin: '0 auto',
 										width: 'auto',
+										position: 'relative',
 										height: '100%'
 									};
 								} else if (width < height) {
@@ -182,7 +184,7 @@ export default class Lightbox extends Component {
 										...imgStyle,
 										width: '100%',
 										height: 'auto',
-										position: 'absolute',
+										position: 'relative',
 										top: '50%',
 										transform: 'translateY(-50%)'
 									};
@@ -203,11 +205,17 @@ export default class Lightbox extends Component {
 											transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out'
 										}}
 									>
-										{image.sizes && image.sizes.src ? (
+										<Image
+											spacer={false}
+											image={image}
+											style={{height: '100%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+											imgStyle={imgStyle}
+										/>
+										{/* {image.sizes && image.sizes.src ? (
 											<Img sizes={image.sizes} style={{height: '100%'}} imgStyle={imgStyle}/>
 										) : (
 											<img src={image.url} style={imgStyle}/>
-										)}
+										)} */}
 									</div>
 								);
 							})}
