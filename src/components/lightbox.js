@@ -79,7 +79,6 @@ export default class Lightbox extends Component {
 
 		const defaultOptions = {
 			centeredSlides: true,
-			loop: true,
 			direction: 'horizontal',
 			pagination: false,
 			slidesPerView: 1,

@@ -130,6 +130,77 @@
 	}
 }
 
+.landing {
+	.form {
+		ul {
+			li {
+				margin-bottom: 6px;
+				padding: 0;
+			}
+		}
+	}
+
+	input[type='text'],
+	input[type='email'],
+	input[type='password'],
+	input[type='date'],
+	textarea {
+		background-color: $color_white;
+		border: 1px solid transparent;
+		color: rgb(77, 77, 77);
+		font-family: $fontGotham;
+		font-weight: 500;
+		font-size: 13px;
+		height: 54px;
+		line-height: 1.2;
+
+		&:focus {
+			border-color: transparent;
+		}
+	}
+
+	textarea {
+		height: 136px;
+	}
+
+	button[type='submit'] {
+		color: $color_white;
+		font-family: $fontGotham;
+		font-size: 14px;
+		font-weight: 500;
+		height: 43px;
+		letter-spacing: 0;
+		padding: 0 15px;
+		width: 100%;
+
+		svg {
+			fill: $color_white !important;
+		}
+	}
+
+	.loader {
+		svg {
+			fill: rgb(77, 77, 77) !important;
+		}
+	}
+}
+
+.landingpbl {
+	@extend .landing;
+
+	button[type='submit'] {
+		background-color: $color_52;
+		border-color: $color_52;
+		color: $color_white;
+
+		&:hover {
+			background-color: $color_52;
+			border-color: $color_52;
+			color: $color_white;
+		}
+	}
+}
+
 :global {
 	.react-datepicker-wrapper {
 		display: block;

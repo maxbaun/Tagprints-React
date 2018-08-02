@@ -30,12 +30,14 @@ export default class ImageGrid extends Component {
 		hasMore: PropTypes.bool.isRequired,
 		onLoadMore: PropTypes.func.isRequired,
 		onImageClick: PropTypes.func,
-		windowWidth: PropTypes.number.isRequired
+		windowWidth: PropTypes.number.isRequired,
+		itemSpacing: PropTypes.number
 	};
 
 	static defaultProps = {
 		placeholders: [],
-		onImageClick: noop
+		onImageClick: noop,
+		itemSpacing: 7.5
 	};
 
 	componentDidMount() {
@@ -245,7 +247,7 @@ export default class ImageGrid extends Component {
 	}
 
 	render() {
-		const {component, hasMore, onLoadMore: handleLoadMore} = this.props;
+		const {component, hasMore, onLoadMore: handleLoadMore, itemSpacing} = this.props;
 		let {items} = this.state;
 
 		const gridStyle = this.getGrid();
@@ -275,7 +277,7 @@ export default class ImageGrid extends Component {
 
 							return (
 								<li key={item.key} className={CSS.item} style={style} onClick={click(this.props.onImageClick, item)}>
-									{React.createElement(component, {...item})}
+									{React.createElement(component, {...item, itemSpacing})}
 								</li>
 							);
 						})}
