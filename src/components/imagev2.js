@@ -37,15 +37,12 @@ export default class ImageV2 extends Component {
 
 	componentDidMount() {
 		const {image} = this.props;
-		const sizes = image.localFile && image.localFile.childImageSharp ? image.localFile.childImageSharp.sizes : null;
-		const resolutions = image.localFile && image.localFile.childImageSharp ? image.localFile.childImageSharp.resolutions : null;
+		// Const sizes = image.localFile && image.localFile.childImageSharp ? image.localFile.childImageSharp.sizes : null;
+		// const resolutions = image.localFile && image.localFile.childImageSharp ? image.localFile.childImageSharp.resolutions : null;
 
-		if (!sizes && !resolutions) {
-			this.loader = cancellable(this.preloadImage(this.props.image.url));
-			this.loader.then(this.handleImageLoad);
-
-			setTimeout(this.handleImageLoad, 1000);
-		}
+		this.loader = cancellable(this.preloadImage(this.props.image.url));
+		this.loader.then(this.handleImageLoad);
+		// SetTimeout(this.handleImageLoad, 1000);
 	}
 
 	componentWillUnmount() {
