@@ -14,7 +14,7 @@ import CSS from '../css/modules/home.module.scss';
 import Fragment from '../components/fragment';
 import Seo from '../components/seo';
 import Link from '../components/link';
-import Image from '../components/image';
+import Image from '../components/imagev2';
 import NewsletterSignup from '../components/newsletterSignup';
 import WindowSize from '../components/windowSize';
 
@@ -58,6 +58,8 @@ class Index extends Component {
 		if (heroLoaded || (windowWidth !== 0 && windowWidth < 992)) {
 			heroCss.push(CSS.heroLoaded);
 		}
+
+		console.log(clients.image);
 
 		return (
 			<Fragment>
@@ -115,14 +117,14 @@ class Index extends Component {
 						<div className={CSS.clients}>
 							<div className={CSS.clientsBg}>
 								<Image
-									sizes={clients.backgroundImage.localFile.childImageSharp.sizes}
+									image={clients.backgroundImage}
 									imgStyle={{
 										height: '100%'
 									}}
 								/>
 							</div>
 							<div className={CSS.clientsImage}>
-								<Image sizes={clients.image.localFile.childImageSharp.sizes}/>
+								<Image image={clients.image} style={{width: '100%'}}/>
 							</div>
 						</div>
 						<div className={CSS.tagSection}>
@@ -142,14 +144,19 @@ class Index extends Component {
 									<div className={CSS.diffSectionImage}>
 										<div className={CSS.diffSectionImageInner}>
 											<Image
-												sizes={differenceSection.image.localFile.childImageSharp.sizes}
+												image={differenceSection.image}
+												style={{
+													width: '100%',
+													height: '100%'
+												}}
 												imgStyle={{
 													height: '100%',
 													width: 'auto',
 													maxWidth: 'none',
 													objectPosition: 'right center',
 													left: 'auto',
-													top: '-8%'
+													top: '-8%',
+													right: 0
 												}}
 											/>
 										</div>
@@ -187,13 +194,17 @@ class Index extends Component {
 									<div className={CSS.featuredServiceImage}>
 										<div>
 											<Image
-												sizes={serviceSection.featuredService.image.localFile.childImageSharp.sizes}
+												image={serviceSection.featuredService.image}
+												style={{
+													height: '100%'
+												}}
 												imgStyle={{
 													right: '-28%',
 													height: '100%',
 													width: 'auto',
 													top: '7%',
-													maxWidth: 'none'
+													maxWidth: 'none',
+													margin: '0 auto'
 												}}
 											/>
 										</div>
@@ -201,7 +212,7 @@ class Index extends Component {
 									<div className={CSS.featuredServiceContent}>
 										<div>
 											<div className={CSS.featuredServiceLogo}>
-												<Image sizes={serviceSection.featuredService.logo.localFile.childImageSharp.sizes}/>
+												<Image image={serviceSection.featuredService.logo}/>
 											</div>
 											<div
 												// eslint-disable-next-line react/no-danger
@@ -224,7 +235,7 @@ class Index extends Component {
 													<li key={service.title}>
 														<div className={CSS.service}>
 															<div className={CSS.serviceImage}>
-																<Image sizes={service.image.localFile.childImageSharp.sizes}/>
+																<Image image={service.image}/>
 															</div>
 															<div className={CSS.serviceContent}>
 																<div className={CSS.serviceBody}>
@@ -250,7 +261,11 @@ class Index extends Component {
 									<div className={CSS.featuredCsImage}>
 										<div className={CSS.featuredCsImageInner}>
 											<Image
-												sizes={csSection.featuredCaseStudy.image.localFile.childImageSharp.sizes}
+												image={csSection.featuredCaseStudy.image}
+												style={{
+													width: '100%',
+													height: '100%'
+												}}
 												imgStyle={{
 													height: '100%'
 												}}
@@ -288,7 +303,11 @@ class Index extends Component {
 																	<div className={CSS.caseStudyImage}>
 																		<div className={CSS.caseStudyImageInner}>
 																			<Image
-																				sizes={caseStudy.image.localFile.childImageSharp.sizes}
+																				image={caseStudy.image}
+																				style={{
+																					height: '100%',
+																					width: '100%'
+																				}}
 																				imgStyle={{
 																					height: '100%'
 																				}}
@@ -343,7 +362,11 @@ class Index extends Component {
 								<div className={CSS.sectionTeamImageLeft}>
 									<div className={CSS.sectionTeamImageInner}>
 										<Image
-											sizes={teamSection.leftImage.localFile.childImageSharp.sizes}
+											image={teamSection.leftImage}
+											style={{
+												height: '100%',
+												width: '100%'
+											}}
 											imgStyle={{
 												height: '100%'
 											}}
@@ -354,7 +377,11 @@ class Index extends Component {
 									<div className={CSS.sectionTeamImageInner}>
 										<div className={CSS.sectionTeamGradient}>
 											<Image
-												sizes={teamSection.rightImage.localFile.childImageSharp.sizes}
+												image={teamSection.rightImage}
+												style={{
+													height: '100%',
+													width: '100%'
+												}}
 												imgStyle={{
 													top: '6%',
 													height: '100%'

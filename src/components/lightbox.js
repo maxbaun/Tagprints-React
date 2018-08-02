@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Swiper from 'swiper';
-import Img from 'gatsby-image';
 
-import {ref, click} from '../utils/componentHelpers';
+import {ref} from '../utils/componentHelpers';
 import Image from './imagev2';
 import Modal from './modal';
 import CSS from '../css/modules/lightbox.module.scss';

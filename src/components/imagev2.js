@@ -97,6 +97,12 @@ export default class ImageV2 extends Component {
 		// 	return <Img {...props} resolutions={resolutions}/>;
 		// }
 
+		console.log(this.props.style);
+
+		// If (!image.mediaDetails) {
+		// 	return null;
+		// }
+
 		const ratio = (image.mediaDetails.height * 100) / image.mediaDetails.width;
 
 		return (
