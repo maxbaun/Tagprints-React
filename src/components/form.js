@@ -140,7 +140,7 @@ class Form extends Component {
 			let value;
 
 			if (field.type === 'date') {
-				value = moment();
+				value = null;
 			}
 
 			if (field.type === 'checkbox') {
@@ -370,7 +370,7 @@ class Form extends Component {
 		}
 
 		if (type === 'date') {
-			return <DatePicker {...props} value={value || moment()}/>;
+			return <DatePicker {...props} value={value}/>;
 		}
 
 		if (type === 'captcha') {
