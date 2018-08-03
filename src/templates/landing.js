@@ -82,9 +82,13 @@ class LandingTemplate extends Component {
 							</div>
 						) : null}
 						<div className={CSS.heroInner}>
-							<div className={CSS.headerLogo}>
-								<Logo width={153} height={29.8} classname={this.getModClass('landingHeader', true)}/>
+							<div className={CSS.header}>
+								<div className={CSS.headerLogo}>
+									<Logo width={153} height={29.8} classname={this.getModClass('landingHeader', true)}/>
+								</div>
+								<div className={CSS.headerPhone}>312-767-4990</div>
 							</div>
+
 							{/* eslint-disable-next-line react/no-danger */}
 							<div dangerouslySetInnerHTML={innerHtml(hero.header)} className={CSS.heroHeader}/>
 							<div className={CSS.heroContent}>

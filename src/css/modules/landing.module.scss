@@ -9,9 +9,22 @@
 	position: relative;
 }
 
+.header {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+}
+
 .headerLogo {
-	max-width: 100%;
+	max-width: 75%;
 	width: 153px;
+}
+
+.headerPhone {
+	font-family: $fontGotham;
+	font-weight: 500;
+	font-size: 14px;
+	text-transform: uppercase;
 }
 
 .heroHeader {
@@ -381,6 +394,10 @@
 				color: $color_white;
 			}
 		}
+
+		.headerPhone {
+			color: $color_white;
+		}
 	}
 
 	.heroForm {
@@ -467,6 +484,10 @@
 				color: $color_white;
 			}
 		}
+
+		.headerPhone {
+			color: $color_white;
+		}
 	}
 
 	.heroHeader {
@@ -546,6 +567,10 @@
 	&.dark {
 		.hero {
 			background-color: transparent;
+		}
+
+		.headerPhone {
+			color: $color_55;
 		}
 	}
 
