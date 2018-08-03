@@ -41,8 +41,6 @@ export default class JobTemplate extends Component {
 	}
 
 	handleModalOpen(modalStart) {
-		console.log(modalStart);
-
 		this.setState({
 			modalOpen: true,
 			modalStart

@@ -7,11 +7,7 @@ const Logo = ({width, height, classname}) => {
 	const wrapClass = [CSS.logo, CSS[classname]];
 
 	return (
-		<div
-			className={wrapClass.join(' ')}
-			data-theme="default"
-			data-theme-toggle="true"
-		>
+		<div className={wrapClass.join(' ')} data-theme="default" data-theme-toggle="true">
 			<svg
 				version="1.1"
 				xmlns="http://www.w3.org/2000/svg"
@@ -37,10 +33,7 @@ const Logo = ({width, height, classname}) => {
 							className={CSS.st1}
 							d="M173.9,46.1C173.9,46.1,173.9,46.1,173.9,46.1c0,0.4,0.2,1,0,1.2C173.9,46.9,173.9,46.5,173.9,46.1z"
 						/>
-						<path
-							className={CSS.st2}
-							d="M349.5,49.1c0.3-0.4,0.7-0.8,1.1-1.1C350.3,48.4,349.9,48.8,349.5,49.1z"
-						/>
+						<path className={CSS.st2} d="M349.5,49.1c0.3-0.4,0.7-0.8,1.1-1.1C350.3,48.4,349.9,48.8,349.5,49.1z"/>
 						<g>
 							<g>
 								<path

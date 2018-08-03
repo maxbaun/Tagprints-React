@@ -12,10 +12,17 @@
 .galleryItem {
 	cursor: pointer;
 	height: 100%;
-	padding: 7.5px;
 	width: 100%;
 }
 
 .a13Section {
 	background-color: $color_46;
+}
+
+.landingSection {
+	padding: 0;
+
+	@include largeAndUp {
+		padding: 0;
+	}
 }

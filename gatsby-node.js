@@ -83,6 +83,7 @@ function getPages(graphql, createPage) {
 				createPage({
 					path: getSlug(edge, result.data.pages.edges),
 					component: slash(getPageTemplate(edge.node.template)),
+					layout: getPageLayout(edge.node.template),
 					context: {
 						id: edge.node.id
 					}
@@ -351,5 +352,17 @@ function getPageTemplate(template) {
 		return path.resolve('./src/templates/thanks.js');
 	}
 
+	if (template === 'template-landing.php') {
+		return path.resolve('./src/templates/landing.js');
+	}
+
 	return path.resolve(`./src/templates/page.js`);
+}
+
+function getPageLayout(template) {
+	if (template === 'template-landing.php') {
+		return 'landing';
+	}
+
+	return 'index';
 }

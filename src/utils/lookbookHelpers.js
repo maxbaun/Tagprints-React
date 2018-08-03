@@ -102,6 +102,7 @@ function transformLookbookImage(image, lookbook) {
 		sizes: image && image.localFile && image.localFile.childImageSharp ? image.localFile.childImageSharp.sizes : {},
 		layout: width === height ? imageLayouts.square : height > width ? imageLayouts.portait : imageLayouts.landscape,
 		lookbook: lookbook.slug,
-		link: lookbook.acf.link
+		link: lookbook.acf.link,
+		mediaDetails: image.mediaDetails
 	};
 }

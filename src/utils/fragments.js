@@ -169,6 +169,7 @@ export const BaseImage = graphql`
 	fragment BaseImage on wordpress__wp_media {
 		id: wordpress_id
 		url: source_url
+		id: wordpress_id
 		mediaDetails: media_details {
 			width
 			height

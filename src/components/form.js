@@ -104,11 +104,13 @@ class Form extends Component {
 		formId: PropTypes.string.isRequired,
 		query: PropTypes.object.isRequired,
 		location: PropTypes.object.isRequired,
-		classname: PropTypes.string
+		classname: PropTypes.string,
+		showCaptcha: PropTypes.bool
 	};
 
 	static defaultProps = {
-		classname: 'default'
+		classname: 'default',
+		showCaptcha: true
 	};
 
 	componentDidMount() {
@@ -138,7 +140,7 @@ class Form extends Component {
 			let value;
 
 			if (field.type === 'date') {
-				value = moment();
+				value = null;
 			}
 
 			if (field.type === 'checkbox') {
@@ -186,7 +188,7 @@ class Form extends Component {
 	}
 
 	handleSubmit() {
-		if (!this.state.recaptcha) {
+		if (this.props.showCaptcha && !this.state.recaptcha) {
 			this.setState({
 				recaptchaError: 'Please select the recaptchs'
 			});
@@ -280,6 +282,7 @@ class Form extends Component {
 	}
 
 	renderForm() {
+		const {showCaptcha} = this.props;
 		const {inputs, button, sending, recaptchaError} = this.state;
 		let count = 0;
 
@@ -325,9 +328,11 @@ class Form extends Component {
 							</li>
 						);
 					})}
-					<li className={CSS.captcha}>
-						<Recaptcha onChange={this.handleRecaptcha} error={recaptchaError}/>
-					</li>
+					{showCaptcha ? (
+						<li className={CSS.captcha}>
+							<Recaptcha onChange={this.handleRecaptcha} error={recaptchaError}/>
+						</li>
+					) : null}
 					<li className={CSS.submit}>
 						<Button type="submit" classes="btn btn-cta btn-cta-transparent-inverse" text={button.text} loading={sending}/>
 					</li>
@@ -365,7 +370,7 @@ class Form extends Component {
 		}
 
 		if (type === 'date') {
-			return <DatePicker {...props} value={value || moment()}/>;
+			return <DatePicker {...props} value={value}/>;
 		}
 
 		if (type === 'captcha') {

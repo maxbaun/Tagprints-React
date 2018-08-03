@@ -18,7 +18,8 @@ class GalleryItem extends Component {
 		width: PropTypes.number,
 		preload: PropTypes.bool,
 		sizes: PropTypes.object,
-		resolutions: PropTypes.object
+		resolutions: PropTypes.object,
+		itemSpacing: PropTypes.number
 	};
 
 	static defaultProps = {
@@ -27,14 +28,19 @@ class GalleryItem extends Component {
 		height: 0,
 		width: 0,
 		sizes: {},
-		resolutions: {}
+		resolutions: {},
+		itemSpacing: 7.5
 	};
 
 	render() {
-		const {height, width, url, sizes, resolutions} = this.props;
+		const {height, width, url, sizes, resolutions, itemSpacing} = this.props;
+
+		const style = {
+			padding: itemSpacing
+		};
 
 		return (
-			<div className={CSS.galleryItem}>
+			<div className={CSS.galleryItem} style={style}>
 				<Image
 					preload
 					inViewToggle
@@ -72,15 +78,19 @@ export default class SectionGallery extends Component {
 
 	static propTypes = {
 		images: PropTypes.array.isRequired,
-		link: PropTypes.object.isRequired,
-		children: PropTypes.element.isRequired,
+		link: PropTypes.object,
+		children: PropTypes.element,
 		classname: PropTypes.string,
-		btnClass: PropTypes.string
+		btnClass: PropTypes.string,
+		itemSpacing: PropTypes.number
 	};
 
 	static defaultProps = {
 		classname: '',
-		btnClass: 'btn btn-cta'
+		children: null,
+		btnClass: 'btn btn-cta',
+		itemSpacing: 7.5,
+		link: {}
 	};
 
 	componentDidMount() {
@@ -117,7 +127,7 @@ export default class SectionGallery extends Component {
 	}
 
 	render() {
-		const {images, link, children, classname, btnClass} = this.props;
+		const {images, link, children, classname, btnClass, itemSpacing} = this.props;
 		const {width} = this.state;
 
 		const isMobile = width < 1000;
@@ -129,10 +139,11 @@ export default class SectionGallery extends Component {
 					<Lightbox images={filteredImages} open={this.state.modalOpen} start={this.state.modalStart} onClose={this.handleModalClose}/>
 				) : null}
 				<section className={[CSS.sectionGallery, CSS[classname]].join(' ')}>
-					{children}
+					{children ? children : null}
 					<div className={CSS.gallery}>
 						<ImageGrid
 							items={filteredImages}
+							itemSpacing={itemSpacing}
 							component={GalleryItem}
 							hasMore={false}
 							onLoadMore={noop}
@@ -140,7 +151,7 @@ export default class SectionGallery extends Component {
 							onImageClick={this.handleImageClick}
 						/>
 					</div>
-					{isMobile ? (
+					{isMobile && link && link.url ? (
 						<div
 							style={{
 								textAlign: 'center',
