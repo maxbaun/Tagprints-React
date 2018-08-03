@@ -163,8 +163,8 @@ export default class Lightbox extends Component {
 						<div className="swiper-wrapper" style={{height: '100%'}}>
 							{images.map(image => {
 								let imgStyle = {
-									maxHeight: image.height ? image.height : '100%',
-									maxWidth: image.width ? image.width : '100%',
+									maxHeight: image.mediaDetails.height ? image.mediaDetails.height : '100%',
+									maxWidth: image.mediaDetails.width ? image.mediaDetails.width : '100%',
 									right: 0,
 									left: 0,
 									margin: '0 auto'
