@@ -7,10 +7,6 @@
 	display: block;
 	overflow: hidden;
 	position: relative;
-
-	@include largeAndUp {
-		height: 1010px;
-	}
 }
 
 .headerLogo {
@@ -23,28 +19,29 @@
 	text-align: center;
 
 	@include mediumAndUp {
-		margin: 20px 0 40px;
+		margin: 20px 0 30px;
 	}
 
 	@include largeAndUp {
-		margin: 20px 0 60px;
+		margin: 20px 0 30px;
 	}
 
 	h1 {
-		margin: 0;
+		margin: 0 0 10px;
 		font-family: $fontUltra;
 		font-size: 40px;
-		line-height: 1.2;
+		line-height: 42px;
 		text-transform: uppercase;
 
 		@include mediumAndUp {
 			font-size: 50px;
 			line-height: 1.3;
+			margin: 0;
 		}
 
 		@include largeAndUp {
 			font-size: 87px;
-			line-height: 1.662;
+			line-height: 1.3;
 		}
 	}
 
@@ -65,7 +62,7 @@
 .heroBackgroungImage {
 	@include absoluteFull();
 	display: none;
-	z-index: 0;
+	z-index: -1;
 
 	@include largeAndUp {
 		display: block;
@@ -82,7 +79,7 @@
 	}
 
 	@include largeAndUp {
-		@include absoluteFull();
+		// @include absoluteFull();
 	}
 }
 

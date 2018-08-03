@@ -36,7 +36,7 @@ export default class ImageV2 extends Component {
 	};
 
 	componentDidMount() {
-		const {image} = this.props;
+		// Const {image} = this.props;
 		// Const sizes = image.localFile && image.localFile.childImageSharp ? image.localFile.childImageSharp.sizes : null;
 		// const resolutions = image.localFile && image.localFile.childImageSharp ? image.localFile.childImageSharp.resolutions : null;
 
@@ -55,7 +55,7 @@ export default class ImageV2 extends Component {
 		return new Promise((resolve, reject) => {
 			const img = new window.Image();
 			img.onload = () => {
-				if (!this.img) {
+				if (!img) {
 					return reject();
 				}
 
@@ -103,6 +103,8 @@ export default class ImageV2 extends Component {
 				style={{
 					position: 'relative',
 					overflow: 'hidden',
+					width: '100%',
+					height: '100%',
 					...this.props.style
 				}}
 			>

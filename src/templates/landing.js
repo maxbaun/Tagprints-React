@@ -6,6 +6,7 @@ import {innerHtml, getLightboxImageObject} from '../utils/wordpressHelpers';
 import Fragment from '../components/fragment';
 import Seo from '../components/seo';
 import Image from '../components/imagev2';
+import ImageChanger from '../components/imageChanger';
 import Form from '../components/form';
 import SectionGallery from '../components/sectionGallery';
 import IconBlocks from '../components/iconBlocks';
@@ -88,7 +89,7 @@ class LandingTemplate extends Component {
 							<div dangerouslySetInnerHTML={innerHtml(hero.header)} className={CSS.heroHeader}/>
 							<div className={CSS.heroContent}>
 								<div className={CSS.heroImages}>
-									<Image image={hero.images[0]} imgStyle={{height: '100%', width: 'auto', margin: '0 auto'}}/>
+									<ImageChanger images={hero.images} imgStyle={{height: '100%', width: 'auto', margin: '0 auto', right: 0}}/>
 								</div>
 								<div className={CSS.heroForm}>
 									<Form
