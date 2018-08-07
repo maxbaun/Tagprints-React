@@ -33,10 +33,30 @@
 	}
 }
 
+.small {
+	@extend .modal;
+
+	width: 95%;
+
+	@include mediumAndUp {
+		width: 45%;
+	}
+}
+
+.medium {
+	@extend .modal;
+
+	width: 95%;
+
+	@include mediumAndUp {
+		width: 60%;
+	}
+}
+
 .large {
 	@extend .modal;
 
-	width: 80%;
+	width: 95%;
 
 	@include mediumAndUp {
 		width: 75%;
@@ -52,26 +72,12 @@
 }
 
 .close {
-	color: $color_white;
-	cursor: pointer;
 	display: block;
-	font-size: 40px;
-	height: 40px;
-	opacity: 0.4;
 	position: fixed;
 	right: 10px;
 	top: 10px;
 	transition: opacity 0.15s ease-in-out;
 	z-index: 1003;
-
-	&:hover {
-		opacity: 0.7;
-	}
-
-	> span {
-		line-height: 40px;
-		vertical-align: top;
-	}
 }
 
 .content {
@@ -84,6 +90,20 @@
 	background-size: 110px 69px;
 	@include image-2x('../..//images/brickwall@2x.png', 110px, 69px);
 	background-repeat: repeat;
+}
+
+.landing {
+	&--pbl {
+		@include pblGradient();
+	}
+
+	&--htp {
+		@include brandGradient();
+	}
+
+	&--a13 {
+		background-color: $color_53;
+	}
 }
 
 .footer {

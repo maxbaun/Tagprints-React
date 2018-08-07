@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 
 import {innerHtml, getLightboxImageObject} from '../utils/wordpressHelpers';
+import {click} from '../utils/componentHelpers';
 import Fragment from '../components/fragment';
 import Seo from '../components/seo';
 import Image from '../components/imagev2';
@@ -10,18 +11,25 @@ import ImageChanger from '../components/imageChanger';
 import Form from '../components/form';
 import SectionGallery from '../components/sectionGallery';
 import IconBlocks from '../components/iconBlocks';
-import Link from '../components/link';
+import Button from '../components/button';
 import Logo from '../components/logo';
 import WindowSize from '../components/windowSize';
+import Modal from '../components/modal';
+import ModalContent from '../components/modalContent';
 import CSS from '../css/modules/landing.module.scss';
 
 class LandingTemplate extends Component {
 	constructor(props) {
 		super(props);
 
+		this.state = {
+			modalOpen: false
+		};
+
 		this.renderCta = this.renderCta.bind(this);
 		this.getModClass = this.getModClass.bind(this);
 		this.isMobile = this.isMobile.bind(this);
+		this.handleModalToggle = ::this.handleModalToggle;
 	}
 
 	static propTypes = {
@@ -50,8 +58,13 @@ class LandingTemplate extends Component {
 		return this.props.windowWidth <= 992;
 	}
 
+	handleModalToggle(modalOpen) {
+		this.setState({modalOpen});
+	}
+
 	render() {
 		const {currentPage} = this.props.data;
+		const {modalOpen} = this.state;
 		let {pageClass, pageTheme, hero, description, gallery, features, clients, facts} = currentPage.acf;
 
 		const galleryImages = gallery.map(image => {
@@ -74,6 +87,18 @@ class LandingTemplate extends Component {
 		return (
 			<Fragment>
 				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
+				<Modal showClose size="small" active={modalOpen} onClose={click(this.handleModalToggle, false)}>
+					<ModalContent classname={this.getModClass('landing')}>
+						<div className={CSS.modalInner}>
+							<Form
+								showCaptcha={false}
+								location={this.props.location}
+								formId={hero.form.formId}
+								classname={this.getModClass('landing')}
+							/>
+						</div>
+					</ModalContent>
+				</Modal>
 				<div className={wrapCss.join(' ')}>
 					<div className={CSS.hero} style={heroStyle}>
 						{hero.backgroundImage && hero.backgroundImage.url && pageTheme === 'dark' && !this.isMobile() ? (
@@ -164,9 +189,9 @@ class LandingTemplate extends Component {
 			<div className={CSS.cta}>
 				<div className="container">
 					<div className={CSS.ctaInner}>
-						<Link className={CSS.ctaBtn} to={cta.link.url}>
+						<Button classes={CSS.ctaBtn} onClick={click(this.handleModalToggle, true)}>
 							{cta.link.title}
-						</Link>
+						</Button>
 					</div>
 				</div>
 			</div>
