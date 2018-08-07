@@ -26,7 +26,8 @@ export default class Button extends Component {
 		text: PropTypes.string,
 		setSize: PropTypes.bool,
 		onClick: PropTypes.func,
-		loaderColor: PropTypes.string
+		loaderColor: PropTypes.string,
+		children: PropTypes.node
 	};
 
 	static defaultProps = {
@@ -36,7 +37,8 @@ export default class Button extends Component {
 		text: 'Button',
 		setSize: false,
 		onClick: noop,
-		loaderColor: '#f15a24'
+		loaderColor: '#f15a24',
+		children: null
 	};
 
 	componentDidMount() {
@@ -104,7 +106,7 @@ export default class Button extends Component {
 	}
 
 	render() {
-		const {classes, loading, type, text, setSize, onClick, loaderColor} = this.props;
+		const {classes, loading, type, text, setSize, onClick, loaderColor, children} = this.props;
 		const {height, width} = this.state;
 
 		let style = {};
@@ -122,7 +124,7 @@ export default class Button extends Component {
 				onClick={onClick}
 			>
 				{loading ? <Loader wrapHeight={height} wrapWidth={width} color={loaderColor}/> : null}
-				{loading ? null : text}
+				{loading ? null : children ? children : text}
 			</button>
 		);
 	}

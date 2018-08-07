@@ -171,6 +171,8 @@
 		height: 43px;
 		letter-spacing: 0;
 		line-height: 43px;
+		margin: 0 auto;
+		max-width: 250px;
 		padding: 0 15px;
 		width: 100%;
 		white-space: nowrap;
@@ -178,6 +180,15 @@
 		svg {
 			fill: $color_white !important;
 		}
+	}
+
+	.confirmation {
+		color: $color_white;
+		font-family: $fontGotham;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 18px;
+		margin: 0;
 	}
 
 	.loader {
