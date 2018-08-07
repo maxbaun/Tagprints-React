@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Motion, spring, presets} from 'react-motion';
 
 import CSS from '../css/modules/modal.module.scss';
+import Close from './close';
 
 const MotionPreset = {
 	stiffness: 360,
@@ -118,9 +119,9 @@ export default class Modal extends Component {
 		return (
 			<div className={wrapClass.join(' ')} style={{visibility}}>
 				{showClose ? (
-					<span onClick={this.handleClose} className={CSS.close}>
-						<span className="fa fa-close"/>
-					</span>
+					<div className={CSS.close}>
+						<Close onClick={this.handleClose}/>
+					</div>
 				) : null}
 				<Motion
 					defaultStyle={{

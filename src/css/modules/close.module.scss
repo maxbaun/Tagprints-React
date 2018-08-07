@@ -1,0 +1,25 @@
+.wrap {
+	cursor: pointer;
+	opacity: 0.6;
+	transition: all 0.2s ease-in-out;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.before,
+.after {
+	position: absolute;
+	left: 15px;
+	content: ' ';
+	width: 2px;
+}
+
+.before {
+	transform: rotate(45deg);
+}
+
+.after {
+	transform: rotate(-45deg);
+}
