@@ -342,7 +342,7 @@ class Form extends Component {
 	}
 
 	renderInput(input, index) {
-		const {id, type, placeholder, label, required, inputName: name, choices, description} = input;
+		const {id, type, placeholder, label, required, inputName: name, choices, description, maxLength} = input;
 		const value = this.state.values[id];
 		const error = this.state.errors[id];
 
@@ -358,6 +358,7 @@ class Form extends Component {
 			error,
 			choices,
 			description,
+			maxLength,
 			label: label && label !== '' && input.labelPlacement !== 'hidden_label' ? label : null
 		};
 

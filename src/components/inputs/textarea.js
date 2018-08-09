@@ -21,13 +21,18 @@ const TextArea = ({
 	required,
 	error,
 	description,
-	label
+	label,
+	maxLength
 }) => {
+	const extraProps = {};
+
+	if (maxLength > 0) {
+		extraProps.maxLength = maxLength;
+	}
+
 	return (
 		<div className={[CSS.inputGroup, CSS[classname]].join(' ')}>
-			{label && label !== '' ? (
-				<label htmlFor={name}>{label}</label>
-			) : null}
+			{label && label !== '' ? <label htmlFor={name}>{label}</label> : null}
 			<textarea
 				className={CSS.input}
 				autoComplete={autocomplete}
@@ -43,13 +48,10 @@ const TextArea = ({
 				onKeyUp={key(onKeyUp)}
 				onFocus={onFocus || null}
 				onBlur={onBlur || null}
+				{...extraProps}
 			/>
-			{description && description !== '' ? (
-				<small className={CSS.description}>{description}</small>
-			) : null}
-			{error && error !== '' ? (
-				<small className={CSS.error}>{error}</small>
-			) : null}
+			{description && description !== '' ? <small className={CSS.description}>{description}</small> : null}
+			{error && error !== '' ? <small className={CSS.error}>{error}</small> : null}
 		</div>
 	);
 };
@@ -71,7 +73,8 @@ TextArea.propTypes = {
 	tabIndex: PropTypes.number,
 	required: PropTypes.bool,
 	error: PropTypes.string,
-	description: PropTypes.string
+	description: PropTypes.string,
+	maxLength: PropTypes.number
 };
 
 TextArea.defaultProps = {
@@ -91,7 +94,8 @@ TextArea.defaultProps = {
 	onBlur: noop,
 	required: false,
 	error: null,
-	description: null
+	description: null,
+	maxLength: 0
 };
 
 export default TextArea;
