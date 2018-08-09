@@ -39,6 +39,11 @@ class LandingTemplate extends Component {
 		windowWidth: PropTypes.number.isRequired
 	};
 
+	componentDidMount() {
+		// eslint-disable-next-line camelcase
+		window.gtag('event', 'conversion', {send_to: 'AW-997082626/5imUCOOG6mAQgoy52wM'});
+	}
+
 	getModClass(base, hasTheme = false) {
 		const {pageClass, pageTheme} = this.props.data.currentPage.acf;
 		let cl = base;
