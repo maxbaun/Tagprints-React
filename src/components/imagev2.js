@@ -40,8 +40,11 @@ export default class ImageV2 extends Component {
 		// Const sizes = image.localFile && image.localFile.childImageSharp ? image.localFile.childImageSharp.sizes : null;
 		// const resolutions = image.localFile && image.localFile.childImageSharp ? image.localFile.childImageSharp.resolutions : null;
 
-		this.loader = cancellable(this.preloadImage(this.props.image.url));
-		this.loader.then(this.handleImageLoad);
+		if (this.props.image && this.props.image.url) {
+			this.loader = cancellable(this.preloadImage(this.props.image.url));
+			this.loader.then(this.handleImageLoad);
+		}
+
 		// SetTimeout(this.handleImageLoad, 1000);
 	}
 

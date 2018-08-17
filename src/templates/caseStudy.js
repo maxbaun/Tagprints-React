@@ -122,6 +122,10 @@ export default class CaseStudyTemplate extends Component {
 
 					const image = data.image;
 
+					if (!image) {
+						return null;
+					}
+
 					const mediaDetails = image.mediaDetails;
 
 					const sizes = image.localFile.childImageSharp ? image.localFile.childImageSharp.sizes : {};

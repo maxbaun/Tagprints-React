@@ -34,11 +34,15 @@ const CaseStudyItem = ({image, logo, title, subtitle, slug}) => {
 };
 
 CaseStudyItem.propTypes = {
-	image: PropTypes.object.isRequired,
+	image: PropTypes.object,
 	title: PropTypes.string.isRequired,
 	subtitle: PropTypes.string.isRequired,
 	logo: PropTypes.string.isRequired,
 	slug: PropTypes.string.isRequired
+};
+
+CaseStudyItem.defaultProps = {
+	image: {}
 };
 
 export default CaseStudyItem;
