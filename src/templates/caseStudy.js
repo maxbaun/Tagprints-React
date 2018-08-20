@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import graphql from 'graphql';
-import Img from 'gatsby-image';
 import Link from 'gatsby-link';
 
 import {innerHtml, getLightboxImageObject} from '../utils/wordpressHelpers';
 import {click} from '../utils/componentHelpers';
 import Seo from '../components/seo';
 import ScrollSpy from '../components/scrollSpy';
-import Image from '../components/image';
+import Image from '../components/imagev2';
 import Lightbox from '../components/lightbox';
 import CSS from '../css/modules/caseStudy.module.scss';
 
@@ -55,6 +54,8 @@ export default class CaseStudyTemplate extends Component {
 	render() {
 		const {caseStudy} = this.props.data;
 
+		console.log(caseStudy);
+
 		return (
 			<div>
 				<Seo currentPage={caseStudy} site={this.props.site} location={this.props.location}/>
@@ -71,7 +72,7 @@ export default class CaseStudyTemplate extends Component {
 						<div className={CSS.hero}>
 							<div className={CSS.heroImage}>
 								{caseStudy.acf.heroOverlay ? <div className={CSS.overlay}/> : null}
-								<Img sizes={caseStudy.acf.hero.localFile.childImageSharp.sizes}/>
+								<Image placeholder image={caseStudy.acf.hero}/>
 							</div>
 							<div className={CSS.heroInner}>
 								<div className={CSS.scrollWrap}>
@@ -126,25 +127,9 @@ export default class CaseStudyTemplate extends Component {
 						return null;
 					}
 
-					const mediaDetails = image.mediaDetails;
-
-					const sizes = image.localFile.childImageSharp ? image.localFile.childImageSharp.sizes : {};
-
-					const props = {
-						preload: true,
-						naturalWidth: mediaDetails.width,
-						naturalHeight: mediaDetails.height,
-						url: image.url,
-						sizes,
-						imgStyle: {
-							width: '100%',
-							height: 'auto'
-						}
-					};
-
 					return (
 						<li key={image.id} style={style} onClick={click(this.handleModalOpen, index)}>
-							<Image {...props}/>
+							<Image image={image} imgStyle={{width: '100%', height: 'auto'}}/>
 						</li>
 					);
 				})}
