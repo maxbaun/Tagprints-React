@@ -5,7 +5,6 @@ import Visibility from 'react-visibility-sensor';
 
 import {ImageLoader} from '../utils/imageHelpers';
 import {noop} from '../utils/componentHelpers';
-
 import CSS from '../css/modules/image.module.scss';
 import Placeholder from './placeholder';
 
@@ -169,9 +168,17 @@ export default class Image extends Component {
 		const {inView} = this.state;
 		const {inViewToggle, onClick} = this.props;
 		const isGatsbyImg = this.props.sizes.src || this.props.resolutions.src;
-		const wrapCSS = [CSS.imageWrap, inViewToggle ? CSS.viewToggle : '', inViewToggle && inView ? CSS.inView : ''];
+		const wrapCSS = [
+			CSS.imageWrap,
+			inViewToggle ? CSS.viewToggle : '',
+			inViewToggle && inView ? CSS.inView : ''
+		];
 		return (
-			<div className={wrapCSS.join(' ')} style={this.props.style} onClick={onClick}>
+			<div
+				className={wrapCSS.join(' ')}
+				style={this.props.style}
+				onClick={onClick}
+			>
 				<Visibility partialVisibility onChange={this.toggleView}>
 					{isGatsbyImg ? this.renderGatsbyImage() : this.renderImage()}
 				</Visibility>
@@ -185,15 +192,31 @@ export default class Image extends Component {
 		const loaded = Boolean(url);
 
 		return (
-			<div style={{maxHeight: '100%', maxWidth: '100%', width: this.props.naturalWidth, height: this.props.naturalHeight}}>
+			<div
+				style={{
+					maxHeight: '100%',
+					maxWidth: '100%',
+					width: this.props.naturalWidth,
+					height: this.props.naturalHeight
+				}}
+			>
 				{placeholder && !loaded ? (
 					<div className={CSS.placeholder}>
 						<Placeholder
-							style={{maxHeight: '100%', maxWidth: '100%', width: this.props.naturalWidth, height: this.props.naturalHeight}}
+							style={{
+								maxHeight: '100%',
+								maxWidth: '100%',
+								width: this.props.naturalWidth,
+								height: this.props.naturalHeight
+							}}
 						/>
 					</div>
 				) : null}
-				<figure className={[CSS.inner, loaded ? CSS.innerActive : ''].join(' ')}>{loaded ? <img src={url} style={imgStyle}/> : null}</figure>
+				<figure
+					className={[CSS.inner, loaded ? CSS.innerActive : ''].join(' ')}
+				>
+					{loaded ? <img src={url} style={imgStyle}/> : null}
+				</figure>
 			</div>
 		);
 	}
@@ -234,11 +257,25 @@ export default class Image extends Component {
 		};
 
 		if (resolutions.src) {
-			return <Img resolutions={resolutions} onLoad={onLoad} style={style} imgStyle={imageStyle}/>;
+			return (
+				<Img
+					resolutions={resolutions}
+					onLoad={onLoad}
+					style={style}
+					imgStyle={imageStyle}
+				/>
+			);
 		}
 
 		if (sizes.src) {
-			return <Img sizes={sizes} onLoad={onLoad} style={style} imgStyle={imageStyle}/>;
+			return (
+				<Img
+					sizes={sizes}
+					onLoad={onLoad}
+					style={style}
+					imgStyle={imageStyle}
+				/>
+			);
 		}
 
 		return null;
