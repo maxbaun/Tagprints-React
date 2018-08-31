@@ -41,7 +41,7 @@ class LandingTemplate extends Component {
 
 	componentDidMount() {
 		// eslint-disable-next-line camelcase
-		window.gtag('event', 'conversion', {send_to: 'AW-997082626/5imUCOOG6mAQgoy52wM'});
+		// window.gtag('event', 'conversion', {send_to: 'AW-997082626/5imUCOOG6mAQgoy52wM'});
 	}
 
 	getModClass(base, hasTheme = false) {
@@ -70,7 +70,16 @@ class LandingTemplate extends Component {
 	render() {
 		const {currentPage} = this.props.data;
 		const {modalOpen} = this.state;
-		let {pageClass, pageTheme, hero, description, gallery, features, clients, facts} = currentPage.acf;
+		let {
+			pageClass,
+			pageTheme,
+			hero,
+			description,
+			gallery,
+			features,
+			clients,
+			facts
+		} = currentPage.acf;
 
 		const galleryImages = gallery.map(image => {
 			return {
@@ -83,7 +92,12 @@ class LandingTemplate extends Component {
 
 		const heroStyle = {};
 
-		if (hero.backgroundImage && hero.backgroundImage.url && pageTheme === 'dark' && this.isMobile()) {
+		if (
+			hero.backgroundImage &&
+			hero.backgroundImage.url &&
+			pageTheme === 'dark' &&
+			this.isMobile()
+		) {
 			heroStyle.backgroundImage = `url(${hero.backgroundImage.url})`;
 		}
 
@@ -91,8 +105,17 @@ class LandingTemplate extends Component {
 
 		return (
 			<Fragment>
-				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
-				<Modal showClose size="small" active={modalOpen} onClose={click(this.handleModalToggle, false)}>
+				<Seo
+					currentPage={currentPage}
+					site={this.props.site}
+					location={this.props.location}
+				/>
+				<Modal
+					showClose
+					size="small"
+					active={modalOpen}
+					onClose={click(this.handleModalToggle, false)}
+				>
 					<ModalContent classname={this.getModClass('landing')}>
 						<div className={CSS.modalInner}>
 							<Form
@@ -106,24 +129,46 @@ class LandingTemplate extends Component {
 				</Modal>
 				<div className={wrapCss.join(' ')}>
 					<div className={CSS.hero} style={heroStyle}>
-						{hero.backgroundImage && hero.backgroundImage.url && pageTheme === 'dark' && !this.isMobile() ? (
+						{hero.backgroundImage &&
+						hero.backgroundImage.url &&
+						pageTheme === 'dark' &&
+						!this.isMobile() ? (
 							<div className={CSS.heroBackgroungImage}>
-								<Image image={hero.backgroundImage} imgStyle={{height: '100%'}} style={{height: '100%'}}/>
-							</div>
-						) : null}
+									<Image
+									image={hero.backgroundImage}
+									imgStyle={{height: '100%'}}
+									style={{height: '100%'}}
+									/>
+								</div>
+							) : null}
 						<div className={CSS.heroInner}>
 							<div className={CSS.header}>
 								<div className={CSS.headerLogo}>
-									<Logo width={153} height={29.8} classname={this.getModClass('landingHeader', true)}/>
+									<Logo
+										width={153}
+										height={29.8}
+										classname={this.getModClass('landingHeader', true)}
+									/>
 								</div>
 								<div className={CSS.headerPhone}>312-767-4990</div>
 							</div>
 
 							{/* eslint-disable-next-line react/no-danger */}
-							<div dangerouslySetInnerHTML={innerHtml(hero.header)} className={CSS.heroHeader}/>
+							<div
+								dangerouslySetInnerHTML={innerHtml(hero.header)}
+								className={CSS.heroHeader}
+							/>
 							<div className={CSS.heroContent}>
 								<div className={CSS.heroImages}>
-									<ImageChanger images={hero.images} imgStyle={{height: '100%', width: 'auto', margin: '0 auto', right: 0}}/>
+									<ImageChanger
+										images={hero.images}
+										imgStyle={{
+											height: '100%',
+											width: 'auto',
+											margin: '0 auto',
+											right: 0
+										}}
+									/>
 								</div>
 								<div className={CSS.heroForm}>
 									<Form
@@ -145,11 +190,18 @@ class LandingTemplate extends Component {
 						</div>
 					</div>
 					<div className={CSS.gallery}>
-						<SectionGallery classname="landingSection" images={galleryImages} itemSpacing={0}/>
+						<SectionGallery
+							classname="landingSection"
+							images={galleryImages}
+							itemSpacing={0}
+						/>
 					</div>
 					<div className={CSS.features}>
 						{/* eslint-disable-next-line react/no-danger */}
-						<div dangerouslySetInnerHTML={innerHtml(features.header)} className={CSS.featuresHeader}/>
+						<div
+							dangerouslySetInnerHTML={innerHtml(features.header)}
+							className={CSS.featuresHeader}
+						/>
 						<ul className={CSS.featureList}>
 							{features.features.map(f => {
 								return (
@@ -167,14 +219,23 @@ class LandingTemplate extends Component {
 					<div className={CSS.clients}>
 						<div className="container">
 							{/* eslint-disable-next-line react/no-danger */}
-							<div dangerouslySetInnerHTML={innerHtml(clients.header)} className={CSS.clientsHeader}/>
+							<div
+								dangerouslySetInnerHTML={innerHtml(clients.header)}
+								className={CSS.clientsHeader}
+							/>
 							<Image image={clients.image}/>
 						</div>
 					</div>
 					<div className={CSS.facts}>
 						{/* eslint-disable-next-line react/no-danger */}
-						<div dangerouslySetInnerHTML={innerHtml(facts.header)} className={CSS.factsHeader}/>
-						<IconBlocks classname={this.getModClass('landingBlocks')} blocks={facts.facts}/>
+						<div
+							dangerouslySetInnerHTML={innerHtml(facts.header)}
+							className={CSS.factsHeader}
+						/>
+						<IconBlocks
+							classname={this.getModClass('landingBlocks')}
+							blocks={facts.facts}
+						/>
 					</div>
 					{this.renderCta()}
 					<div className={CSS.footer}>
@@ -194,7 +255,10 @@ class LandingTemplate extends Component {
 			<div className={CSS.cta}>
 				<div className="container">
 					<div className={CSS.ctaInner}>
-						<Button classes={CSS.ctaBtn} onClick={click(this.handleModalToggle, true)}>
+						<Button
+							classes={CSS.ctaBtn}
+							onClick={click(this.handleModalToggle, true)}
+						>
 							{cta.link.title}
 						</Button>
 					</div>
