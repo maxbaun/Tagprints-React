@@ -5,18 +5,18 @@ import Link from 'gatsby-link';
 import CSS from '../css/modules/workHeader.module.scss';
 
 const HeaderViews = {
-	lookbook: {
-		title: 'Lookbook',
-		subtitle: 'Take a look and get inspired!',
-		icon: 'fa fa-chevron-right',
-		link: '/our-work/case-studies',
-		switch: 'left'
-	},
 	caseStudies: {
 		title: 'Case Studies',
 		subtitle: 'Trusted by Agencies, Loved by Brands',
 		icon: 'fa fa-chevron-left',
 		link: '/our-work/lookbook',
+		switch: 'left'
+	},
+	lookbook: {
+		title: 'Lookbook',
+		subtitle: 'Take a look and get inspired!',
+		icon: 'fa fa-chevron-right',
+		link: '/our-work/case-studies',
 		switch: 'right'
 	}
 };
@@ -35,11 +35,11 @@ export default class WorkHeader extends Component {
 	getView(location = this.props.location) {
 		const {pathname} = location;
 
-		if (pathname.indexOf('case-studies') > -1) {
-			return HeaderViews.caseStudies;
+		if (pathname.indexOf('lookbook') > -1) {
+			return HeaderViews.lookbook;
 		}
 
-		return HeaderViews.lookbook;
+		return HeaderViews.caseStudies;
 	}
 
 	render() {
@@ -55,13 +55,10 @@ export default class WorkHeader extends Component {
 							className={CSS.switchText}
 							data-active={view.switch === 'left'}
 						>
-							Lookbook
+							Case Studies
 						</span>
 						<div className={CSS.switchInner}>
-							<div
-								className={CSS.switchCircle}
-								data-position={view.switch}
-							>
+							<div className={CSS.switchCircle} data-position={view.switch}>
 								<span className={view.icon}/>
 							</div>
 						</div>
@@ -69,7 +66,7 @@ export default class WorkHeader extends Component {
 							className={CSS.switchText}
 							data-active={view.switch === 'right'}
 						>
-							Case Studies
+							Lookbook
 						</span>
 					</Link>
 				</div>

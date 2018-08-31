@@ -157,14 +157,24 @@ export default class Lightbox extends Component {
 		const {height, width, initialized} = this.state;
 
 		return (
-			<Modal showClose size="full" active={open} onClose={this.handleModalClose} onShow={this.handleModalShow}>
+			<Modal
+				showClose
+				size="full"
+				active={open}
+				onClose={this.handleModalClose}
+				onShow={this.handleModalShow}
+			>
 				<div ref={ref.call(this, 'wrapper')} className={CSS.wrapper}>
 					<div className="swiper-container" style={{height: '100%'}}>
 						<div className="swiper-wrapper" style={{height: '100%'}}>
 							{images.map(image => {
 								let imgStyle = {
-									maxHeight: image.mediaDetails.height ? image.mediaDetails.height : '100%',
-									maxWidth: image.mediaDetails.width ? image.mediaDetails.width : '100%',
+									maxHeight: image.mediaDetails.height ?
+										image.mediaDetails.height :
+										'100%',
+									maxWidth: image.mediaDetails.width ?
+										image.mediaDetails.width :
+										'100%',
 									right: 0,
 									left: 0,
 									margin: '0 auto'
@@ -183,9 +193,7 @@ export default class Lightbox extends Component {
 										...imgStyle,
 										width: '100%',
 										height: 'auto',
-										position: 'relative',
-										top: '50%',
-										transform: 'translateY(-50%)'
+										position: 'relative'
 									};
 								}
 
@@ -201,13 +209,20 @@ export default class Lightbox extends Component {
 											position: 'relative',
 											opacity: initialized ? 1 : 0,
 											transform: initialized ? 'scale(1)' : 'scale(0.95)',
-											transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out'
+											transition:
+												'opacity 0.15s ease-in-out, transform 0.15s ease-in-out'
 										}}
 									>
 										<Image
 											spacer={false}
 											image={image}
-											style={{height: '100%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+											style={{
+												height: '100%',
+												width: '100%',
+												display: 'flex',
+												alignItems: 'center',
+												justifyContent: 'center'
+											}}
 											imgStyle={imgStyle}
 										/>
 										{/* {image.sizes && image.sizes.src ? (

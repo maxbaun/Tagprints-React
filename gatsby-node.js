@@ -17,8 +17,12 @@ exports.modifyWebpackConfig = ({config}) => {
 			new webpack.DefinePlugin({
 				API_URL: JSON.stringify(process.env.API_URL),
 				GRAVITY_FORMS_API: JSON.stringify(process.env.GRAVITY_FORMS_API),
-				GRAVITY_FORMS_PUBLIC_KEY: JSON.stringify(process.env.GRAVITY_FORMS_PUBLIC_KEY),
-				GRAVITY_FORMS_PRIVATE_KEY: JSON.stringify(process.env.GRAVITY_FORMS_PRIVATE_KEY),
+				GRAVITY_FORMS_PUBLIC_KEY: JSON.stringify(
+					process.env.GRAVITY_FORMS_PUBLIC_KEY
+				),
+				GRAVITY_FORMS_PRIVATE_KEY: JSON.stringify(
+					process.env.GRAVITY_FORMS_PRIVATE_KEY
+				),
 				RECAPTCHA_KEY: JSON.stringify(process.env.RECAPTCHA_KEY),
 				RECAPTCHA_SECRET: JSON.stringify(process.env.RECAPTCHA_SECRET),
 				MAILCHIMP_URL: JSON.stringify(process.env.MAILCHIMP_URL),
@@ -39,7 +43,6 @@ exports.createPages = ({graphql, boundActionCreators}) => {
 		getPosts(graphql, createPage),
 		createOurWorkPage(graphql, createPage),
 		createLookbookPages(graphql, createPage),
-		createCaseStudiesRoot(graphql, createPage),
 		createCaseStudyCategories(graphql, createPage),
 		createCaseStudies(graphql, createPage)
 	]);
@@ -76,7 +79,10 @@ function getPages(graphql, createPage) {
 			}
 
 			result.data.pages.edges.forEach(edge => {
-				if (edge.node.title === 'TagPrints Homepage' || edge.node.slug === 'our-work') {
+				if (
+					edge.node.title === 'TagPrints Homepage' ||
+					edge.node.slug === 'our-work'
+				) {
 					return;
 				}
 
@@ -143,13 +149,22 @@ function createOurWorkPage(graphql, createPage) {
 		createPage({
 			path: '/our-work',
 			layout: 'work',
-			component: slash(path.resolve('./src/templates/lookbooks.js'))
+			component: slash(path.resolve('./src/templates/caseStudies.js'))
 		});
 
 		createPage({
 			path: '/our-work/lookbook',
 			layout: 'work',
 			component: slash(path.resolve('./src/templates/lookbooks.js'))
+		});
+
+		createPage({
+			path: '/our-work/case-studies',
+			layout: 'work',
+			component: slash(path.resolve('./src/templates/caseStudies.js')),
+			context: {
+				view: 'caseStudies'
+			}
 		});
 
 		resolve();
@@ -197,21 +212,6 @@ function createLookbookPages(graphql, createPage) {
 
 			resolve();
 		});
-	});
-}
-
-function createCaseStudiesRoot(graphql, createPage) {
-	return new Promise(resolve => {
-		createPage({
-			path: '/our-work/case-studies',
-			layout: 'work',
-			component: slash(path.resolve('./src/templates/caseStudies.js')),
-			context: {
-				view: 'caseStudies'
-			}
-		});
-
-		return resolve();
 	});
 }
 
