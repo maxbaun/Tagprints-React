@@ -14,7 +14,7 @@
 	transition: all 0.3s ease-in-out;
 	width: 100%;
 	overflow: hidden;
-	@include heroSizing();
+	// @include heroSizing();
 }
 
 .heroLoaded {
@@ -37,10 +37,11 @@
 	display: none;
 	opacity: 0;
 	width: 100%;
-	@include heroSizing();
-
+	// @include heroSizing();
+	//
 	video {
-		@include heroMedia();
+		display: block;
+		width: 100%;
 	}
 }
 
@@ -48,11 +49,11 @@
 	display: block;
 	opacity: 1;
 	width: 100%;
-	@include heroSizing();
-
-	img {
-		@include heroMedia();
-	}
+	// @include heroSizing();
+	//
+	// img {
+	// 	@include heroMedia();
+	// }
 }
 
 .heroOverlay {
@@ -406,7 +407,7 @@
 
 .featuredServiceContent {
 	align-items: center;
-	background-color: #D7D9DB;
+	background-color: #d7d9db;
 	display: flex;
 	justify-content: center;
 	width: 100%;
@@ -536,7 +537,7 @@
 }
 
 .sectionCs {
-	background-color: #D7D9DB;
+	background-color: #d7d9db;
 	padding: 40px 0 0;
 
 	@include mediumAndUp {
