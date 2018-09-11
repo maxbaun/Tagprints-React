@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 import Link from 'gatsby-link';
 
-import {innerHtml, replaceLinks, getLightboxImageObject} from '../utils/wordpressHelpers';
+import {
+	innerHtml,
+	replaceLinks,
+	getLightboxImageObject
+} from '../utils/wordpressHelpers';
 import CSS from '../css/modules/pbl.module.scss';
 import Fragment from '../components/fragment';
 import Seo from '../components/seo';
@@ -42,7 +46,11 @@ export default class PblPageTemplate extends Component {
 
 		return (
 			<Fragment>
-				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
+				<Seo
+					currentPage={currentPage}
+					site={this.props.site}
+					location={this.props.location}
+				/>
 				<main className="main" role="main">
 					<Hero
 						backgroundImage={currentPage.image.localFile.childImageSharp.sizes}
@@ -58,7 +66,7 @@ export default class PblPageTemplate extends Component {
 						id="pblSectionSlider"
 						socialTitle="GREAT SHARING CAPABILITIES"
 						slides={data.sliderSlides}
-						images={[data.sliderImages[0].image]}
+						images={[...data.sliderImages]}
 						sectionClass="pblSection"
 					>
 						<div className={CSS.sliderTitle}>
@@ -106,7 +114,13 @@ export default class PblPageTemplate extends Component {
 						cta={data.rentalCta}
 						options={data.rentalBlocks}
 					/>
-					<SectionFaq id="pblFaqs" title={data.faqTitle} faqs={data.faqFaqs} classname="pblFaq" accordionClass="pblAccordion"/>
+					<SectionFaq
+						id="pblFaqs"
+						title={data.faqTitle}
+						faqs={data.faqFaqs}
+						classname="pblFaq"
+						accordionClass="pblAccordion"
+					/>
 				</main>
 				{/* <main
 					dangerouslySetInnerHTML={innerHtml(currentPage.content)} // eslint-disable-line react/no-danger

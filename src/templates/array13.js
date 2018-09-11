@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 import Link from 'gatsby-link';
 
-import {innerHtml, replaceLinks, getLightboxImageObject} from '../utils/wordpressHelpers';
+import {
+	innerHtml,
+	replaceLinks,
+	getLightboxImageObject
+} from '../utils/wordpressHelpers';
 import CSS from '../css/modules/array13.module.scss';
 import ArrayLogo from '../images/array13Logo.svg';
 import Fragment from '../components/fragment';
@@ -48,7 +52,11 @@ export default class PbpPageTemplate extends Component {
 
 		return (
 			<Fragment>
-				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
+				<Seo
+					currentPage={currentPage}
+					site={this.props.site}
+					location={this.props.location}
+				/>
 				<main className="main" role="main">
 					<Hero
 						backgroundImage={currentPage.image.localFile.childImageSharp.sizes}
@@ -70,7 +78,7 @@ export default class PbpPageTemplate extends Component {
 						id="array13SectionSlider"
 						socialTitle="GREAT SHARING CAPABILITIES"
 						slides={data.slider.slides}
-						images={[data.slider.image]}
+						images={[{image: data.slider.image}]}
 						sectionClass="a13Section"
 						title="Array13"
 						subtitle="3D PANORAMIC CAMERA"
@@ -84,7 +92,12 @@ export default class PbpPageTemplate extends Component {
 								className={CSS.iconSectionHeader}
 							/>
 							<div className={CSS.iconSectionBody}>
-								<span className={[`icomoon icomoon-${data.iconSection.icon}`, CSS.iconSectionIcon].join(' ')}/>
+								<span
+									className={[
+										`icomoon icomoon-${data.iconSection.icon}`,
+										CSS.iconSectionIcon
+									].join(' ')}
+								/>
 								<div
 									// eslint-disable-next-line react/no-danger
 									dangerouslySetInnerHTML={innerHtml(data.iconSection.content)}
@@ -93,7 +106,12 @@ export default class PbpPageTemplate extends Component {
 							</div>
 						</div>
 					</section>
-					<SectionGallery classname="a13Section" btnClass="btn btn-array13" images={galleryImages} link={data.gallery.link}>
+					<SectionGallery
+						classname="a13Section"
+						btnClass="btn btn-array13"
+						images={galleryImages}
+						link={data.gallery.link}
+					>
 						<div
 							// eslint-disable-next-line react/no-danger
 							dangerouslySetInnerHTML={innerHtml(data.gallery.header)}
@@ -107,7 +125,10 @@ export default class PbpPageTemplate extends Component {
 								dangerouslySetInnerHTML={innerHtml(data.freebies.header)}
 								className={CSS.freebiesSectionHeader}
 							/>
-							<IconBlocks classname="a13Freebies" blocks={data.freebies.blocks}/>
+							<IconBlocks
+								classname="a13Freebies"
+								blocks={data.freebies.blocks}
+							/>
 						</div>
 					</section>
 					{this.renderCta('/free-quote/', 'Request A Free Quote')}
@@ -121,7 +142,13 @@ export default class PbpPageTemplate extends Component {
 						}}
 						options={data.rental.options}
 					/>
-					<SectionFaq id="pbpFaqs" title="FAQS" faqs={data.faqs} classname="a13Faqs" accordionClass="a13Accordion"/>
+					<SectionFaq
+						id="pbpFaqs"
+						title="FAQS"
+						faqs={data.faqs}
+						classname="a13Faqs"
+						accordionClass="a13Accordion"
+					/>
 					{/*
 
 					<SectionPorfolio classname="pbpSection" title={data.gallery.title} categories={data.gallery.categories} modalClass="pbpModal"/>

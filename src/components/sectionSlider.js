@@ -12,7 +12,8 @@ export default class SectionSlider extends Component {
 		super(props);
 
 		this.state = {
-			currentIndex: 0
+			currentIndex: 0,
+			currentImage: 0
 		};
 
 		this.slider = null;
@@ -20,6 +21,7 @@ export default class SectionSlider extends Component {
 
 		this.handleSlideChange = this.handleSlideChange.bind(this);
 		this.handlePaginationClick = this.handlePaginationClick.bind(this);
+		this.changeImage = this.changeImage.bind(this);
 	}
 
 	static propTypes = {
@@ -49,6 +51,8 @@ export default class SectionSlider extends Component {
 		setTimeout(() => {
 			this.updateSlider();
 		}, 300);
+
+		this.startImageFade();
 	}
 
 	componentWillUpdate(nextProps) {
@@ -64,6 +68,34 @@ export default class SectionSlider extends Component {
 
 		this.swiper = null;
 		this.slider = null;
+
+		if (this.interval) {
+			clearInterval(this.interval);
+			this.interval = null;
+		}
+	}
+
+	startImageFade() {
+		if (this.props.images.length === 1) {
+			return;
+		}
+
+		this.interval = setInterval(this.changeImage, 5000);
+	}
+
+	changeImage() {
+		let nextIndex = this.state.currentImage + 1;
+
+		if (nextIndex === this.props.images.length) {
+			nextIndex = 0;
+		}
+
+		this.setState(prevState => {
+			return {
+				...prevState,
+				currentImage: nextIndex
+			};
+		});
 	}
 
 	updateSlider() {
@@ -91,10 +123,17 @@ export default class SectionSlider extends Component {
 	}
 
 	render() {
-		const {images, socialTitle, slides, title, subtitle, tag, id, sectionClass} = this.props;
+		const {
+			images,
+			socialTitle,
+			slides,
+			title,
+			subtitle,
+			tag,
+			id,
+			sectionClass
+		} = this.props;
 		const {currentIndex} = this.state;
-
-		const image = images[0];
 
 		const wrapClass = [CSS.section, CSS[sectionClass]];
 
@@ -103,12 +142,49 @@ export default class SectionSlider extends Component {
 				<div className="container">
 					<div className={CSS.inner}>
 						<div className={CSS.image}>
-							<Image
-								sizes={image.localFile.childImageSharp.sizes}
-								url={image.url}
-								naturalWidth={image.mediaDetails.width}
-								naturalHeight={image.mediaDetails.height}
-							/>
+							{images.map((img, index) => {
+								const {image} = img;
+
+								const imageCss = [CSS.imageToggle];
+
+								if (this.state.currentImage === index) {
+									imageCss.push(CSS.imageToggleActive);
+								}
+
+								const largestSize = this.props.images.reduce((obj, img) => {
+									const {image} = img;
+
+									if (!obj.width) {
+										obj = image.mediaDetails;
+									}
+
+									if (image.mediaDetails.width > obj.width) {
+										obj = image.mediaDetails;
+									}
+
+									return obj;
+								}, {});
+
+								let imgStyle = {
+									position: images.length > 1 ? 'absolute' : 'relative',
+									...largestSize
+								};
+
+								return (
+									<div
+										key={image.url}
+										className={imageCss.join(' ')}
+										style={imgStyle}
+									>
+										<Image
+											sizes={image.localFile.childImageSharp.sizes}
+											url={image.url}
+											naturalWidth={image.mediaDetails.width}
+											naturalHeight={image.mediaDetails.height}
+										/>
+									</div>
+								);
+							})}
 						</div>
 						<div className={CSS.content}>
 							<div className={CSS.title}>
@@ -136,8 +212,15 @@ export default class SectionSlider extends Component {
 														return (
 															<li
 																key={slide.content}
-																className={index === currentIndex ? CSS.activePage : CSS.page}
-																onClick={click(this.handlePaginationClick, index + 1)}
+																className={
+																	index === currentIndex ?
+																		CSS.activePage :
+																		CSS.page
+																}
+																onClick={click(
+																	this.handlePaginationClick,
+																	index + 1
+																)}
 															>
 																<span/>
 															</li>
@@ -150,7 +233,9 @@ export default class SectionSlider extends Component {
 															<div key={slide.content} className="swiper-slide">
 																{/* eslint-disable react/no-danger */}
 																<div
-																	dangerouslySetInnerHTML={innerHtml(slide.content)}
+																	dangerouslySetInnerHTML={innerHtml(
+																		slide.content
+																	)}
 																	className={CSS.carouselSlide}
 																/>
 																{/* eslint-enable react/no-danger */}
@@ -166,8 +251,15 @@ export default class SectionSlider extends Component {
 													return (
 														<li
 															key={slide.content}
-															className={index === currentIndex ? CSS.activeBullet : CSS.bullet}
-															onClick={click(this.handlePaginationClick, index + 1)}
+															className={
+																index === currentIndex ?
+																	CSS.activeBullet :
+																	CSS.bullet
+															}
+															onClick={click(
+																this.handlePaginationClick,
+																index + 1
+															)}
 														>
 															<span>{index + 1}</span>
 														</li>
