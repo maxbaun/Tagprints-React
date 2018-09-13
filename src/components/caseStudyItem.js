@@ -7,9 +7,13 @@ import {innerHtml} from '../utils/wordpressHelpers';
 import Image from './imagev2';
 import CSS from '../css/modules/caseStudyItem.module.scss';
 
-const CaseStudyItem = ({image, logo, title, subtitle, slug}) => {
+const CaseStudyItem = ({image, logo, title, subtitle, slug, theme}) => {
 	return (
-		<Link to={`/case-study/${slug}`} className={CSS.caseStudy}>
+		<Link
+			to={`/case-study/${slug}`}
+			className={CSS.caseStudy}
+			data-theme={theme}
+		>
 			<div className={CSS.header}>
 				<div className={CSS.image}>
 					<Image
@@ -46,13 +50,15 @@ CaseStudyItem.propTypes = {
 	title: PropTypes.string.isRequired,
 	subtitle: PropTypes.string,
 	logo: PropTypes.string,
-	slug: PropTypes.string.isRequired
+	slug: PropTypes.string.isRequired,
+	theme: PropTypes.string
 };
 
 CaseStudyItem.defaultProps = {
 	image: {},
 	logo: null,
-	subtitle: null
+	subtitle: null,
+	theme: 'default'
 };
 
 export default CaseStudyItem;
