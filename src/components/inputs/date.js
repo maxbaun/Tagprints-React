@@ -5,7 +5,27 @@ import DatePicker from 'react-datepicker';
 import {key, input, noop} from '../../utils/componentHelpers';
 import CSS from '../../css/modules/forms.module.scss';
 
-const Datepicker = ({classname, name, id, value, onChange, autocomplete, placeholder, onFocus, onBlur, readOnly, tabIndex, required, error}) => {
+const Datepicker = ({
+	classname,
+	name,
+	id,
+	value,
+	onChange,
+	autocomplete,
+	placeholder,
+	onFocus,
+	onBlur,
+	readOnly,
+	tabIndex,
+	required,
+	error
+}) => {
+	const extraProps = {};
+
+	if (required) {
+		extraProps.required = 'true';
+	}
+
 	return (
 		<div className={[CSS.inputGroup, CSS[classname]].join(' ')}>
 			<DatePicker
@@ -13,7 +33,6 @@ const Datepicker = ({classname, name, id, value, onChange, autocomplete, placeho
 				onChange={onChange}
 				selected={value}
 				autoComplete={autocomplete}
-				required={required}
 				id={id || null}
 				name={name || null}
 				readOnly={readOnly}
@@ -21,8 +40,11 @@ const Datepicker = ({classname, name, id, value, onChange, autocomplete, placeho
 				placeholderText={placeholder}
 				onFocus={onFocus || null}
 				onBlur={onBlur || null}
+				{...extraProps}
 			/>
-			{error && error !== '' ? <small className={CSS.error}>{error}</small> : null}
+			{error && error !== '' ? (
+				<small className={CSS.error}>{error}</small>
+			) : null}
 		</div>
 	);
 };

@@ -30,6 +30,10 @@ const TextArea = ({
 		extraProps.maxLength = maxLength;
 	}
 
+	if (required) {
+		extraProps.required = 'true';
+	}
+
 	return (
 		<div className={[CSS.inputGroup, CSS[classname]].join(' ')}>
 			{label && label !== '' ? <label htmlFor={name}>{label}</label> : null}
@@ -37,7 +41,6 @@ const TextArea = ({
 				className={CSS.input}
 				autoComplete={autocomplete}
 				style={styles || null}
-				required={required ? 'true' : 'false'}
 				id={id || null}
 				name={name || null}
 				value={value || ''}
@@ -50,8 +53,12 @@ const TextArea = ({
 				onBlur={onBlur || null}
 				{...extraProps}
 			/>
-			{description && description !== '' ? <small className={CSS.description}>{description}</small> : null}
-			{error && error !== '' ? <small className={CSS.error}>{error}</small> : null}
+			{description && description !== '' ? (
+				<small className={CSS.description}>{description}</small>
+			) : null}
+			{error && error !== '' ? (
+				<small className={CSS.error}>{error}</small>
+			) : null}
 		</div>
 	);
 };

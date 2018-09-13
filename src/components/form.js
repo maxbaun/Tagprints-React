@@ -239,7 +239,12 @@ class Form extends Component {
 	}
 
 	inputVisible(input) {
-		if (!input || !input.conditionalLogic || !input.conditionalLogic.rules || !input.conditionalLogic.rules.length) {
+		if (
+			!input ||
+			!input.conditionalLogic ||
+			!input.conditionalLogic.rules ||
+			!input.conditionalLogic.rules.length
+		) {
 			return true;
 		}
 
@@ -270,7 +275,15 @@ class Form extends Component {
 			wrapCss.push(CSS[classname]);
 		}
 
-		return <div className={wrapCss.join(' ')}>{loading ? this.renderLoader() : success ? this.renderConfirmation() : this.renderForm()}</div>;
+		return (
+			<div className={wrapCss.join(' ')}>
+				{loading ?
+					this.renderLoader() :
+					success ?
+						this.renderConfirmation() :
+						this.renderForm()}
+			</div>
+		);
 	}
 
 	renderLoader() {
@@ -330,11 +343,19 @@ class Form extends Component {
 					})}
 					{showCaptcha ? (
 						<li className={CSS.captcha}>
-							<Recaptcha onChange={this.handleRecaptcha} error={recaptchaError}/>
+							<Recaptcha
+								onChange={this.handleRecaptcha}
+								error={recaptchaError}
+							/>
 						</li>
 					) : null}
 					<li className={CSS.submit}>
-						<Button type="submit" classes="btn btn-cta btn-cta-transparent-inverse" text={button.text} loading={sending}/>
+						<Button
+							type="submit"
+							classes="btn btn-cta btn-cta-transparent-inverse"
+							text={button.text}
+							loading={sending}
+						/>
 					</li>
 				</ul>
 			</form>
@@ -342,9 +363,21 @@ class Form extends Component {
 	}
 
 	renderInput(input, index) {
-		const {id, type, placeholder, label, required, inputName: name, choices, description, maxLength} = input;
+		const {
+			id,
+			type,
+			placeholder,
+			label,
+			isRequired,
+			inputName: name,
+			choices,
+			description,
+			maxLength
+		} = input;
 		const value = this.state.values[id];
 		const error = this.state.errors[id];
+
+		console.log(input);
 
 		const props = {
 			id: `${id}`,
@@ -353,13 +386,16 @@ class Form extends Component {
 			tabIndex: index,
 			placeholder: placeholder && placeholder !== '' ? placeholder : null,
 			onChange: this.handleChange(id),
-			required,
+			required: isRequired,
 			value,
 			error,
 			choices,
 			description,
 			maxLength,
-			label: label && label !== '' && input.labelPlacement !== 'hidden_label' ? label : null
+			label:
+				label && label !== '' && input.labelPlacement !== 'hidden_label' ?
+					label :
+					null
 		};
 
 		if (type === 'text' || type === 'email') {
@@ -375,11 +411,19 @@ class Form extends Component {
 		}
 
 		if (type === 'captcha') {
-			return <Recaptcha tabIndex={index} onChange={this.handleChange(id)} error={error}/>;
+			return (
+				<Recaptcha
+					tabIndex={index}
+					onChange={this.handleChange(id)}
+					error={error}
+				/>
+			);
 		}
 
 		if (type === 'hidden' && value) {
-			return <input type="hidden" name={input.inputName} id={id} value={value}/>;
+			return (
+				<input type="hidden" name={input.inputName} id={id} value={value}/>
+			);
 		}
 
 		if (type === 'radio' || type === 'checkbox') {

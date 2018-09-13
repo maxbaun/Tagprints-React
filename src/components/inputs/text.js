@@ -24,6 +24,12 @@ const TextInput = ({
 	label,
 	description
 }) => {
+	const extraProps = {};
+
+	if (required) {
+		extraProps.required = 'true';
+	}
+
 	if (type === 'fileupload') {
 		type = 'file';
 	}
@@ -36,7 +42,6 @@ const TextInput = ({
 				autoComplete={autocomplete}
 				style={styles || null}
 				type={type}
-				required={required ? 'true' : 'false'}
 				id={id || null}
 				name={name || null}
 				value={value || ''}
@@ -47,6 +52,7 @@ const TextInput = ({
 				onKeyUp={key(onKeyUp)}
 				onFocus={onFocus || null}
 				onBlur={onBlur || null}
+				{...extraProps}
 			/>
 			{description && description !== '' ? (
 				<small className={CSS.description}>{description}</small>

@@ -852,61 +852,59 @@ section.brick.borders {
 	}
 }
 
-.gif-facts{
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
+.gif-facts {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	justify-content: center;
 }
 
-.gif-fact{
-    padding: 0 50px;
-    font-size: 14px;
-    line-height: 1.286;
-    color: $color_22;
+.gif-fact {
+	padding: 0 50px;
+	font-size: 14px;
+	line-height: 1.286;
+	color: $color_22;
 
-    .svg-icon{
-        vertical-align: middle;
-        margin-right: 10px;
-    }
+	.svg-icon {
+		vertical-align: middle;
+		margin-right: 10px;
+	}
 }
 
-
-.gif-fact-separator{
-    background-color: $color_21;
-    height: 24px;
-    width: 1px;
+.gif-fact-separator {
+	background-color: $color_21;
+	height: 24px;
+	width: 1px;
 }
 
-@media (max-width:$screen-sm-min){
-    .gif-facts{
-        display: block;
-        text-align: center;
-    }
+@media (max-width: $screen-sm-min) {
+	.gif-facts {
+		display: block;
+		text-align: center;
+	}
 
+	.gif-fact {
+		padding: 25px 0;
+	}
 
-    .gif-fact{
-        padding: 25px 0;
-    }
-
-    .gif-fact-separator{
-        height: 1px;
-        width: 24px;
-        margin: 0 auto;
-        display: block;
-    }
+	.gif-fact-separator {
+		height: 1px;
+		width: 24px;
+		margin: 0 auto;
+		display: block;
+	}
 }
 
 *::-webkit-media-controls-panel {
-  display: none!important;
-  -webkit-appearance: none;
+	display: none !important;
+	-webkit-appearance: none;
 }
 
 /* Old shadow dom for play button */
 
 *::-webkit-media-controls-play-button {
-  display: none!important;
-  -webkit-appearance: none;
+	display: none !important;
+	-webkit-appearance: none;
 }
 
 /* New shadow dom for play button */
@@ -914,6 +912,6 @@ section.brick.borders {
 /* This one works! */
 
 *::-webkit-media-controls-start-playback-button {
-  display: none!important;
-  -webkit-appearance: none;
+	display: none !important;
+	-webkit-appearance: none;
 }
