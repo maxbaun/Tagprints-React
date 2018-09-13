@@ -377,8 +377,6 @@ class Form extends Component {
 		const value = this.state.values[id];
 		const error = this.state.errors[id];
 
-		console.log(input);
-
 		const props = {
 			id: `${id}`,
 			name: name !== '' || `gform_${id}`,

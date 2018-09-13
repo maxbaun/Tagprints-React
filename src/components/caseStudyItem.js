@@ -12,13 +12,21 @@ const CaseStudyItem = ({image, logo, title, subtitle, slug}) => {
 		<Link to={`/case-study/${slug}`} className={CSS.caseStudy}>
 			<div className={CSS.header}>
 				<div className={CSS.image}>
-					<Image showPlaceholder image={image} imgStyle={{height: '100%', width: '100%'}}/>
+					<Image
+						showPlaceholder
+						image={image}
+						imgStyle={{height: '100%', width: '100%'}}
+					/>
 				</div>
-				<div className={CSS.logo}>
-					<div className={CSS.logoWrap}>
-						<div style={{maxWidth: 150, margin: '0 auto'}}>{logo && logo !== '' ? <Svg svg={logo}/> : null}</div>
+				{logo ? (
+					<div className={CSS.logo}>
+						<div className={CSS.logoWrap}>
+							<div style={{maxWidth: 150, margin: '0 auto'}}>
+								{logo && logo !== '' ? <Svg svg={logo}/> : null}
+							</div>
+						</div>
 					</div>
-				</div>
+				) : null}
 				<div className={CSS.overlay}>
 					<span className="btn btn-cta-white">Learn More</span>
 				</div>
@@ -27,7 +35,7 @@ const CaseStudyItem = ({image, logo, title, subtitle, slug}) => {
 				{/* eslint-disable react/no-danger */}
 				<p className={CSS.title} dangerouslySetInnerHTML={innerHtml(title)}/>
 				{/* eslint-enable react/no-danger */}
-				<p className={CSS.subtitle}>{subtitle}</p>
+				{subtitle ? <p className={CSS.subtitle}>{subtitle}</p> : null}
 			</div>
 		</Link>
 	);
@@ -36,13 +44,15 @@ const CaseStudyItem = ({image, logo, title, subtitle, slug}) => {
 CaseStudyItem.propTypes = {
 	image: PropTypes.object,
 	title: PropTypes.string.isRequired,
-	subtitle: PropTypes.string.isRequired,
-	logo: PropTypes.string.isRequired,
+	subtitle: PropTypes.string,
+	logo: PropTypes.string,
 	slug: PropTypes.string.isRequired
 };
 
 CaseStudyItem.defaultProps = {
-	image: {}
+	image: {},
+	logo: null,
+	subtitle: null
 };
 
 export default CaseStudyItem;

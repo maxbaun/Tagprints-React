@@ -3,6 +3,13 @@
 @import './contactv2.module.scss';
 
 .content {
-	padding: 50px 0;
+	padding: 50px 0 15px;
+	text-align: center;
+}
+
+.featuredTitle {
+	font-family: $fontGotham;
+	font-size: 30px;
+	margin: 0 0 15px;
 	text-align: center;
 }
