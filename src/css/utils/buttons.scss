@@ -385,3 +385,81 @@ input[type='submit'].arrow:hover:after {
 		background: transparent;
 	}
 }
+
+.btn-experience {
+	border: 1px solid transparent;
+	font-family: $fontGotham;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 19px;
+	text-transform: uppercase;
+	padding: 15px 45px;
+}
+
+.btn-experience-carousel {
+	@extend .btn-experience;
+	font-size: 12px;
+	line-height: 15px;
+	padding: 10px 25px;
+
+	@include mediumAndUp {
+		font-size: 16px;
+		line-height: 19px;
+		padding: 15px 45px;
+	}
+}
+
+.btn-experience-orange {
+	@extend .btn-experience;
+	border-color: $color_48;
+	background-color: $color_48;
+	color: $color_white;
+
+	&:hover,
+	&:active,
+	&:focus {
+		border-color: darken($color_48, 10%);
+		background-color: darken($color_48, 10%);
+		color: $color_white;
+	}
+}
+
+.btn-experience-orange-carousel {
+	@extend .btn-experience-orange;
+	@extend .btn-experience-carousel;
+}
+
+.btn-experience-white {
+	@extend .btn-experience;
+	border-color: $color_white;
+	background-color: $color_white;
+	color: $color_48;
+
+	&:hover,
+	&:active,
+	&:focus {
+		border-color: $color_white;
+		background-color: transparent;
+		color: $color_48;
+	}
+}
+
+.btn-experience-outline {
+	@extend .btn-experience;
+	border-color: $color_white;
+	background-color: transparent;
+	color: $color_white;
+
+	&:hover,
+	&:active,
+	&:focus {
+		border-color: $color_white;
+		background-color: $color_white;
+		color: $color_56;
+	}
+}
+
+.btn-experience-outline-carousel {
+	@extend .btn-experience-outline;
+	@extend .btn-experience-carousel;
+}
