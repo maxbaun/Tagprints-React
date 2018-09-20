@@ -18,6 +18,19 @@
 	background-color: $color_58;
 }
 
+.sectionCta {
+	@extend .section;
+	background-color: $color_48;
+	align-items: center;
+	display: flex;
+	padding: 0;
+	height: 148px;
+}
+
+.sectionPortfolio {
+	@extend .section;
+}
+
 .experienceTitle {
 	font-family: $fontUltra;
 	font-size: 40px;
@@ -38,4 +51,13 @@
 .experienceTitleProcess {
 	@extend .experienceTitle;
 	color: $color_56;
+}
+
+.experienceTitlePortfolio {
+	@extend .experienceTitle;
+	color: $color_56;
+
+	@include largeAndUp {
+		text-align: right;
+	}
 }

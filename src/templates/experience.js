@@ -7,6 +7,8 @@ import Seo from '../components/seo';
 import ExperienceCarousel from '../components/experienceCarousel';
 import ExperienceDescription from '../components/experienceDescription';
 import ExperienceBlocks from '../components/experienceBlocks';
+import ImageGrid from '../components/imageGrid';
+import Link from '../components/link';
 import CSS from '../css/modules/experience.module.scss';
 import {innerHtml} from '../utils/wordpressHelpers';
 
@@ -36,16 +38,28 @@ export default class ThanksTemplate extends Component {
 			<Fragment>
 				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<main className="main" role="main">
-					<ExperienceCarousel slides={currentPage.acf.carousel.slides}/>
+					<ExperienceCarousel scrollTo="#sectionProcess" slides={currentPage.acf.carousel.slides}/>
 					<section className={CSS.section}>
 						<div className="container">
 							<ExperienceDescription content={currentPage.acf.description}/>
 						</div>
 					</section>
-					<section className={CSS.sectionProcess}>
+					<section id="sectionProcess" className={CSS.sectionProcess}>
 						<div className="container">
 							<h2 className={CSS.experienceTitleProcess}>{currentPage.acf.process.title}</h2>
 							<ExperienceBlocks blocks={currentPage.acf.process.blocks}/>
+						</div>
+					</section>
+					<section className={CSS.sectionCta}>
+						<div className="container">
+							<Link to={currentPage.acf.cta.link.url} className="btn btn-experience-white">
+								{currentPage.acf.cta.link.title}
+							</Link>
+						</div>
+					</section>
+					<section className={CSS.sectionPortfolio}>
+						<div className="container">
+							<h2 className={CSS.experienceTitlePortfolio}>{currentPage.acf.portfolio.title}</h2>
 						</div>
 					</section>
 				</main>
@@ -84,6 +98,18 @@ export const experiencePageQuery = graphql`
 						}
 						title
 						text
+					}
+				}
+				cta: experienceCta {
+					link {
+						title
+						url
+					}
+				}
+				portfolio: experiencePortfolio {
+					title
+					gallery {
+						...LargeImage
 					}
 				}
 			}

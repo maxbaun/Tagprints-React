@@ -155,3 +155,22 @@ $desktopLeft: 150px;
 	background-color: $color_48;
 	opacity: 1;
 }
+
+.scrollTo {
+	cursor: pointer;
+	background-image: url('../../images/more-info-experience.png');
+	background-size: 20px 137px;
+	background-repeat: no-repeat;
+	@include image-2x('../../images/more-info-experience@2x.png', 20px, 137px);
+	height: 137px;
+	width: 20px;
+	display: none;
+	position: absolute;
+	bottom: 30px;
+	left: 10%;
+	z-index: 1;
+
+	@include largeAndUp {
+		display: block;
+	}
+}

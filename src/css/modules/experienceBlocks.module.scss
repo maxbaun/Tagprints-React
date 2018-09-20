@@ -25,6 +25,10 @@
 		flex: 1;
 		margin: 0;
 		width: auto;
+
+		&:not(:last-child) {
+			margin-right: 30px;
+		}
 	}
 }
 

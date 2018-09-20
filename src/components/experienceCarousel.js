@@ -5,6 +5,7 @@ import Swiper from 'swiper';
 import CSS from '../css/modules/experienceCarousel.module.scss';
 import ImageV2 from './imagev2';
 import Link from './link';
+import ScrollSpy from './scrollSpy';
 import {innerHtml} from '../utils/wordpressHelpers';
 import {ref, click} from '../utils/componentHelpers';
 
@@ -24,7 +25,8 @@ export default class ExperienceCarousel extends Component {
 	}
 
 	static propTypes = {
-		slides: PropTypes.array
+		slides: PropTypes.array,
+		scrollTo: PropTypes.string.isRequired
 	};
 
 	static defaultProps = {
@@ -60,7 +62,7 @@ export default class ExperienceCarousel extends Component {
 	}
 
 	render() {
-		const {slides} = this.props;
+		const {slides, scrollTo} = this.props;
 		const {activeSlide} = this.state;
 
 		return (
@@ -127,6 +129,9 @@ export default class ExperienceCarousel extends Component {
 							</div>
 						</div>
 					</div>
+					<ScrollSpy target={scrollTo}>
+						<a className={CSS.scrollTo}/>
+					</ScrollSpy>
 				</div>
 			</div>
 		);
