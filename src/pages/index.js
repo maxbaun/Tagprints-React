@@ -51,16 +51,7 @@ class Index extends Component {
 			return null;
 		}
 
-		const {
-			hero,
-			caseStudiesSection: csSection,
-			clients,
-			cta,
-			differenceSection,
-			serviceSection,
-			tagSection,
-			teamSection
-		} = currentPage.acf;
+		const {hero, caseStudiesSection: csSection, clients, cta, differenceSection, serviceSection, tagSection, teamSection} = currentPage.acf;
 
 		const heroCss = [CSS.hero];
 
@@ -70,11 +61,7 @@ class Index extends Component {
 
 		return (
 			<Fragment>
-				<Seo
-					currentPage={currentPage}
-					site={this.props.site}
-					location={this.props.location}
-				/>
+				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<main className="main" role="main">
 					<div className={CSS.home}>
 						<div className={heroCss.join(' ')}>
@@ -82,13 +69,7 @@ class Index extends Component {
 								<img src={HeroImg}/>
 							</div>
 							<div className={CSS.heroVideo}>
-								<video
-									autoPlay
-									loop
-									muted
-									playsInline
-									onCanPlay={this.handleVideoLoad}
-								>
+								<video autoPlay loop muted playsInline onCanPlay={this.handleVideoLoad}>
 									<source src={HeroVid} type="video/mp4"/>
 									<source src={HeroVidWebm} type="video/webm"/>
 								</video>
@@ -148,16 +129,10 @@ class Index extends Component {
 							<div className="container">
 								<div className={CSS.tagSectionInner}>
 									{/* eslint-disable-next-line react/no-danger */}
-									<h3
-										dangerouslySetInnerHTML={innerHtml(tagSection.title)}
-										className={CSS.tagSectionHeader}
-									/>
+									<h3 dangerouslySetInnerHTML={innerHtml(tagSection.title)} className={CSS.tagSectionHeader}/>
 									{this.renderDivider(262, 30)}
 									{/* eslint-disable-next-line react/no-danger */}
-									<div
-										dangerouslySetInnerHTML={innerHtml(tagSection.text)}
-										className={CSS.tagSectionBody}
-									/>
+									<div dangerouslySetInnerHTML={innerHtml(tagSection.text)} className={CSS.tagSectionBody}/>
 								</div>
 							</div>
 						</div>
@@ -185,11 +160,9 @@ class Index extends Component {
 										</div>
 									</div>
 									<div className={CSS.diffSectionContent}>
-										{/* eslint-disable-next-line react/no-danger */}
 										<div
-											dangerouslySetInnerHTML={innerHtml(
-												differenceSection.title
-											)}
+											// eslint-disable-next-line react/no-danger
+											dangerouslySetInnerHTML={innerHtml(differenceSection.title)}
 											className={CSS.diffSectionHeader}
 										/>
 										<ul className={CSS.diffs}>
@@ -199,9 +172,7 @@ class Index extends Component {
 														<li key={diff.title}>
 															<div className={CSS.diff}>
 																<div className={CSS.diffIcon}>
-																	<span
-																		className={`icomoon icomoon-${diff.icon}`}
-																	/>
+																	<span className={`icomoon icomoon-${diff.icon}`}/>
 																</div>
 																<div className={CSS.diffContent}>
 																	<h5>{diff.title}</h5>
@@ -218,24 +189,24 @@ class Index extends Component {
 						</div>
 						<div className={CSS.serviceSection}>
 							<div className="container">
-								{/* eslint-disable-next-line react/no-danger */}
 								<div
+									// eslint-disable-next-line react/no-danger
 									dangerouslySetInnerHTML={innerHtml(serviceSection.title)}
 									className={CSS.serviceSecitonHeader}
 								/>
 								<div className={CSS.featuredService}>
 									<div className={CSS.featuredServiceImage}>
-										<div>
+										<div className={CSS.featuredServiceImageInner}>
 											<Image
 												image={serviceSection.featuredService.image}
 												style={{
 													height: '100%'
 												}}
 												imgStyle={{
-													right: '-28%',
-													height: '100%',
-													width: 'auto',
-													top: '7%',
+													right: 0,
+													height: 'auto',
+													width: '100%',
+													top: 0,
 													maxWidth: 'none',
 													margin: '0 auto'
 												}}
@@ -249,17 +220,11 @@ class Index extends Component {
 											</div>
 											<div
 												// eslint-disable-next-line react/no-danger
-												dangerouslySetInnerHTML={innerHtml(
-													serviceSection.featuredService.text
-												)}
+												dangerouslySetInnerHTML={innerHtml(serviceSection.featuredService.text)}
 												className={CSS.featuredServiceBody}
 											/>
 											<div className={CSS.serviceLink}>
-												<Link
-													to={replaceLinks(
-														serviceSection.featuredService.link.url
-													)}
-												>
+												<Link to={replaceLinks(serviceSection.featuredService.link.url)}>
 													{serviceSection.featuredService.link.title} +
 												</Link>
 											</div>
@@ -279,17 +244,11 @@ class Index extends Component {
 															<div className={CSS.serviceContent}>
 																<div className={CSS.serviceBody}>
 																	{/* eslint-disable-next-line react/no-danger */}
-																	<h5
-																		dangerouslySetInnerHTML={innerHtml(
-																			service.title
-																		)}
-																	/>
+																	<h5 dangerouslySetInnerHTML={innerHtml(service.title)}/>
 																	<p>{service.text}</p>
 																</div>
 																<div className={CSS.serviceLink}>
-																	<Link to={replaceLinks(service.link.url)}>
-																		{service.link.title} +
-																	</Link>
+																	<Link to={replaceLinks(service.link.url)}>{service.link.title} +</Link>
 																</div>
 															</div>
 														</div>
@@ -344,10 +303,7 @@ class Index extends Component {
 													csSection.caseStudies.map(caseStudy => {
 														return (
 															<li key={caseStudy.title}>
-																<Link
-																	className={CSS.caseStudy}
-																	to={replaceLinks(caseStudy.link.url)}
-																>
+																<Link className={CSS.caseStudy} to={replaceLinks(caseStudy.link.url)}>
 																	<div className={CSS.caseStudyImage}>
 																		<div className={CSS.caseStudyImageInner}>
 																			<Image
@@ -398,11 +354,7 @@ class Index extends Component {
 							</div>
 							<div className="container">
 								<div className={CSS.sectionMailForm}>
-									<NewsletterSignup
-										text="Stay in the know."
-										btnClass="btn btn-brand"
-										loaderColor="#fff"
-									/>
+									<NewsletterSignup text="Stay in the know." btnClass="btn btn-brand" loaderColor="#fff"/>
 								</div>
 							</div>
 							<div className={CSS.sectionMailImage2}>

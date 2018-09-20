@@ -383,11 +383,6 @@
 	text-align: center;
 	width: 100%;
 
-	> div {
-		height: 80%;
-		width: 100%;
-	}
-
 	> div > div,
 	> div > div > div {
 		height: 100%;
@@ -405,9 +400,14 @@
 	}
 }
 
+.featuredServiceImageInner {
+	padding: 10%;
+	width: 100%;
+}
+
 .featuredServiceContent {
 	align-items: center;
-	background-color: #d7d9db;
+	background-color: #D7D9DB;
 	display: flex;
 	justify-content: center;
 	width: 100%;
@@ -537,7 +537,7 @@
 }
 
 .sectionCs {
-	background-color: #d7d9db;
+	background-color: #D7D9DB;
 	padding: 40px 0 0;
 
 	@include mediumAndUp {
