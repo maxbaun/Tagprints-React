@@ -170,6 +170,31 @@
 	}
 }
 
+[data-theme='experience'] {
+	.header {
+		.st0,
+		.st1,
+		.st3 {
+			fill: $color_48;
+		}
+
+		.st2,
+		.st4 {
+			fill: $color_56;
+		}
+	}
+
+	.footer {
+		.st0,
+		.st1,
+		.st2,
+		.st3,
+		.st4 {
+			fill: $color_57;
+		}
+	}
+}
+
 .logo {
 	&.landingFooter {
 		.st0,

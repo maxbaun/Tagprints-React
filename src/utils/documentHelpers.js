@@ -41,5 +41,9 @@ export const getDataTheme = location => {
 		return 'array13';
 	}
 
+	if (part.includes('experience-')) {
+		return 'experience';
+	}
+
 	return 'default';
 };

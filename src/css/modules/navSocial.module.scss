@@ -189,3 +189,38 @@
 		}
 	}
 }
+
+[data-theme='experience'] {
+	.header {
+		.number,
+		.icon {
+			a {
+				color: $color_56;
+
+				&:hover {
+					color: $color_56;
+				}
+			}
+		}
+
+		.separator {
+			background-color: transparent;
+		}
+	}
+
+	.footer {
+		.icon {
+			a {
+				background-color: transparent;
+				border-color: $color_57;
+				color: $color_57;
+
+				&:hover {
+					background-color: $color_57;
+					border-color: $color_57;
+					color: $color_black;
+				}
+			}
+		}
+	}
+}
