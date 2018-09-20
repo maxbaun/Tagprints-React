@@ -5,6 +5,8 @@ import graphql from 'graphql';
 import Fragment from '../components/fragment';
 import Seo from '../components/seo';
 import ExperienceCarousel from '../components/experienceCarousel';
+import ExperienceDescription from '../components/experienceDescription';
+import ExperienceBlocks from '../components/experienceBlocks';
 import CSS from '../css/modules/experience.module.scss';
 import {innerHtml} from '../utils/wordpressHelpers';
 
@@ -35,6 +37,17 @@ export default class ThanksTemplate extends Component {
 				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<main className="main" role="main">
 					<ExperienceCarousel slides={currentPage.acf.carousel.slides}/>
+					<section className={CSS.section}>
+						<div className="container">
+							<ExperienceDescription content={currentPage.acf.description}/>
+						</div>
+					</section>
+					<section className={CSS.sectionProcess}>
+						<div className="container">
+							<h2 className={CSS.experienceTitleProcess}>{currentPage.acf.process.title}</h2>
+							<ExperienceBlocks blocks={currentPage.acf.process.blocks}/>
+						</div>
+					</section>
 				</main>
 			</Fragment>
 		);
@@ -60,6 +73,17 @@ export const experiencePageQuery = graphql`
 								url
 							}
 						}
+					}
+				}
+				description: experienceDescription
+				process: experienceProcess {
+					title
+					blocks {
+						icon {
+							...LargeImage
+						}
+						title
+						text
 					}
 				}
 			}
