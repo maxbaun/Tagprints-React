@@ -10,6 +10,7 @@ import ExperienceBlocks from '../components/experienceBlocks';
 import ExperienceFacts from '../components/experienceFacts';
 import ExperienceEnhancements from '../components/experienceEnhancements';
 import SectionGallery from '../components/sectionGallery';
+import AccordionGroup from '../components/accordionGroup';
 import Link from '../components/link';
 import CSS from '../css/modules/experience.module.scss';
 import {innerHtml, getLightboxImageObject} from '../utils/wordpressHelpers';
@@ -96,6 +97,12 @@ export default class ThanksTemplate extends Component {
 							</Link>
 						</div>
 					</section>
+					<section className={CSS.sectionFaqs}>
+						<div className="container">
+							<h2 className={CSS.experienceTitleFaqs}>{currentPage.acf.faqs.title}</h2>
+							<AccordionGroup id="ExperienceAccordion" items={currentPage.acf.faqs.faqs} classname="experienceAccordion"/>
+						</div>
+					</section>
 				</main>
 			</Fragment>
 		);
@@ -164,6 +171,13 @@ export const experiencePageQuery = graphql`
 						icon
 						title
 						text
+					}
+				}
+				faqs: experienceFaqs {
+					title
+					faqs {
+						header
+						content
 					}
 				}
 			}

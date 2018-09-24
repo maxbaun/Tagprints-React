@@ -78,6 +78,11 @@
 	}
 }
 
+.sectionFaqs {
+	@extend .section;
+	background-color: $color_58;
+}
+
 .experienceTitle {
 	font-family: $fontUltra;
 	font-size: 40px;
@@ -122,4 +127,9 @@
 	@extend .experienceTitle;
 	color: $color_56;
 	margin-top: 0;
+}
+
+.experienceTitleFaqs {
+	@extend .experienceTitle;
+	color: $color_56;
 }
