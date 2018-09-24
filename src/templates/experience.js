@@ -8,6 +8,7 @@ import ExperienceCarousel from '../components/experienceCarousel';
 import ExperienceDescription from '../components/experienceDescription';
 import ExperienceBlocks from '../components/experienceBlocks';
 import ExperienceFacts from '../components/experienceFacts';
+import ExperienceEnhancements from '../components/experienceEnhancements';
 import SectionGallery from '../components/sectionGallery';
 import Link from '../components/link';
 import CSS from '../css/modules/experience.module.scss';
@@ -79,6 +80,22 @@ export default class ThanksTemplate extends Component {
 							<ExperienceFacts yes={currentPage.acf.facts.do} no={currentPage.acf.facts.dont}/>
 						</div>
 					</section>
+					<section className={CSS.sectionEnhancements}>
+						<div className={CSS.sectionLeft}/>
+						<div className={CSS.sectionRight}>
+							<div className="container">
+								<h2 className={CSS.experienceTitleEnhancements}>{currentPage.acf.enhancements.title}</h2>
+								<ExperienceEnhancements items={currentPage.acf.enhancements.enhancements}/>
+							</div>
+						</div>
+					</section>
+					<section className={CSS.sectionCtaCenter}>
+						<div className="container">
+							<Link to={currentPage.acf.cta.link.url} className="btn btn-experience-outline">
+								{currentPage.acf.cta.link.title}
+							</Link>
+						</div>
+					</section>
 				</main>
 			</Fragment>
 		);
@@ -139,6 +156,14 @@ export const experiencePageQuery = graphql`
 					}
 					dont {
 						item
+					}
+				}
+				enhancements: experienceEnhancements {
+					title
+					enhancements {
+						icon
+						title
+						text
 					}
 				}
 			}

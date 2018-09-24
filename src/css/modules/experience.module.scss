@@ -13,6 +13,32 @@
 	}
 }
 
+.sectionHalf {
+	@include largeAndUp {
+		display: flex;
+		flex-wrap: nowrap;
+	}
+}
+
+.sectionLeft {
+	@include largeAndUp {
+		width: 20%;
+	}
+}
+
+.sectionRight {
+	padding: 40px 0;
+
+	@include mediumAndUp {
+		padding: 60px 0;
+	}
+
+	@include largeAndUp {
+		padding: 60px 0;
+		width: 80%;
+	}
+}
+
 .sectionProcess {
 	@extend .section;
 	background-color: $color_58;
@@ -27,6 +53,12 @@
 	height: 148px;
 }
 
+.sectionCtaCenter {
+	@extend .sectionCta;
+	justify-content: center;
+	text-align: center;
+}
+
 .sectionPortfolio {
 	@extend .section;
 }
@@ -34,6 +66,16 @@
 .sectionFacts {
 	@extend .section;
 	background-color: $color_58;
+}
+
+.sectionEnhancements {
+	@extend .section;
+	@extend .sectionHalf;
+	padding: 0;
+
+	.sectionLeft {
+		background-color: $color_56;
+	}
 }
 
 .experienceTitle {
@@ -74,4 +116,10 @@
 	@include largeAndUp {
 		opacity: 0.9;
 	}
+}
+
+.experienceTitleEnhancements {
+	@extend .experienceTitle;
+	color: $color_56;
+	margin-top: 0;
 }
