@@ -13,7 +13,7 @@ import SectionGallery from '../components/sectionGallery';
 import AccordionGroup from '../components/accordionGroup';
 import Link from '../components/link';
 import CSS from '../css/modules/experience.module.scss';
-import {innerHtml, getLightboxImageObject} from '../utils/wordpressHelpers';
+import {getLightboxImageObject} from '../utils/wordpressHelpers';
 
 export default class ThanksTemplate extends Component {
 	static propTypes = {
@@ -33,8 +33,6 @@ export default class ThanksTemplate extends Component {
 
 	render() {
 		const {currentPage} = this.props.data;
-
-		console.log(currentPage.acf);
 
 		const galleryImages = currentPage.acf.portfolio.images.map(image => {
 			return {

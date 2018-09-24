@@ -17,10 +17,15 @@ const ExperienceBlocks = ({blocks}) => {
 									<div className={CSS.blockImage}>
 										<ImageV2
 											image={block.icon}
-											imgStyle={{width: block.icon.mediaDetails.width, height: block.icon.mediaDetails.height}}
-											style={{
+											imgStyle={{
 												width: block.icon.mediaDetails.width,
 												height: block.icon.mediaDetails.height,
+												maxWidth: block.icon.mediaDetails.width / 2,
+												maxHeight: block.icon.mediaDetails.height / 2
+											}}
+											style={{
+												width: block.icon.mediaDetails.width / 2,
+												height: block.icon.mediaDetails.height / 2,
 												display: 'inline-block'
 											}}
 										/>
