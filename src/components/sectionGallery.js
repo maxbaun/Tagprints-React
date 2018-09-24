@@ -19,7 +19,8 @@ class GalleryItem extends Component {
 		preload: PropTypes.bool,
 		sizes: PropTypes.object,
 		resolutions: PropTypes.object,
-		itemSpacing: PropTypes.number
+		itemSpacing: PropTypes.number,
+		contain: PropTypes.bool
 	};
 
 	static defaultProps = {
@@ -29,7 +30,8 @@ class GalleryItem extends Component {
 		width: 0,
 		sizes: {},
 		resolutions: {},
-		itemSpacing: 7.5
+		itemSpacing: 7.5,
+		contain: false
 	};
 
 	render() {
@@ -127,10 +129,10 @@ export default class SectionGallery extends Component {
 	}
 
 	render() {
-		const {images, link, children, classname, btnClass, itemSpacing} = this.props;
+		const {images, classname, contain} = this.props;
 		const {width} = this.state;
-
 		const isMobile = width < 1000;
+
 		const filteredImages = width > 0 && isMobile ? images.slice(0, 8) : images;
 
 		return (
@@ -139,31 +141,46 @@ export default class SectionGallery extends Component {
 					<Lightbox images={filteredImages} open={this.state.modalOpen} start={this.state.modalStart} onClose={this.handleModalClose}/>
 				) : null}
 				<section className={[CSS.sectionGallery, CSS[classname]].join(' ')}>
-					{children ? children : null}
-					<div className={CSS.gallery}>
-						<ImageGrid
-							items={filteredImages}
-							itemSpacing={itemSpacing}
-							component={GalleryItem}
-							hasMore={false}
-							onLoadMore={noop}
-							windowWidth={width}
-							onImageClick={this.handleImageClick}
-						/>
-					</div>
-					{isMobile && link && link.url ? (
-						<div
-							style={{
-								textAlign: 'center',
-								marginTop: 15
-							}}
-						>
-							<Link className={btnClass} to={replaceLinks(link.url)}>
-								{link.title}
-							</Link>
-						</div>
-					) : null}
+					{contain ? <div className="container">{this.renderGallery(filteredImages)}</div> : this.renderGallery(filteredImages)}
 				</section>
+			</Fragment>
+		);
+	}
+
+	renderGallery(images) {
+		const {link, children, classname, btnClass, itemSpacing} = this.props;
+		const {width} = this.state;
+
+		const isMobile = width < 1000;
+		const isImageMoreLink = classname === 'experienceGallery';
+
+		return (
+			<Fragment>
+				{children ? children : null}
+				<div className={CSS.gallery}>
+					<ImageGrid
+						items={images}
+						itemSpacing={itemSpacing}
+						component={GalleryItem}
+						hasMore={false}
+						onLoadMore={noop}
+						windowWidth={width}
+						onImageClick={this.handleImageClick}
+					/>
+				</div>
+				{(isMobile && link && link.url) || isImageMoreLink ? (
+					<div
+						className={CSS.link}
+						style={{
+							textAlign: 'center',
+							marginTop: 15
+						}}
+					>
+						<Link className={isImageMoreLink ? '' : btnClass} to={replaceLinks(link.url)}>
+							{link.title}
+						</Link>
+					</div>
+				) : null}
 			</Fragment>
 		);
 	}

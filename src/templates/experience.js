@@ -8,9 +8,10 @@ import ExperienceCarousel from '../components/experienceCarousel';
 import ExperienceDescription from '../components/experienceDescription';
 import ExperienceBlocks from '../components/experienceBlocks';
 import ImageGrid from '../components/imageGrid';
+import SectionGallery from '../components/sectionGallery';
 import Link from '../components/link';
 import CSS from '../css/modules/experience.module.scss';
-import {innerHtml} from '../utils/wordpressHelpers';
+import {innerHtml, getLightboxImageObject} from '../utils/wordpressHelpers';
 
 export default class ThanksTemplate extends Component {
 	static propTypes = {
@@ -32,7 +33,15 @@ export default class ThanksTemplate extends Component {
 		const {currentPage} = this.props.data;
 
 		console.log(currentPage.acf);
-		console.log(currentPage.acf.carousel.slides);
+
+		const galleryImages = currentPage.acf.portfolio.images.map(image => {
+			return {
+				...getLightboxImageObject(image),
+				id: image.url,
+				key: image.url,
+				preload: true
+			};
+		});
 
 		return (
 			<Fragment>
@@ -58,9 +67,11 @@ export default class ThanksTemplate extends Component {
 						</div>
 					</section>
 					<section className={CSS.sectionPortfolio}>
-						<div className="container">
-							<h2 className={CSS.experienceTitlePortfolio}>{currentPage.acf.portfolio.title}</h2>
-						</div>
+						<SectionGallery classname="experienceGallery" images={galleryImages} link={currentPage.acf.portfolio.link}>
+							<div className="container">
+								<h2 className={CSS.experienceTitlePortfolio}>{currentPage.acf.portfolio.title}</h2>
+							</div>
+						</SectionGallery>
 					</section>
 				</main>
 			</Fragment>
@@ -108,8 +119,11 @@ export const experiencePageQuery = graphql`
 				}
 				portfolio: experiencePortfolio {
 					title
-					gallery {
+					images {
 						...LargeImage
+					}
+					link {
+						url
 					}
 				}
 			}
