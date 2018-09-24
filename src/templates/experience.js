@@ -7,7 +7,7 @@ import Seo from '../components/seo';
 import ExperienceCarousel from '../components/experienceCarousel';
 import ExperienceDescription from '../components/experienceDescription';
 import ExperienceBlocks from '../components/experienceBlocks';
-import ImageGrid from '../components/imageGrid';
+import ExperienceFacts from '../components/experienceFacts';
 import SectionGallery from '../components/sectionGallery';
 import Link from '../components/link';
 import CSS from '../css/modules/experience.module.scss';
@@ -73,6 +73,12 @@ export default class ThanksTemplate extends Component {
 							</div>
 						</SectionGallery>
 					</section>
+					<section className={CSS.sectionFacts}>
+						<div className="container">
+							<h2 className={CSS.experienceTitleFacts}>{currentPage.acf.facts.title}</h2>
+							<ExperienceFacts yes={currentPage.acf.facts.do} no={currentPage.acf.facts.dont}/>
+						</div>
+					</section>
 				</main>
 			</Fragment>
 		);
@@ -124,6 +130,15 @@ export const experiencePageQuery = graphql`
 					}
 					link {
 						url
+					}
+				}
+				facts: experienceFacts {
+					title
+					do {
+						item
+					}
+					dont {
+						item
 					}
 				}
 			}
