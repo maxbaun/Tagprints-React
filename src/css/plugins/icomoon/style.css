@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?pr4mes');
-  src:  url('fonts/icomoon.eot?pr4mes#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?pr4mes') format('truetype'),
-    url('fonts/icomoon.woff?pr4mes') format('woff'),
-    url('fonts/icomoon.svg?pr4mes#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?2fgo84');
+  src:  url('fonts/icomoon.eot?2fgo84#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?2fgo84') format('truetype'),
+    url('fonts/icomoon.woff?2fgo84') format('woff'),
+    url('fonts/icomoon.svg?2fgo84#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,20 +24,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icomoon-hour:before {
-  content: "\e91d";
-}
 .icomoon-checkmark:before {
-  content: "\e91e";
+  content: "\e913";
+}
+.icomoon-hour:before {
+  content: "\e914";
 }
 .icomoon-more-photographers:before {
-  content: "\e91f";
+  content: "\e915";
+}
+.icomoon-real-time-assets:before {
+  content: "\e916";
 }
 .icomoon-real-time-sharing:before {
-  content: "\e920";
+  content: "\e917";
 }
 .icomoon-x:before {
-  content: "\e921";
+  content: "\e918";
 }
 .icomoon-design2:before {
   content: "\e911";
