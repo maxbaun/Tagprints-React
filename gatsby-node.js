@@ -305,10 +305,6 @@ function getSlug(edge, edges) {
 }
 
 function getPageTemplate(template) {
-	if (template === 'template-hashtag.php') {
-		return path.resolve('./src/templates/hashtag.js');
-	}
-
 	if (template === 'template-team.php') {
 		return path.resolve('./src/templates/team.js');
 	}
