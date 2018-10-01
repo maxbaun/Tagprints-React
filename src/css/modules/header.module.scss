@@ -97,7 +97,7 @@
 	top: 100%;
 	left: -15px;
 	right: -15px;
-	z-index: 1;
+	z-index: 2;
 	transition: all 0.3s ease-in-out, visibility 0s 0.3s;
 
 	@include largeAndUp {
@@ -216,6 +216,26 @@
 
 		span {
 			background-color: white;
+		}
+	}
+}
+
+.header[data-theme='experience'] {
+	background-color: $color_white;
+
+	.menu {
+		background-color: $color_white;
+
+		@include largeAndUp {
+			background-color: transparent;
+		}
+	}
+
+	.toggle {
+		border-color: $color_56;
+
+		span {
+			background-color: $color_56;
 		}
 	}
 }

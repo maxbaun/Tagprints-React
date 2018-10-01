@@ -111,3 +111,19 @@
 		}
 	}
 }
+
+.footer[data-theme='experience'] {
+	background-color: #1D1D1B;
+
+	.copy {
+		color: rgba($color_57, 0.7);
+
+		a {
+			color: rgba($color_57, 0.7);
+
+			&:hover {
+				color: $color_57;
+			}
+		}
+	}
+}

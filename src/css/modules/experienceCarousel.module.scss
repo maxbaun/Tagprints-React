@@ -1,0 +1,176 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+$desktopLeft: 150px;
+
+.wrap {
+	display: block;
+}
+
+.carousel {
+	position: relative;
+}
+
+.slide {
+	display: block;
+	position: relative;
+}
+
+.slideActive {
+	@extend .slide;
+
+	.slideCopy,
+	.slideLinks {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.slideImage {
+	height: 450px;
+
+	@include largeAndUp {
+		height: 680px;
+	}
+}
+
+.slideContent {
+	align-items: center;
+	display: flex;
+	height: 100%;
+	left: 0;
+	margin-left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+}
+
+.slideContentInner {
+	padding-left: 0;
+
+	@include largeAndUp {
+		padding-left: $desktopLeft;
+	}
+}
+
+.slideCopy {
+	color: $color_white;
+	max-width: 580px;
+	opacity: 0;
+	transform: translate3d(0, 17px, 0);
+	transition: all 0.15s 0.3s ease-in-out;
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: $color_white;
+		font-family: $fontGotham;
+		font-weight: 900;
+		font-size: 35px;
+		margin: 0;
+
+		@include mediumAndUp {
+			font-size: 40px;
+		}
+		@include largeAndUp {
+			font-size: 50px;
+		}
+	}
+}
+
+.slideLinks {
+	@include noList();
+	display: flex;
+	flex-wrap: nowrap;
+	margin-top: 20px;
+	opacity: 0;
+	transform: translate3d(10px, 0, 0);
+	transition: all 0.2s 0.5s ease-in-out;
+
+	@include mediumAndUp {
+		flex-wrap: nowrap;
+	}
+}
+
+.slideLink {
+	margin-right: 15px;
+	width: calc(50% - 15px);
+
+	@include mediumAndUp {
+		margin-bottom: 0;
+		width: 212px;
+
+		&:not(:last-child) {
+			margin-right: 30px;
+		}
+	}
+}
+
+.pagination {
+	bottom: 30px;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	z-index: 1;
+
+	@include largeAndUp {
+		bottom: $desktopLeft;
+	}
+}
+
+.paginationInner {
+	padding-left: 0;
+
+	@include largeAndUp {
+		padding-left: $desktopLeft;
+	}
+}
+
+.bullets {
+	@include noList;
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.bullet {
+	background-color: $color_white;
+	border-radius: 50%;
+	cursor: pointer;
+	height: 10px;
+	opacity: 0.7;
+	transition: all 0.15s ease-in-out;
+	width: 10px;
+
+	&:not(:last-child) {
+		margin-right: 10px;
+	}
+}
+
+.bulletActive {
+	@extend .bullet;
+	background-color: $color_48;
+	opacity: 1;
+}
+
+.scrollTo {
+	cursor: pointer;
+	background-image: url('../../images/more-info-experience.png');
+	background-size: 20px 137px;
+	background-repeat: no-repeat;
+	@include image-2x('../../images/more-info-experience@2x.png', 20px, 137px);
+	height: 137px;
+	width: 20px;
+	display: none;
+	position: absolute;
+	bottom: 30px;
+	left: 10%;
+	z-index: 1;
+
+	@include largeAndUp {
+		display: block;
+	}
+}

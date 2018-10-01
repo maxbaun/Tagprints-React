@@ -54,8 +54,6 @@ export default class CaseStudyTemplate extends Component {
 	render() {
 		const {caseStudy} = this.props.data;
 
-		console.log(caseStudy);
-
 		return (
 			<div>
 				<Seo currentPage={caseStudy} site={this.props.site} location={this.props.location}/>

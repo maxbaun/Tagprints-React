@@ -1,0 +1,37 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.wrap {
+	max-width: 700px;
+
+	@include largeAndUp {
+		padding-left: 150px;
+	}
+
+	h5,
+	h4 {
+		line-height: 1;
+		font-family: $fontGotham;
+		margin: 0 0 20px;
+	}
+
+	h5 {
+		color: $color_56;
+		font-size: 16px;
+		font-weight: 900;
+		text-transform: uppercase;
+	}
+
+	h4 {
+		color: $color_48;
+		font-size: 24px;
+		font-weight: 500;
+	}
+
+	p {
+		font-family: $fontGotham;
+		font-size: 17px;
+		font-weight: 300;
+		margin: 0;
+	}
+}

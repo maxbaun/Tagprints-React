@@ -1,0 +1,55 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.wrap {
+	display: block;
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+.inner {
+	display: flex;
+	flex-wrap: wrap;
+
+	@include mediumAndUp {
+		flex-wrap: nowrap;
+	}
+}
+
+.col {
+	@include mediumAndUp {
+		width: 50%;
+
+		&:not(:last-child) {
+			margin-right: 30px;
+		}
+	}
+}
+
+.list {
+	@include noList();
+}
+
+.item {
+	align-items: flex-start;
+	display: flex;
+}
+
+.icon {
+	color: $color_48;
+	display: block;
+	font-size: 22px;
+	margin-right: 20px;
+
+	span {
+		margin-top: 2px;
+	}
+}
+
+.text {
+	color: $color_56;
+	display: block;
+	font-family: $fontGotham;
+	font-size: 19px;
+	font-weight: 500;
+}

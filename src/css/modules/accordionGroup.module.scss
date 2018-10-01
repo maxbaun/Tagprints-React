@@ -152,4 +152,50 @@
 			}
 		}
 	}
+
+	.experienceAccordion {
+		.badger-accordion {
+			border-color: $color_56;
+
+			> div {
+				&:not(:last-child) {
+					.badger-accordion__trigger {
+						border-color: $color_56;
+
+						&[aria-expanded='true'] {
+							border-color: transparent;
+						}
+					}
+
+					.badger-accordion__panel:not(.-ba-is-hidden) {
+						border-color: $color_56;
+					}
+				}
+			}
+
+			&__trigger {
+				color: $color_56;
+				font-family: $fontGotham;
+				font-weight: 500;
+				background-color: transparent;
+
+				&-icon {
+					&::before,
+					&::after {
+						background-color: $color_48;
+					}
+				}
+			}
+
+			&__panel {
+				&-inner {
+					p {
+						font-size: 19px;
+						line-height: 1.75;
+						color: $color_7;
+					}
+				}
+			}
+		}
+	}
 }

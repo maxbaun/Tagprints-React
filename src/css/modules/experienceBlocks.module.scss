@@ -1,0 +1,80 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.wrap {
+	display: block;
+}
+
+.blocks {
+	@include noList();
+	align-items: flex-start;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+
+	@include mediumAndUp {
+		flex-wrap: nowrap;
+	}
+}
+
+.block {
+	margin: 0 0 20px;
+	width: 100%;
+
+	@include mediumAndUp {
+		flex: 1;
+		margin: 0;
+		width: auto;
+
+		&:not(:last-child) {
+			margin-right: 30px;
+		}
+	}
+}
+
+.blockInner {
+	align-items: flex-start;
+	display: flex;
+	max-width: 332px;
+
+	@include mediumAndUp {
+		display: block;
+	}
+}
+
+.blockImage {
+	margin: 0 0 20px;
+	width: 120px;
+
+	@include mediumAndUp {
+		width: auto;
+	}
+}
+
+.blockCopy {
+	padding-left: 15px;
+	width: calc(100% - 120px);
+
+	@include mediumAndUp {
+		padding-left: 0;
+		width: auto;
+	}
+}
+
+.blockTitle {
+	color: $color_56;
+	font-family: $fontGotham;
+	font-weight: 900;
+	font-size: 16px;
+	margin: 0 0 20px;
+	text-transform: uppercase;
+}
+
+.blockText {
+	color: $color_56;
+	font-family: $fontGotham;
+	font-weight: 300;
+	font-size: 15px;
+	line-height: 1.333;
+	margin: 0;
+}
