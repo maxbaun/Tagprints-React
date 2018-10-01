@@ -28,23 +28,11 @@ export default class FormTemplate extends Component {
 					<div className={CSS.wrap}>
 						<div className="container">
 							<div className={CSS.content}>
-								{content.view === 'image' ? (
-									<div className={CSS.image}>
-										<Img
-											style={{
-												width: 222,
-												margin: '0 auto'
-											}}
-											sizes={content.image.localFile.childImageSharp.sizes}
-										/>
-									</div>
-								) : (
-									<div
-										// eslint-disable-next-line react/no-danger
-										dangerouslySetInnerHTML={innerHtml(content.content)}
-										className={CSS.text}
-									/>
-								)}
+								<div
+									// eslint-disable-next-line react/no-danger
+									dangerouslySetInnerHTML={innerHtml(content.content)}
+									className={CSS.text}
+								/>
 							</div>
 							{form.form && form.form !== '' ? (
 								<div className={CSS.form}>
@@ -74,9 +62,6 @@ export const pageQuery = graphql`
 				content: formContent {
 					view
 					content
-					image {
-						...LargeImage
-					}
 				}
 				form: formForm {
 					labelPlacement: field_label

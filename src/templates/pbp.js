@@ -33,11 +33,7 @@ export default class PbpPageTemplate extends Component {
 
 		return (
 			<Fragment>
-				<Seo
-					currentPage={currentPage}
-					site={this.props.site}
-					location={this.props.location}
-				/>
+				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<main className="main" role="main">
 					<Hero
 						backgroundImage={currentPage.image.localFile.childImageSharp.sizes}
@@ -60,12 +56,7 @@ export default class PbpPageTemplate extends Component {
 						tag="Pro"
 					/>
 					{this.renderCta('/free-quote/', 'Request A Free Quote')}
-					<SectionPorfolio
-						classname="pbpSection"
-						title={data.gallery.title}
-						categories={data.gallery.categories}
-						modalClass="pbpModal"
-					/>
+					<SectionPorfolio classname="pbpSection" title={data.gallery.title} categories={data.gallery.categories} modalClass="pbpModal"/>
 					<section className={CSS.bonusesSection}>
 						<div className="container">
 							<div className={CSS.bonusesHeader}>
@@ -86,10 +77,7 @@ export default class PbpPageTemplate extends Component {
 								/>
 								<h4>{data.promises.subtitle}</h4>
 							</div>
-							<IconBlocks
-								classname="pbpPromises"
-								blocks={data.promises.blocks}
-							/>
+							<IconBlocks classname="pbpPromises" blocks={data.promises.blocks}/>
 						</div>
 					</section>
 					<SectionRental
@@ -102,13 +90,7 @@ export default class PbpPageTemplate extends Component {
 						}}
 						options={data.rental.options}
 					/>
-					<SectionFaq
-						id="pbpFaqs"
-						title="FAQS"
-						faqs={data.faqs}
-						classname="pbpFaqs"
-						accordionClass="pbpAccordion"
-					/>
+					<SectionFaq id="pbpFaqs" title="FAQS" faqs={data.faqs} classname="pbpFaqs" accordionClass="pbpAccordion"/>
 				</main>
 			</Fragment>
 		);
