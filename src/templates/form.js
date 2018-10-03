@@ -26,20 +26,18 @@ export default class FormTemplate extends Component {
 				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<main className="main" role="main">
 					<div className={CSS.wrap}>
-						<div className="container">
-							<div className={CSS.content}>
-								<div
-									// eslint-disable-next-line react/no-danger
-									dangerouslySetInnerHTML={innerHtml(content.content)}
-									className={CSS.text}
-								/>
-							</div>
-							{form.form && form.form !== '' ? (
-								<div className={CSS.form}>
-									<Form location={this.props.location} formId={form.form} labelPlacement={form.labelPlacement}/>
-								</div>
-							) : null}
+						<div className={CSS.content}>
+							<div
+								// eslint-disable-next-line react/no-danger
+								dangerouslySetInnerHTML={innerHtml(content.content)}
+								className={CSS.text}
+							/>
 						</div>
+						{form.form && form.form !== '' ? (
+							<div className={CSS.form}>
+								<Form location={this.props.location} formId={form.form} classname="contact" labelPlacement={form.labelPlacement}/>
+							</div>
+						) : null}
 					</div>
 				</main>
 				{/* <main

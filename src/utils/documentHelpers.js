@@ -25,7 +25,16 @@ export const getDataTheme = location => {
 		return 'home';
 	}
 
-	if (part.includes('contact') || part.includes('free-quote') || part.includes('thanks')) {
+	if (
+		part.includes('contact') ||
+		part.includes('free-quote') ||
+		part.includes('thanks') ||
+		part === 'hashtag-printer-planning' ||
+		part === 'photo-booth-lite-planning' ||
+		part === 'photo-booth-lite-planning-local' ||
+		part === 'questionnaire' ||
+		part === 'questionnaire-shipped'
+	) {
 		return 'contact';
 	}
 

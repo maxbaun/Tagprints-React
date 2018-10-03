@@ -2,35 +2,36 @@
 @import '../utils/mixins.scss';
 
 .wrap {
-	background-image: url('../../images/brickwall.png');
-	background-size: 110px 69px;
-	@include image-2x('../..//images/brickwall@2x.png', 110px, 69px);
-	background-repeat: repeat;
-	padding: 60px 0;
+	padding: 0 0 60px;
 }
 
 .content {
-	margin-bottom: 30px;
-	text-align: center;
+	@include brandGradient();
+	padding: 30px 15px;
 }
 
 .text {
 	h1 {
-		font-weight: 100;
-		line-height: 50px;
-		margin: 15px 0 0;
+		color: $color_white;
+		font-family: $fontUltra;
+		font-size: 36px;
+		line-height: 1.127;
+		margin: 0;
+		text-align: center;
 
-		span {
-			color: $color_5;
-			display: inline-block;
-			padding-top: 5px;
+		@include mediumAndUp {
+			font-size: 63px;
 		}
 	}
 
 	h5 {
-		font-size: 18px;
-		font-weight: 300;
-		line-height: 24px;
-		margin: 15px 0 30px;
+		color: $color_white;
+		font-family: $fontGotham;
+		margin: 0;
 	}
+}
+
+.form {
+	max-width: 960px;
+	margin: 0 auto;
 }
