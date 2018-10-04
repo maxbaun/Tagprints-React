@@ -27,7 +27,7 @@ const Nav = ({classes, items, id, onLinkClick: handleLinkClick, showCta, locatio
 					return (
 						<li key={item.url} className={classes.join(' ')}>
 							<Link
-								to={hasChildren ? replaceLinks(item.children[0].url) : replaceLinks(item.url)}
+								to={replaceLinks(item.url)}
 								onClick={click(handleLinkClick, item)}
 								title={item.title}
 								className={linkClasses.join(' ')}
