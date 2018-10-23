@@ -22,14 +22,14 @@ export default class ThanksTemplate extends Component {
 		site: PropTypes.object.isRequired
 	};
 
-	componentDidMount() {
-		if (window.gtag) {
-			// eslint-disable-next-line camelcase
-			window.gtag('event', 'conversion', {
-				send_to: 'AW-997082626/5imUCOOG6mAQgoy52wM' // eslint-disable-line camelcase
-			});
-		}
-	}
+// 	componentDidMount() {
+// 		if (window.gtag) {
+// 			// eslint-disable-next-line camelcase
+// 			window.gtag('event', 'conversion', {
+// 				send_to: 'AW-997082626/5imUCOOG6mAQgoy52wM' // eslint-disable-line camelcase
+// 			});
+// 		}
+// 	}
 
 	render() {
 		const {currentPage} = this.props.data;
