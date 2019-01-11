@@ -164,6 +164,7 @@
 }
 
 .dropdownLink {
+	display: block;
 	font-family: $fontGotham;
 	font-size: 14px;
 	font-weight: 500;
@@ -175,6 +176,7 @@
 		padding: 13px 29px;
 		font-size: 13px;
 		font-weight: 700;
+		white-space: nowrap;
 	}
 }
 

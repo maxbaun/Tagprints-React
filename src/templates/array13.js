@@ -66,7 +66,7 @@ export default class PbpPageTemplate extends Component {
 					>
 						<div className={CSS.hero}>
 							<div className="container">
-								<img src={ArrayLogo} alt="Array 13 Logo"/>
+								<img src={ArrayLogo} alt="ARRAY13 Logo"/>
 								<div
 									className={CSS.heroContent} // eslint-disable-next-line react/no-danger
 									dangerouslySetInnerHTML={innerHtml(data.hero.content)}
@@ -74,13 +74,25 @@ export default class PbpPageTemplate extends Component {
 							</div>
 						</div>
 					</Hero>
+					<SectionGallery
+						classname="a13Section"
+						btnClass="btn btn-array13"
+						images={galleryImages}
+						link={data.gallery.link}
+					>
+						<div
+							// eslint-disable-next-line react/no-danger
+							dangerouslySetInnerHTML={innerHtml(data.gallery.header)}
+							className={CSS.gallerySectionHeader}
+						/>
+					</SectionGallery>
 					<SectionSlider
 						id="array13SectionSlider"
 						socialTitle="GREAT SHARING CAPABILITIES"
 						slides={data.slider.slides}
 						images={[{image: data.slider.image}]}
 						sectionClass="a13Section"
-						title="Array13"
+						title="ARRAY13"
 						subtitle="3D PANORAMIC CAMERA"
 					/>
 					{this.renderCta('/free-quote/', 'Request A Free Quote')}
@@ -106,18 +118,6 @@ export default class PbpPageTemplate extends Component {
 							</div>
 						</div>
 					</section>
-					<SectionGallery
-						classname="a13Section"
-						btnClass="btn btn-array13"
-						images={galleryImages}
-						link={data.gallery.link}
-					>
-						<div
-							// eslint-disable-next-line react/no-danger
-							dangerouslySetInnerHTML={innerHtml(data.gallery.header)}
-							className={CSS.gallerySectionHeader}
-						/>
-					</SectionGallery>
 					<section className={CSS.freebiesSection}>
 						<div className="container">
 							<div

@@ -66,14 +66,19 @@ class Index extends Component {
 					<div className={CSS.home}>
 						<div className={heroCss.join(' ')}>
 							<div className={CSS.heroImage}>
-								<img src={HeroImg}/>
+								<Image
+									image={hero.image}
+									imgStyle={{
+										height: '100%'
+									}}
+								/>
 							</div>
-							<div className={CSS.heroVideo}>
+							{/* <div className={CSS.heroVideo}>
 								<video autoPlay loop muted playsInline onCanPlay={this.handleVideoLoad}>
 									<source src={HeroVid} type="video/mp4"/>
 									<source src={HeroVidWebm} type="video/webm"/>
 								</video>
-							</div>
+							</div> */}
 							<div className={CSS.heroOverlay}>
 								<div className={CSS.heroOverlayInner}>
 									<h1>
@@ -440,7 +445,10 @@ export const pageQuery = graphql`
 			...Page
 			acf {
 				hero: homeHero {
-					title
+					title,
+					image {
+						...LargeImage
+					}
 				}
 				cta: homeCta {
 					link {
