@@ -77,6 +77,12 @@ module.exports = {
 			}
 		},
 		{
+			resolve: 'gatsby-plugin-google-tagmanager',
+			options: {
+				id: 'GTM-NJL3X7W'
+			}
+		},
+		{
 			resolve: 'gatsby-plugin-webpack-bundle-analyzer',
 			options: {
 				analyzerPort: 3000,
