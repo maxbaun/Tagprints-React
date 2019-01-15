@@ -5,6 +5,7 @@ import graphql from 'graphql';
 import Fragment from '../components/fragment';
 import Seo from '../components/seo';
 import ExperienceCarousel from '../components/experienceCarousel';
+import ExperienceCards from '../components/experienceCards';
 import ExperienceDescription from '../components/experienceDescription';
 import ExperienceBlocks from '../components/experienceBlocks';
 import ExperienceFacts from '../components/experienceFacts';
@@ -14,6 +15,7 @@ import AccordionGroup from '../components/accordionGroup';
 import Link from '../components/link';
 import CSS from '../css/modules/experience.module.scss';
 import {getLightboxImageObject} from '../utils/wordpressHelpers';
+import { innerHtml } from '../utils/componentHelpers';
 
 export default class ThanksTemplate extends Component {
 	static propTypes = {
@@ -48,6 +50,13 @@ export default class ThanksTemplate extends Component {
 				<Seo currentPage={currentPage} site={this.props.site} location={this.props.location}/>
 				<main className="main" role="main">
 					<ExperienceCarousel scrollTo="#sectionProcess" slides={currentPage.acf.carousel.slides}/>
+					<section className={CSS.section}/>
+					<section className={CSS.sectionCards}>
+						<div className="container">
+							<h2 className={CSS.experienceTitleCards} dangerouslySetInnerHTML={innerHtml(currentPage.acf.cards.sectionTitle)}/>
+							<ExperienceCards cards={currentPage.acf.cards.cards}/>
+						</div>
+					</section>
 					<section className={CSS.section}>
 						<div className="container">
 							<ExperienceDescription content={currentPage.acf.description}/>
@@ -125,6 +134,18 @@ export const experiencePageQuery = graphql`
 								title
 								url
 							}
+						}
+					}
+				}
+				cards: experienceCards {
+					sectionTitle
+					cards {
+						title
+						link {
+							url
+						}
+						image {
+							...LargeImage
 						}
 					}
 				}

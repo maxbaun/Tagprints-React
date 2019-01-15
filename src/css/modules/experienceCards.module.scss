@@ -1,0 +1,70 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.experienceCards {
+	ul {
+		@include noList();
+		display: flex;
+		flex-wrap: wrap;
+
+		li {
+			flex: 1 1 calc(100% / 3);
+			margin: 0 0 15px;
+		}
+	}
+}
+
+.card {
+
+}
+
+.cardImage {
+	position: relative;
+
+	&:hover {
+		.overlay {
+			opacity: 1;
+		}
+	}
+}
+
+.overlay {
+	@include absoluteFull();
+	background-color: rgba($color_5, 0.8);
+	opacity: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	will-change: opacity;
+	transition: opacity 0.3s ease-in-out;
+}
+
+.learnMore {
+	color: $color_white;
+	font-size: 16px;
+	font-family: $fontGotham;
+	font-weight: 500;
+
+	&:hover,
+	&:focus {
+		color: $color_white;
+		text-decoration: underline;
+	}
+}
+
+.title {
+	color: rgb(3, 9, 68);
+	display: block;
+	font-family: $fontGotham;
+	font-size: 30px;
+	font-weight: 900;
+	line-height: 1;
+	margin: 20px 0 0;
+	text-transform: uppercase;
+
+	&:hover,
+	&:focus {
+		color: $color_5;
+	}
+}
+

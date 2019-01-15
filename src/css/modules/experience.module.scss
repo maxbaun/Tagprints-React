@@ -39,6 +39,11 @@
 	}
 }
 
+.sectionCards {
+	@extend .section;
+	background-color: $color_58;
+}
+
 .sectionProcess {
 	@extend .section;
 	background-color: $color_58;
@@ -98,6 +103,12 @@
 		margin-top: -120px;
 		opacity: 0.44;
 	}
+}
+
+.experienceTitleCards {
+	@extend .experienceTitle;
+	color: $color_56;
+	line-height: 0.893;
 }
 
 .experienceTitleProcess {
