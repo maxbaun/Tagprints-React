@@ -427,6 +427,8 @@ class Form extends Component {
 		if (type === 'radio' || type === 'checkbox') {
 			return <OptionGroup {...props}/>;
 		}
+
+		return null;
 	}
 
 	renderConfirmation() {
