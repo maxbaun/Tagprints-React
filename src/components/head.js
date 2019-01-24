@@ -137,8 +137,7 @@ Head.defaultProps = {
 	site: {
 		siteMeta: {
 			title: 'TagPrints',
-			subtitle:
-				'Hashtag Printers and Social Photo Booth rentals built to capture branded memories at your events. From turnkey solutions to totally custom, challenge us!'
+			subtitle: 'We create interactive photo experiences for next level brands. From turnkey solutions to totally custom projects!'
 		}
 	}
 };
