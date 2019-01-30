@@ -45,16 +45,23 @@ class GalleryItem extends Component {
 
 		const hasMeta = acf && ((acf.title && acf.title !== '') || (acf.description && acf.description !== ''));
 
+		const meta = (
+			<div className={CSS.galleryItemMeta}>
+				<h3>{acf.title}</h3>
+				<p>{acf.description}</p>
+			</div>
+		);
+
 		return (
 			<div className={CSS.galleryItem} style={style}>
 				<div className={CSS.galleryItemInner}>
 					{hasMeta ?
 						<div className={CSS.galleryItemOverlay}>
-							<div className={CSS.galleryItemOverlayInner} onTouchStart={this.props.onImageClick}>
-								<div className={CSS.galleryItemMeta}>
-									<h3>{acf.title}</h3>
-									<p>{acf.description}</p>
-								</div>
+							<div className={CSS.galleryItemOverlayInnerHover} onClick={this.props.onImageClick}>
+								{meta}
+							</div>
+							<div className={CSS.galleryItemOverlayInnerTouch} onTouchStart={this.props.onImageClick}>
+								{meta}
 							</div>
 						</div> : null
 					}
