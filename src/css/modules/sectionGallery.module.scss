@@ -68,8 +68,23 @@
 		}
 
 		.galleryItemOverlayInner {
-			display: flex;
 			pointer-events: auto;
+		}
+
+		.galleryItemOverlayInnerHover {
+			display: none;
+
+			@media (hover: hover) {
+				display: flex;
+			}
+		}
+
+		.galleryItemOverlayInnerTouch {
+			display: flex;
+
+			@media (hover: hover) {
+				display: none;
+			}
 		}
 	}
 }
@@ -98,6 +113,11 @@
 	height: 100%;
 	pointer-events: none;
 	width: 100%;
+}
+
+.galleryItemOverlayInnerHover,
+.galleryItemOverlayInnerTouch {
+	@extend .galleryItemOverlayInner;
 }
 
 .galleryItemMeta {
