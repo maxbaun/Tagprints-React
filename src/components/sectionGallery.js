@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Link from 'gatsby-link';
 
-import {noop} from '../utils/componentHelpers';
+import {noop, clickPrevent} from '../utils/componentHelpers';
 import {replaceLinks} from '../utils/wordpressHelpers';
 import Image from './image';
 import ImageGrid from './imageGrid';
@@ -20,7 +20,8 @@ class GalleryItem extends Component {
 		sizes: PropTypes.object,
 		resolutions: PropTypes.object,
 		itemSpacing: PropTypes.number,
-		contain: PropTypes.bool
+		contain: PropTypes.bool,
+		acf: PropTypes.object
 	};
 
 	static defaultProps = {
@@ -31,32 +32,54 @@ class GalleryItem extends Component {
 		sizes: {},
 		resolutions: {},
 		itemSpacing: 7.5,
-		contain: false
+		contain: false,
+		acf: {}
 	};
 
 	render() {
-		const {height, width, url, sizes, resolutions, itemSpacing} = this.props;
+		const {height, width, url, sizes, resolutions, itemSpacing, acf} = this.props;
 
 		const style = {
 			padding: itemSpacing
 		};
 
+		const hasMeta = acf && ((acf.title && acf.title !== '') || (acf.description && acf.description !== ''));
+
+		const meta = (
+			<div className={CSS.galleryItemMeta}>
+				<h3>{acf.title}</h3>
+				<p>{acf.description}</p>
+			</div>
+		);
+
 		return (
 			<div className={CSS.galleryItem} style={style}>
-				<Image
-					preload
-					inViewToggle
-					placeholder
-					sizes={sizes}
-					resolutions={resolutions}
-					naturalWidth={width}
-					naturalHeight={height}
-					url={url}
-					style={{
-						height: '100%',
-						width: '100%'
-					}}
-				/>
+				<div className={CSS.galleryItemInner}>
+					{hasMeta ?
+						<div className={CSS.galleryItemOverlay}>
+							<div className={CSS.galleryItemOverlayInnerHover} onClick={this.props.onImageClick}>
+								{meta}
+							</div>
+							<div className={CSS.galleryItemOverlayInnerTouch} onTouchStart={this.props.onImageClick}>
+								{meta}
+							</div>
+						</div> : null
+					}
+					<Image
+						preload
+						inViewToggle
+						placeholder
+						sizes={sizes}
+						resolutions={resolutions}
+						naturalWidth={width}
+						naturalHeight={height}
+						url={url}
+						style={{
+							height: '100%',
+							width: '100%'
+						}}
+					/>
+				</div>
 			</div>
 		);
 	}

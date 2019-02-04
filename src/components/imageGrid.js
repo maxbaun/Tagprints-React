@@ -268,16 +268,22 @@ export default class ImageGrid extends Component {
 							const style = {
 								opacity: 1,
 								display: isOneColumn ? 'block' : 'inline-block',
-								transform: isOneColumn ? `translate3d(0, 0, 0)` : `translate3d(${transformX}px, ${transformY}px, 0)`,
+								transform: isOneColumn ? `translate3d(0, 0, 0) ` : `translate3d(${transformX}px, ${transformY}px, 0) `,
 								width: isOneColumn ? '100%' : item.width,
 								height: isOneColumn ? 'auto' : item.height,
 								position: isOneColumn ? 'relative' : 'absolute',
 								overflow: 'hidden'
 							};
 
+							let innerClick = false;
+
+							if (item.acf && ((item.acf.title && item.acf.title !== '') || (item.acf.description && item.acf.description !== ''))) {
+								innerClick = true;
+							}
+
 							return (
-								<li key={item.key} className={CSS.item} style={style} onClick={click(this.props.onImageClick, item)}>
-									{React.createElement(component, {...item, itemSpacing})}
+								<li key={item.key} className={CSS.item} style={style} onClick={innerClick ? noop : click(this.props.onImageClick, item)}>
+									{React.createElement(component, {...item, itemSpacing, onImageClick: click(this.props.onImageClick, item)})}
 								</li>
 							);
 						})}

@@ -41,7 +41,8 @@ export default class ThanksTemplate extends Component {
 				...getLightboxImageObject(image),
 				id: image.url,
 				key: image.url,
-				preload: true
+				preload: true,
+				acf: image.acf || {}
 			};
 		});
 
@@ -170,6 +171,10 @@ export const experiencePageQuery = graphql`
 					title
 					images {
 						...LargeImage
+						acf {
+							title: imageMetaTitle
+							description: imageMetaDescription
+						}
 					}
 					link {
 						url
