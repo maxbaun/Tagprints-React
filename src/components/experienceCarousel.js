@@ -43,7 +43,8 @@ export default class ExperienceCarousel extends Component {
 			centeredSlides: true,
 			loop: false,
 			direction: 'horizontal',
-			slidesPerView: 1
+			slidesPerView: 1,
+			simulateTouch: false
 		};
 
 		this.swiper = new Swiper(container, options);
@@ -89,7 +90,9 @@ export default class ExperienceCarousel extends Component {
 																		index === 0 ?
 																			'btn btn-experience-orange-carousel' :
 																			'btn btn-experience-outline-carousel';
-
+																	if (!link.title || link.title === '') {
+																		return null;
+																	}
 																	return (
 																		<li key={`${index}_${link.title}`} className={CSS.slideLink}>
 																			<Link
