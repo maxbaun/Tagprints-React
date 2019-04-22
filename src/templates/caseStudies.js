@@ -25,6 +25,10 @@ export default class CaseStudiesTemplate extends Component {
 	};
 
 	transformCases(caseStudyData) {
+		if (!caseStudyData || !caseStudyData.edges) {
+			return [];
+		}
+
 		return caseStudyData.edges
 			.map(c => {
 				const caseStudy = c.node;
