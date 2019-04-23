@@ -114,8 +114,8 @@ export default class CaseStudiesTemplate extends Component {
 											</div>
 										</div>
 									);
-								  }) :
-								this.renderEmpty()}
+								}) :
+								null}
 						</div>
 					</div>
 				</main>
