@@ -78,6 +78,7 @@
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 1.733;
+	margin-bottom: 1.5em;
 
 	h1 {
 		font-family: proxima_novaextrabold;
@@ -94,6 +95,10 @@
 		margin: 0 0 10px;
 		line-height: 1;
 		font-weight: 700;
+	}
+
+	:last-child {
+		margin-bottom: 0;
 	}
 }
 
