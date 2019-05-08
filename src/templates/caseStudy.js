@@ -9,6 +9,7 @@ import Seo from '../components/seo';
 import ScrollSpy from '../components/scrollSpy';
 import Image from '../components/imagev2';
 import Lightbox from '../components/lightbox';
+import Video from '../components/video';
 import CSS from '../css/modules/caseStudy.module.scss';
 
 export default class CaseStudyTemplate extends Component {
@@ -93,6 +94,11 @@ export default class CaseStudyTemplate extends Component {
 										/>
 									</div>
 									<div className="col-sm-8">
+										{caseStudy.acf.video && caseStudy.acf.video !== '' ? (
+											<div className={CSS.video}>
+												<Video src={caseStudy.acf.video}/>
+											</div>
+										) : null}
 										<div className={CSS.images}>{this.renderImages()}</div>
 									</div>
 								</div>
@@ -156,6 +162,7 @@ export const pageQuery = graphql`
 						...LargeImage
 					}
 				}
+				video: caseStudyVideo
 			}
 		}
 	}
