@@ -73,12 +73,12 @@ class Index extends Component {
 									}}
 								/>
 							</div>
-							{/* <div className={CSS.heroVideo}>
+							<div className={CSS.heroVideo}>
 								<video autoPlay loop muted playsInline onCanPlay={this.handleVideoLoad}>
 									<source src={HeroVid} type="video/mp4"/>
 									<source src={HeroVidWebm} type="video/webm"/>
 								</video>
-							</div> */}
+							</div>
 							<div className={CSS.heroOverlay}>
 								<div className={CSS.heroOverlayInner}>
 									<h1>
