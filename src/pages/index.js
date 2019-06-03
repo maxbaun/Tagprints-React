@@ -4,9 +4,12 @@ import graphql from 'graphql';
 import Typist from 'react-typist';
 
 import {innerHtml, replaceLinks} from '../utils/wordpressHelpers';
-import HeroVid from '../images/homeHeroVid2.mp4';
-import HeroVidWebm from '../images/homeHeroVid2.webm';
-import HeroImg from '../images/homeHeroImg2.jpg';
+// import HeroVid from '../images/homeHeroVid2.mp4';
+// import HeroVidWebm from '../images/homeHeroVid2.webm';
+// import HeroImg from '../images/homeHeroImg2.jpg';
+import ShazamMp4 from '../images/shazam-hero.mp4';
+import ShazamWebm from '../images/shazam-hero.webm';
+import ShazamImg from '../images/shazam-hero.jpg';
 import Divider from '../images/brand-divider.png';
 import Letters1 from '../images/letters.png';
 import Letters2 from '../images/letters2.png';
@@ -66,19 +69,20 @@ class Index extends Component {
 					<div className={CSS.home}>
 						<div className={heroCss.join(' ')}>
 							<div className={CSS.heroImage}>
-								<Image
+								{/* <Image
 									image={hero.image}
 									imgStyle={{
 										height: '100%'
 									}}
-								/>
+								/> */}
+								<img src={ShazamImg} alt="TagPrints Shazam"/>
 							</div>
-							{/* <div className={CSS.heroVideo}>
+							<div className={CSS.heroVideo}>
 								<video autoPlay loop muted playsInline onCanPlay={this.handleVideoLoad}>
-									<source src={HeroVid} type="video/mp4"/>
-									<source src={HeroVidWebm} type="video/webm"/>
+									<source src={ShazamMp4} type="video/mp4"/>
+									<source src={ShazamWebm} type="video/webm"/>
 								</video>
-							</div> */}
+							</div>
 							<div className={CSS.heroOverlay}>
 								<div className={CSS.heroOverlayInner}>
 									<h1>
