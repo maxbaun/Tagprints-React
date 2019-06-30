@@ -128,7 +128,7 @@ import {CaseStudy} from '../utils/fragments'; //eslint-disable-line
 
 export const pageQuery = graphql`
 	query caseStudiesQuery($caseStudyCategoryId: Int) {
-		caseStudies: allWordpressWpCaseStudy(filter: {case_study_category: {eq: $caseStudyCategoryId}}) {
+		caseStudies: allWordpressWpCaseStudy(filter: {case_study_category: {eq: $caseStudyCategoryId}, acf: {hideFromListView: {ne: true}}}) {
 			edges {
 				node {
 					...CaseStudy
