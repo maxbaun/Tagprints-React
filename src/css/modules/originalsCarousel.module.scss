@@ -1,0 +1,50 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+.wrap {
+	display: block;
+	overflow: hidden;
+	width: 100%;
+}
+
+.carousel {
+	position: relative;
+}
+
+.slide {
+	display: block;
+	position: relative;
+}
+
+.pagination {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 10px;
+	z-index: 1;
+}
+
+.bullets {
+	@include noList;
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.bullet {
+	background-color: $color_white;
+	border-radius: 50%;
+	cursor: pointer;
+	height: 10px;
+	opacity: 0.5;
+	transition: all 0.15s ease-in-out;
+	width: 10px;
+
+	&:not(:last-child) {
+		margin-right: 10px;
+	}
+}
+
+.bulletActive {
+	@extend .bullet;
+	opacity: 1;
+}

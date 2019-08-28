@@ -198,7 +198,7 @@ $heroTopDesktop: 200px;
 
 	@include largeAndUp() {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 50% 50%;
 		grid-column-gap: 50px;
 		padding-bottom: 50px;
 	}
@@ -354,7 +354,7 @@ $heroTopDesktop: 200px;
 }
 
 .faqs {
-	@include originalsGradient();
+	background-color: $color_43;
 	padding: 40px 0;
 
 	@include largeAndUp() {

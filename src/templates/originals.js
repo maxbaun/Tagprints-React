@@ -22,6 +22,7 @@ import SectionFaq from '../components/sectionFaq';
 import SectionPorfolio from '../components/sectionPortfolio';
 import Modal from '../components/modal';
 import ImageV2 from '../components/imagev2';
+import OriginalsCarousel from '../components/originalsCarousel';
 
 export default class PbpPageTemplate extends Component {
 	constructor(props) {
@@ -131,15 +132,8 @@ export default class PbpPageTemplate extends Component {
 								<div className={CSS.sectionPromo} data-position={section.position}>
 									<div className={CSS.sectionPromoContent} dangerouslySetInnerHTML={innerHtml(section.promoContent)}/>
 									<div className={CSS.sectionPromoImage}>
-										<ImageV2
-											image={section.promoImage}
-											imgStyle={{
-												objectFit: 'initial',
-												height: 'auto'
-											}}
-											style={{
-												height: 'auto'
-											}}
+										<OriginalsCarousel
+											images={section.promoImages}
 										/>
 									</div>
 								</div>
@@ -198,7 +192,7 @@ export const pageQuery = graphql`
 				intro: ogIntro
 				sections: ogSections {
 					position
-					promoImage {
+					promoImages {
 						...LargeImage
 					}
 					promoContent
