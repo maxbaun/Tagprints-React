@@ -46,7 +46,7 @@ export default class AccordionGroup extends Component {
 						<dl key={item.header} id={`${id}-${index}`} className="badger-accordion js-badger-accordion" style={{marginBottom: 0}}>
 							<dt
 								key={item.header}
-								className="js-badger-accordion-header badger-accordion__header"
+								className="badger-accordion__header"
 							>
 								<div className="badger-accordion__trigger js-badger-accordion-header">
 									<div className="badger-accordion__trigger-title">
