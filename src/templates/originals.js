@@ -167,6 +167,13 @@ export default class PbpPageTemplate extends Component {
 						</div>
 						<SectionFaq id="pblFaqs" faqs={data.faqs.faqs} classname="pblFaq" accordionClass="pblAccordion"/>
 					</section>
+					<section className={CSS.sectionCta}>
+						<div className={CSS.sectionCtaInner}>
+							<Link className="btn btn-cta btn-cta-transparent-inverse" to="/free-quote">
+								Free Quote
+							</Link>
+						</div>
+					</section>
 				</main>
 			</Fragment>
 		);

@@ -432,3 +432,16 @@ $heroTopDesktop: 200px;
 		}
 	}
 }
+
+.sectionCta {
+	background-color: $color_43;
+	padding: 0 0 40px;
+
+	@include largeAndUp {
+		padding: 0 0 40px;
+	}
+}
+
+.sectionCtaInner {
+	text-align: center;
+}
