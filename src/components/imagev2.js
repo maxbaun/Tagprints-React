@@ -22,7 +22,8 @@ export default class ImageV2 extends Component {
 		onLoad: PropTypes.func,
 		circle: PropTypes.bool,
 		showPlaceholder: PropTypes.bool,
-		spacer: PropTypes.bool
+		spacer: PropTypes.bool,
+		className: PropTypes.string
 	};
 
 	static defaultProps = {
@@ -32,7 +33,8 @@ export default class ImageV2 extends Component {
 		onLoad: noop,
 		circle: false,
 		showPlaceholder: false,
-		spacer: true
+		spacer: true,
+		className: ''
 	};
 
 	componentDidMount() {
@@ -79,7 +81,7 @@ export default class ImageV2 extends Component {
 	}
 
 	render() {
-		const {image, circle, spacer} = this.props;
+		const {image, circle, spacer, className} = this.props;
 		const {loaded} = this.state;
 
 		if (!image) {
@@ -103,6 +105,7 @@ export default class ImageV2 extends Component {
 
 		return (
 			<div
+				className={`image ${className || ''}`}
 				style={{
 					position: 'relative',
 					overflow: 'hidden',

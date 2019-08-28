@@ -65,7 +65,7 @@ export default class Header extends Component {
 			<header className={CSS.header} data-theme={getDataTheme(this.props.location)} data-theme-toggle="true">
 				<div className={CSS.inner}>
 					<div className={CSS.navTop} role="banner">
-						<NavSocial showPhone classname="header"/>
+						<NavSocial showPhone classname="header" theme={getDataTheme(this.props.location)}/>
 					</div>
 					<div className={CSS.navMain}>
 						<div className={CSS.main}>
@@ -95,7 +95,7 @@ export default class Header extends Component {
 								location={this.props.location}
 							/>
 							<div className={CSS.socialMobile}>
-								<NavSocial showPhone classname="header"/>
+								<NavSocial showPhone classname="header" theme={getDataTheme(this.props.location)}/>
 							</div>
 						</div>
 					</div>

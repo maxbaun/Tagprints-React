@@ -26,7 +26,13 @@ export default class AccordionGroup extends Component {
 	componentDidMount() {
 		setTimeout(() => {
 			const Badger = require('badger-accordion');
-			this.badger = new Badger(`#${this.props.id}`);
+
+			const wrapper = document.getElementById(this.props.id);
+			const acc = Array.from(wrapper.querySelectorAll('.badger-accordion'));
+
+			acc.forEach(a => {
+				new Badger(a); // eslint-disable-line
+			});
 		}, 300);
 	}
 
@@ -34,36 +40,34 @@ export default class AccordionGroup extends Component {
 		const {items, id, classname} = this.props;
 
 		return (
-			<div className={[CSS.accordionGroup, classname].join(' ')}>
-				<dl id={id} className="badger-accordion js-badger-accordion">
-					{items.map(item => {
-						return (
-							<Fragment key={item.header}>
-								<dt
-									key={item.header}
-									className="badger-accordion__header"
-								>
-									<div className="badger-accordion__trigger js-badger-accordion-header">
-										<div className="badger-accordion__trigger-title">
-											{item.header}
-										</div>
-										<div className="badger-accordion__trigger-icon"/>
+			<div id={id} className={[CSS.accordionGroup, classname].join(' ')}>
+				{items.map((item, index) => {
+					return (
+						<dl key={item.header} id={`${id}-${index}`} className="badger-accordion js-badger-accordion" style={{marginBottom: 0}}>
+							<dt
+								key={item.header}
+								className="js-badger-accordion-header badger-accordion__header"
+							>
+								<div className="badger-accordion__trigger js-badger-accordion-header">
+									<div className="badger-accordion__trigger-title">
+										{item.header}
 									</div>
-								</dt>
-								<dd className="badger-accordion__panel js-badger-accordion-panel">
-									{/* eslint-disable react/no-danger */}
-									<div
-										className="badger-accordion__panel-inner text-module js-badger-accordion-panel-inner"
-										dangerouslySetInnerHTML={innerHtml(
-											item.content
-										)}
-									/>
-									{/* eslint-enable react/no-danger */}
-								</dd>
-							</Fragment>
-						);
-					})}
-				</dl>
+									<div className="badger-accordion__trigger-icon"/>
+								</div>
+							</dt>
+							<dd className="badger-accordion__panel js-badger-accordion-panel">
+								{/* eslint-disable react/no-danger */}
+								<div
+									dangerouslySetInnerHTML={innerHtml(
+										item.content
+									)}
+									className="badger-accordion__panel-inner text-module js-badger-accordion-panel-inner"
+								/>
+								{/* eslint-enable react/no-danger */}
+							</dd>
+						</dl>
+					);
+				})}
 			</div>
 		);
 	}

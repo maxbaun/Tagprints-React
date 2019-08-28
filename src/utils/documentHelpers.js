@@ -42,7 +42,7 @@ export const getDataTheme = location => {
 		return 'photobooth-pro';
 	}
 
-	if (part.includes('social-photo-booth-lite')) {
+	if (part.includes('social-photo-booth-lite') || part.includes('origi')) {
 		return 'photobooth-lite';
 	}
 

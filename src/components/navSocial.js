@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 
 import CSS from '../css/modules/navSocial.module.scss';
 
-const NavSocial = ({showPhone, classname}) => {
+const NavSocial = ({showPhone, classname, theme}) => {
 	const wrapClass = [CSS.icons, CSS[classname]];
 
 	return (
 		<ul
 			className={wrapClass.join(' ')}
-			data-theme="default"
+			data-theme={theme}
 			data-theme-toggle="true"
 		>
 			<li className={CSS.icon}>
@@ -46,12 +46,14 @@ const NavSocial = ({showPhone, classname}) => {
 
 NavSocial.propTypes = {
 	showPhone: PropTypes.bool,
-	classname: PropTypes.string
+	classname: PropTypes.string,
+	theme: PropTypes.string
 };
 
 NavSocial.defaultProps = {
 	showPhone: false,
-	classname: ''
+	classname: '',
+	theme: 'default'
 };
 
 export default NavSocial;

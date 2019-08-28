@@ -349,6 +349,10 @@ function getPageTemplate(template) {
 		return path.resolve('./src/templates/experience.js');
 	}
 
+	if (template === 'template-originals.php') {
+		return path.resolve('./src/templates/originals.js');
+	}
+
 	return path.resolve(`./src/templates/page.js`);
 }
 
