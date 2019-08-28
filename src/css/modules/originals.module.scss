@@ -389,10 +389,29 @@ $heroTopDesktop: 200px;
 
 	section {
 		padding: 0;
+
+		*[class="container"] {
+			max-width: none;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+
+			> div {
+				margin: 0;
+				max-width: none;
+				width: 100%;
+			}
+		}
 	}
 
 	dl {
+		border-right: none;
+		border-left: none;
+		border-color: rgba($white, 0.4);
+
 		dt {
+			@extend .container;
+
 			> div {
 				background-color: transparent;
 				color: $white !important;
@@ -401,6 +420,8 @@ $heroTopDesktop: 200px;
 		}
 
 		dd {
+			@extend .container;
+
 			div {
 				* {
 					color: $white;
