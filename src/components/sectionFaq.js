@@ -13,7 +13,7 @@ export default class SectionFaq extends Component {
 
 	static propTypes = {
 		id: PropTypes.string.isRequired,
-		title: PropTypes.string.isRequired,
+		title: PropTypes.string,
 		faqs: PropTypes.array.isRequired,
 		classname: PropTypes.string,
 		accordionClass: PropTypes.string
@@ -21,12 +21,16 @@ export default class SectionFaq extends Component {
 
 	static defaultProps = {
 		classname: '',
-		accordionClass: ''
+		accordionClass: '',
+		title: null
 	};
 
 	componentDidMount() {
 		const Badger = require('badger-accordion');
-		this.badger = new Badger(`#${this.props.id}`);
+
+		setTimeout(() => {
+			this.badger = new Badger();
+		}, 1000);
 	}
 
 	render() {
@@ -38,7 +42,7 @@ export default class SectionFaq extends Component {
 			>
 				<div className={CSS.inner}>
 					<div className="container">
-						<h3>{title}</h3>
+						{title ? <h3>{title}</h3> : null}
 						<div className={CSS.faqs}>
 							<AccordionGroup
 								id={`${id}Accordion`}

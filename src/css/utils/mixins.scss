@@ -115,6 +115,10 @@
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#B42B5E',endColorstr='#753A80' , GradientType=1);
 }
 
+@mixin originalsGradient() {
+	background: linear-gradient(to left, rgba(237, 30, 121, 1) 0%, rgba(220, 30, 120, 1) 1.96%, rgba(175, 31, 117, 1) 7.55%, rgba(135, 31, 114, 1) 13.71%, rgba(100, 31, 112, 1) 20.32%, rgba(71, 31, 110, 1) 27.49%, rgba(48, 32, 109, 1) 35.41%, rgba(29, 32, 107, 1) 44.41%, rgba(17, 32, 107, 1) 55.13%, rgba(9, 32, 106, 1) 69.25%, rgba(7, 32, 106, 1) 100%);
+}
+
 @mixin htpGradient() {
 	@include brandGradient();
 }

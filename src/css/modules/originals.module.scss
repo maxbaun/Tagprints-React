@@ -1,0 +1,447 @@
+@import '../utils/variables.scss';
+@import '../utils/mixins.scss';
+
+$heroTop: 50px;
+$heroTopDesktop: 200px;
+
+@mixin heroMinHeight {
+	@include heroSizing();
+}
+
+@mixin sectionTitle() {
+	color: $color_59;
+	font-family: $fontUltra;
+	font-size: 30px;
+	text-transform: uppercase;
+
+	@include mediumAndUp() {
+		font-size: 50px;
+	}
+}
+
+@mixin sectionText() {
+	color: $color_44;
+	font-family: $fontGotham;
+	font-weight: 500;
+	line-height: 1.5;
+}
+
+.hero {
+	@include originalsGradient();
+	width: 100%;
+	max-height: 100%;
+	@include heroMinHeight;
+
+	@include mediumAndUp() {
+		height: 100vh;
+	}
+}
+
+.heroInner {
+	height: 100%;
+	width: 100%;
+	padding: $heroTop 0 20px;
+	position: relative;
+	top: 0;
+	left: 0;
+	@include heroMinHeight;
+
+	@include mediumAndUp() {
+		position: absolute;
+		height: 100vh;
+	}
+
+	@include largeAndUp() {
+		padding: $heroTopDesktop 0 30px;
+	}
+}
+
+.heroImage {
+	height: 100%;
+	max-width: 50%;
+	margin: 0 auto;
+
+	@include largeAndUp() {
+		max-width: 400px;
+	}
+
+	img {
+		height: 100%;
+		object-fit: initial;
+		width: auto;
+	}
+}
+
+.heroLogoImage {
+	margin: 0 auto;
+	max-width: 875px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: calc(50% + 25px);
+	transform: translateY(-50%);
+
+	@include mediumAndUp() {
+		top: calc(50% + 100px);
+	}
+}
+
+.heroPlay {
+	background-color: transparent;
+	color: $white;
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	top: 50%;
+	top: calc(50% + 25px);
+	transform: translateY(-50%);
+	border: none;
+
+	@include mediumAndUp() {
+		top: calc(50% + 100px);
+	}
+
+	@include mediumAndUp() {
+		height: 130px;
+		font-size: 60px;
+		width: 130px;
+	}
+
+	span:first-child {
+		width: calc(100% + 20px);
+		height: calc(100% + 20px);
+		position: absolute;
+		left: -10px;
+		top: -10px;
+		background-color: rgba($white, 0.5);
+		border-radius: 50%;
+		transition: background-color 0.15s ease-in-out;
+	}
+
+	span:nth-child(2) {
+		background-color: $color_59;
+		border-radius: 50%;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		transition: background-color 0.15s ease-in-out;
+	}
+
+	i {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate3d(-50%, -50%, 0);
+	}
+
+	&:hover {
+		span:first-child {
+			background-color: rgba($white, 0.8);
+		}
+
+		span:nth-child(2) {
+			background-color: darken($color_59, 5%);
+		}
+	}
+}
+
+.intro {
+	border-bottom: 1px solid #9bA4C5;
+	text-align: center;
+
+	h2 {
+		@include sectionTitle();
+		margin: 0;
+	}
+
+	h3 {
+		color: $color_44;
+		font-weight: 300;
+		font-size: 40px;
+		margin: 0 0 30px;
+
+		@include mediumAndUp() {
+			font-size: 50px;
+		}
+	}
+
+	p {
+		@include sectionText();
+		max-width: 90%;
+		margin: 0 auto 15px;
+	}
+
+	i {
+		color: $color_59;
+		font-size: 50px;
+	}
+}
+
+.introInner {
+	max-width: 727px;
+	margin: 0 auto;
+}
+
+.section {
+	border-bottom: 1px solid #9bA4C5;
+}
+
+.sectionPromo {
+	border-bottom: 1px solid #9bA4C5;
+	padding-bottom: 30px;
+
+	@include largeAndUp() {
+		display: grid;
+		grid-template-columns: 50% 50%;
+		grid-column-gap: 50px;
+		padding-bottom: 50px;
+	}
+
+	&[data-position="left"] {
+		.sectionPromoImage {
+			@include largeAndUp() {
+				order: 0;
+			}
+		}
+
+		.sectionPromoContent {
+			@include largeAndUp() {
+				order: 1;
+			}
+		}
+	}
+}
+
+.sectionPromoContent {
+	margin: 0 0 15px;
+
+	@include largeAndUp() {
+		padding: 20px;
+		margin: 0;
+	}
+
+	h3 {
+		@include sectionTitle();
+	}
+
+	p,
+	ul {
+		@include sectionText();
+	}
+
+	ul {
+		@include noList();
+		font-family: $fontBook;
+		font-weight: 400;
+		max-width: 300px;
+
+		li {
+			color: $color_44;
+			padding-left: 30px;
+			position: relative;
+			font-size: 17px;
+			margin: 0 0 20px;
+
+			@include largeAndUp() {
+				margin: 0 0 30px;
+			}
+
+			&::before {
+				content: '\F00C';
+				font-family: 'FontAwesome';
+				position: absolute;
+				left: 0;
+				top: -2px;
+			}
+		}
+	}
+}
+
+.sectionProject {
+	margin: 30px 0 0;
+
+	@include largeAndUp() {
+		margin: 50px 0 0;
+	}
+
+	@include largeAndUp() {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-column-gap: 50px;
+	}
+}
+
+.sectionProjectLeft {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto 1fr;
+	grid-gap: 15px;
+	margin: 0 0 20px;
+
+	@include largeAndUp {
+		grid-template-columns: 0.5fr 1fr;
+		grid-template-rows: 1fr;
+		margin: 0;
+	}
+}
+
+.sectionProjectTag {
+	> div {
+		align-items: center;
+		display: flex;
+	}
+
+	@include largeAndUp() {
+		padding-left: 10%;
+	}
+
+	p {
+		margin: 0;
+		font-size: 14px;
+		font-family: $fontGotham;
+		font-weight: 500;
+		text-transform: uppercase;
+		margin-right: 15px;
+		color: $color_44;
+		line-height: 1.2;
+	}
+
+	i {
+		color: $color_59;
+		font-size: 30px;
+	}
+}
+
+.sectionProjectContent {
+	h4 {
+		color: $color_59;
+		font-size: 25px;
+		font-family: $fontGotham;
+		font-weight: 500;
+	}
+
+	p {
+		@include sectionText();
+	}
+
+	a {
+		color: $color_59;
+		font-size: 15px;
+		font-family: $fontGotham;
+		font-weight: 500;
+
+		span {
+			margin-right: 15px;
+		}
+
+		i {
+			transition: all 0.15s ease-in-out;
+			transform: translateX(0);
+		}
+
+		&:hover {
+			i {
+				transform: translateX(5px);
+			}
+		}
+	}
+}
+
+.faqs {
+	background-color: $color_43;
+	padding: 40px 0;
+
+	@include largeAndUp() {
+		padding: 80px 0;
+	}
+
+	header {
+		margin: 0 0 30px;
+		text-align: center;
+
+		@include largeAndUp() {
+			margin: 0 0 50px;
+		}
+
+		h2 {
+			color: $white;
+			font-family: $fontUltra;
+			background-color: $color_59;
+			display: inline-block;
+			text-transform: uppercase;
+			max-width: 1100px;
+			margin: 0 auto;
+			padding: 15px 25px;
+			line-height: 1;
+			font-size: 40px;
+
+			@include largeAndUp() {
+				font-size: 63px;
+			}
+		}
+	}
+
+	section {
+		padding: 0;
+
+		*[class="container"] {
+			max-width: none;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+
+			> div {
+				margin: 0;
+				max-width: none;
+				width: 100%;
+			}
+		}
+	}
+
+	dl {
+		border-right: none;
+		border-left: none;
+		border-color: rgba($white, 0.4);
+
+		dt {
+			@extend .container;
+
+			> div {
+				background-color: transparent;
+				color: $white !important;
+				cursor: pointer;
+			}
+		}
+
+		dd {
+			@extend .container;
+
+			div {
+				* {
+					color: $white;
+					font-family: $fontGotham;
+					font-weight: 500;
+				}
+			}
+		}
+	}
+}
+
+.sectionCta {
+	background-color: $color_43;
+	padding: 0 0 40px;
+
+	@include largeAndUp {
+		padding: 0 0 40px;
+	}
+}
+
+.sectionCtaInner {
+	text-align: center;
+}
