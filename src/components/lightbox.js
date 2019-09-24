@@ -5,6 +5,7 @@ import Swiper from 'swiper';
 import {ref} from '../utils/componentHelpers';
 import Image from './imagev2';
 import Modal from './modal';
+import Video from './video';
 import CSS from '../css/modules/lightbox.module.scss';
 
 export default class Lightbox extends Component {
@@ -209,22 +210,35 @@ export default class Lightbox extends Component {
 											position: 'relative',
 											opacity: initialized ? 1 : 0,
 											transform: initialized ? 'scale(1)' : 'scale(0.95)',
-											transition:
-												'opacity 0.15s ease-in-out, transform 0.15s ease-in-out'
+											transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out'
 										}}
 									>
-										<Image
-											spacer={false}
-											image={image}
-											style={{
-												height: '100%',
-												width: '100%',
-												display: 'flex',
-												alignItems: 'center',
-												justifyContent: 'center'
-											}}
-											imgStyle={imgStyle}
-										/>
+										{image.video ? (
+											<Video
+												src={image.video}
+												style={{
+													height: '100%',
+													width: '100%',
+													maxWidth: 792,
+													display: 'flex',
+													alignItems: 'center',
+													justifyContent: 'center'
+												}}
+											/>
+										) : (
+											<Image
+												spacer={false}
+												image={image}
+												style={{
+													height: '100%',
+													width: '100%',
+													display: 'flex',
+													alignItems: 'center',
+													justifyContent: 'center'
+												}}
+												imgStyle={imgStyle}
+											/>
+										)}
 										{/* {image.sizes && image.sizes.src ? (
 											<Img sizes={image.sizes} style={{height: '100%'}} imgStyle={imgStyle}/>
 										) : (

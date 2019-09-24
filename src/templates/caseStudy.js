@@ -36,7 +36,16 @@ export default class CaseStudyTemplate extends Component {
 	getLightboxImages() {
 		const {caseStudy} = this.props.data;
 
-		return caseStudy.acf.images.map(i => i.image).map(getLightboxImageObject);
+		return caseStudy.acf.images
+			.filter(i => i.image)
+			.map(i => ({
+				image: i.image,
+				video: i.video
+			}))
+			.map(i => ({
+				...getLightboxImageObject(i.image),
+				video: i.video
+			}));
 	}
 
 	handleModalOpen(index) {
@@ -125,7 +134,7 @@ export default class CaseStudyTemplate extends Component {
 						width: `calc(100% / ${data.width})`
 					};
 
-					const image = data.image;
+					const {image} = data;
 
 					if (!image) {
 						return null;
@@ -158,6 +167,7 @@ export const pageQuery = graphql`
 				}
 				images: caseStudyImages {
 					width
+					video
 					image {
 						...LargeImage
 					}
