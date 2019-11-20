@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './utils/fragments';
-import { innerHtml } from './utils/componentHelpers';
+import {innerHtml} from './utils/componentHelpers';
 
 let stylesStr;
 
@@ -31,7 +31,7 @@ export default class Html extends React.Component {
 			css = (
 				<style
 					id="gatsby-inlined-css"
-					dangerouslySetInnerHTML={{__html: stylesStr}} // eslint-disable-line
+					dangerouslySetInnerHTML={{ __html: stylesStr }} // eslint-disable-line
 				/>
 			);
 		}
@@ -49,7 +49,7 @@ export default class Html extends React.Component {
 				<body>
 					<div
 						id="___gatsby"
-						dangerouslySetInnerHTML={{__html: this.props.body}} //eslint-disable-line
+						dangerouslySetInnerHTML={{ __html: this.props.body }} //eslint-disable-line
 					/>
 					{this.props.postBodyComponents}
 					<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAZyFJjtN1lLLz3UoVF_mDelyTQOSZ0-rY" async/>
@@ -67,6 +67,12 @@ export default class Html extends React.Component {
 
 		const numberScript = `window.vs_account_id = "fwABAVssGPNPYgDM";`;
 
+		const salesloftScript = `(function(i,s,o,g,r,a,m){i['SLScoutObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://scout-cdn.salesloft.com/sl.js','slscout');
+			slscout(["init", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0IjoxMTg2OH0.4ZTLQ-jBLV9Jn3YY8327OzlZuEHJ_w2oLWILwrzsU8I"]);`;
+
 		return (
 			<div>
 				<script src="https://www.googletagmanager.com/gtag/js?id=AW-997082626" async/>
@@ -77,6 +83,11 @@ export default class Html extends React.Component {
 				<script dangerouslySetInnerHTML={{__html: numberScript}}/>
 				<script type="text/javascript" src="https://rw1.calls.net/euinc/number-changer.js" async/>
 				{/* END number */}
+
+				{/* START salesloft */}
+				<script dangerouslySetInnerHTML={{__html: salesloftScript}} async/>
+
+				{/* END saldesloft */}
 			</div>
 		);
 	}
