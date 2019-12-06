@@ -67,6 +67,10 @@ export default class Html extends React.Component {
 
 		const numberScript = `window.vs_account_id = "fwABAVssGPNPYgDM";`;
 
+		if (window.slscout) {
+			window.slscout(['init', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0IjoxMTg2OH0.4ZTLQ-jBLV9Jn3YY8327OzlZuEHJ_w2oLWILwrzsU8I']);
+		}
+
 		const salesloftScript = `(function(i,s,o,g,r,a,m){i['SLScoutObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
