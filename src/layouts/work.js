@@ -8,6 +8,7 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 import WorkHeader from '../components/workHeader';
 import {getDataTheme} from '../utils/documentHelpers';
+import Salesloft from '../scripts/salesloft';
 
 export default class WorkLayout extends Component {
 	static propTypes = {
@@ -30,6 +31,7 @@ export default class WorkLayout extends Component {
 				<WorkHeader location={this.props.location}/>
 				{this.props.children({...this.props, site})}
 				<Footer menu={mainMenu} location={location}/>
+				<Salesloft key={this.props.location.pathname}/>
 			</div>
 		);
 	}

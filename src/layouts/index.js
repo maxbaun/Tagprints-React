@@ -7,6 +7,7 @@ import './styles';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import {getDataTheme} from '../utils/documentHelpers';
+import Salesloft from '../scripts/salesloft';
 
 export default class DefaultLayout extends Component {
 	static propTypes = {
@@ -28,6 +29,7 @@ export default class DefaultLayout extends Component {
 				<Header items={mainMenu.items} location={location}/>
 				{this.props.children({...this.props, site})}
 				<Footer menu={mainMenu} location={location}/>
+				<Salesloft key={location.pathname}/>
 			</div>
 		);
 	}

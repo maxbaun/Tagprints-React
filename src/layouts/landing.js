@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import graphql from 'graphql';
 
 import './styles';
+import Salesloft from '../scripts/salesloft';
 
 export default class DefaultLayout extends Component {
 	static propTypes = {
@@ -21,6 +22,8 @@ export default class DefaultLayout extends Component {
 		return (
 			<div id="site" data-theme="landing" data-theme-toggle="true">
 				{this.props.children({...this.props, site})}
+				<Salesloft key={this.props.location.pathname}/>
+
 			</div>
 		);
 	}

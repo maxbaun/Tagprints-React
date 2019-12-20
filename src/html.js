@@ -53,7 +53,7 @@ export default class Html extends React.Component {
 					/>
 					{this.props.postBodyComponents}
 					<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAZyFJjtN1lLLz3UoVF_mDelyTQOSZ0-rY" async/>
-					{process.env.NODE_ENV === `production` ? this.renderScripts() : null}
+					{process.env.NODE_ENV === `production` ? this.renderScripts() : this.renderScripts()}
 				</body>
 			</html>
 		);
@@ -67,9 +67,9 @@ export default class Html extends React.Component {
 
 		const numberScript = `window.vs_account_id = "fwABAVssGPNPYgDM";`;
 
-		if (window.slscout) {
-			window.slscout(['init', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0IjoxMTg2OH0.4ZTLQ-jBLV9Jn3YY8327OzlZuEHJ_w2oLWILwrzsU8I']);
-		}
+		// If (window.slscout) {
+		// 	window.slscout(['init', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0IjoxMTg2OH0.4ZTLQ-jBLV9Jn3YY8327OzlZuEHJ_w2oLWILwrzsU8I']);
+		// }
 
 		const salesloftScript = `(function(i,s,o,g,r,a,m){i['SLScoutObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
