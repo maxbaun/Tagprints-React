@@ -313,10 +313,6 @@ function getPageTemplate(template) {
 		return path.resolve('./src/templates/form.js');
 	}
 
-	if (template === 'template-job.php') {
-		return path.resolve('./src/templates/job.js');
-	}
-
 	if (template === 'template-contact.php') {
 		return path.resolve('./src/templates/contactv2.js');
 	}
