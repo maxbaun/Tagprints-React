@@ -43,7 +43,7 @@
 		"gatsby-plugin-sass": "^1.0.26",
 		"gatsby-plugin-sitemap": "^1.2.25",
 		"gatsby-plugin-webpack-bundle-analyzer": "^0.1.1",
-		"gatsby-source-wordpress": "2.0.93",
+		"gatsby-source-wordpress": "4.0.8",
 		"imagesloaded": "^4.1.4",
 		"isotope-layout": "^3.0.6",
 		"moment": "^2.22.1",
