@@ -19,7 +19,6 @@
     "indent": ["error", 2, {"SwitchCase": 1}],
     "camelcase": "off",
     "new-cap": "off",
-    "simple-import-sort/sort": "error",
     "capitalized-comments": "off",
     "operator-linebreak": "off"
   },
